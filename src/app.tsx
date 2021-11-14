@@ -1,30 +1,35 @@
+import Taro from '@tarojs/taro'
 import { Component } from 'react'
-import { Provider } from 'mobx-react'
-
-import counterStore from './store/counter'
+import { Provider, userStore } from './store/context'
 
 import './app.less'
 
-const store = {
-  counterStore
-}
+// Taro.addInterceptor(Taro.interceptors.logInterceptor);
+
+// /**
+//  * 检查登入状态
+//  */
+//  const loginStateCheck = function (chain) {
+//   const requestParams = chain.requestParams
+
+//   return chain.proceed(requestParams).then((res) => {
+//     if (res.data.status == 401) {
+//       clearStorage().then(() => {
+//         userStore.clearData()
+//         // 认证信息失效
+//         Taro.reLaunch({
+//           url: '/pages/auth/index',
+//         })
+//       })
+//     }
+//     return res
+//   })
+// }
+// Taro.addInterceptor(loginStateCheck)
 
 class App extends Component {
-  componentDidMount () {}
-
-  componentDidShow () {}
-
-  componentDidHide () {}
-
-  componentDidCatchError () {}
-
-  // this.props.children 就是要渲染的页面
-  render () {
-    return (
-      <Provider store={store}>
-        {this.props.children}
-      </Provider>
-    )
+  render() {
+    return <Provider>{this.props.children}</Provider>
   }
 }
 

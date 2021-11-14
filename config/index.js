@@ -1,3 +1,5 @@
+import { resolve } from 'path'
+
 const config = {
   projectName: 'SHTravelMiniApp',
   date: '2021-11-14',
@@ -19,6 +21,10 @@ const config = {
     }
   },
   framework: 'react',
+  alias: {
+    '@': resolve(__dirname, '..', 'src/'),
+    '@components': resolve(__dirname, '..', 'src/components/'),
+  },
   mini: {
     postcss: {
       pxtransform: {
@@ -45,6 +51,7 @@ const config = {
   h5: {
     publicPath: '/',
     staticDirectory: 'static',
+    esnextModules: ["@taroify"],
     postcss: {
       autoprefixer: {
         enable: true,
