@@ -15,7 +15,12 @@ const IndexPage = (props) => {
   const toDemoPage = () => {
     Taro.navigateTo({ url: '/pages/demo/index' })
   }
-
+  const toLogin = () => {
+    Taro.navigateTo({ url: '/pages/login/index' })
+  }
+  const tomyorder = () => {
+    Taro.navigateTo({ url: '/pages/myorder/index' })
+  }
   const onTabClick = (newIndex: number) => {
     console.log(swiper)
     // swiper.current.next()
@@ -28,9 +33,11 @@ const IndexPage = (props) => {
         <Swiper.Item>
           <Button onClick={toDemoPage}>跳转到 Demo</Button>
         </Swiper.Item>
-        <Swiper.Item>Home2</Swiper.Item>
-        <Swiper.Item>Home3</Swiper.Item>
-        <Swiper.Item>mine</Swiper.Item>
+        <Swiper.Item>有味</Swiper.Item>
+        <Swiper.Item>我的
+          <Button onClick={toLogin}>跳转到 login</Button>
+          <Button onClick={tomyorder}>跳转到 我的订单</Button> 
+        </Swiper.Item>
       </Swiper>
       <TabBar onClick={onTabClick} />
     </View>

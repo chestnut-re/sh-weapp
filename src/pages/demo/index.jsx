@@ -14,10 +14,14 @@ const DemoPage = (props) => {
   const toFist = () => {
     Taro.navigateBack()
   }
+  const toLogin = () => {
+    Taro.navigateTo({ url: '/pages/login/index' })
+  }
 
   return (
     <View className='SecondPage__root'>
       <Button onClick={toFist}>Swiper Demo</Button>
+      <Button onClick={toLogin}>Go to Login</Button>
       <Button color='primary'>主要按钮</Button>
     </View>
   )

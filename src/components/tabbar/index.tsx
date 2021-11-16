@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Text } from '@tarojs/components'
 import './index.less'
+import { ChatOutlined, WapHome, GoodsCollect, Manager } from "@taroify/icons"
 
 interface Props {
   onClick: (number) => void
@@ -22,7 +23,8 @@ const TabBar: React.FC<Props> = ({ onClick }) => {
           _itemClick(0)
         }}
       >
-        <Text>Home</Text>
+        <WapHome  size="30"/>
+        <Text>首页</Text>
       </View>
       <View
         className='tab'
@@ -30,7 +32,8 @@ const TabBar: React.FC<Props> = ({ onClick }) => {
           _itemClick(1)
         }}
       >
-        <Text>Home2</Text>
+        <GoodsCollect size="30"/>
+        <Text>有味</Text>
       </View>
       <View
         className='tab'
@@ -38,16 +41,17 @@ const TabBar: React.FC<Props> = ({ onClick }) => {
           _itemClick(2)
         }}
       >
-        <Text>Home3</Text>
+        <Manager size="30"/>
+        <Text>我的</Text>
       </View>
-      <View
+      {/* <View
         className='tab'
         onClick={() => {
           _itemClick(3)
         }}
       >
-        <Text>Mine</Text>
-      </View>
+        <Text>我的</Text>
+      </View> */}
     </View>
   )
 }
