@@ -4,7 +4,7 @@ import { Provider, userStore } from './store/context'
 
 import './app.less'
 
-// Taro.addInterceptor(Taro.interceptors.logInterceptor);
+Taro.addInterceptor(Taro.interceptors.logInterceptor);
 
 // /**
 //  * 检查登入状态
