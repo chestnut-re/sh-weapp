@@ -1,7 +1,6 @@
-
 SHTravelMiniApp
 
-c端 小程序
+c 端 小程序
 
 # 工程结构
 
@@ -12,4 +11,3 @@ c端 小程序
 5. `utils`: 工具文件夹
 6. `components`: 公共组件
 7. `hooks`: 自定义 hook
-
