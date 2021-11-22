@@ -28,7 +28,9 @@ const MineScreen = (props) => {
   const toSetUp = () => {
     Taro.navigateTo({ url: '/pages/setUp/index' })
   }
-
+  const toMyData = () => {
+    Taro.navigateTo({ url: '/pages/myData/index' })
+  }
   return (
     <View className='MinePage__root'>
       <View className='Header__btn'>
@@ -42,7 +44,7 @@ const MineScreen = (props) => {
           <SettingOutlined size='20' />
         </View>
       </View>
-      <View className='user'>
+      <View className='user' onClick={toMyData}>
         <View className='User__Img'>
           <Manager size='50' />
         </View>
