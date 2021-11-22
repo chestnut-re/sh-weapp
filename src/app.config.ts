@@ -4,11 +4,11 @@ export default {
     'pages/setUp/index',
     'pages/myData/index',
     'pages/aboutUs/index',
-    
     'pages/myToken/index',
     'pages/demo/index',
     'pages/login/index',
     'pages/myOrder/index',
+    'pages/webview/index',
     ],
   window: {
     backgroundTextStyle: 'light',
