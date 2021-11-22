@@ -7,7 +7,7 @@ import { observer } from 'mobx-react'
 
 import './index.less'
 
-const MinePage = (props) => {
+const MineScreen = (props) => {
   const { commonStore } = useStore()
   console.log(commonStore)
 
@@ -16,6 +16,17 @@ const MinePage = (props) => {
   }
   const toLogin = () => {
     Taro.navigateTo({ url: '/pages/login/index' })
+  }
+
+  const toMyOrder = () => {
+    Taro.navigateTo({ url: '/pages/myOrder/index' })
+  }
+
+  const toMyToken = () => {
+    Taro.navigateTo({ url: '/pages/myToken/index' })
+  }
+  const toSetUp = () => {
+    Taro.navigateTo({ url: '/pages/setUp/index' })
   }
 
   return (
@@ -27,7 +38,7 @@ const MinePage = (props) => {
         <View className='btn' onClick={toLogin}>
           <Scan size='20' />
         </View>
-        <View className='btn'>
+        <View className='btn' onClick={toSetUp}>
           <SettingOutlined size='20' />
         </View>
       </View>
@@ -55,8 +66,11 @@ const MinePage = (props) => {
         <View className='Card__Item'>浏览</View>
         <View className='Card__Item'>点赞</View>
       </View>
+      <Button onClick={toLogin}>login</Button>
+      <Button onClick={toMyOrder}>我的订单</Button>
+      <Button onClick={toMyToken}>我的代币</Button>
     </View>
   )
 }
 
-export default observer(MinePage)
+export default observer(MineScreen)

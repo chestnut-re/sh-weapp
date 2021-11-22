@@ -5,6 +5,7 @@ import { observer } from 'mobx-react'
 import { useRef, useState } from 'react'
 import { Swiper } from '@taroify/core'
 import TabBar from '../../components/tabbar'
+import MineScreen from './components/mine'
 import './index.less'
 
 const IndexPage = (props) => {
@@ -18,17 +19,13 @@ const IndexPage = (props) => {
   const toLogin = () => {
     Taro.navigateTo({ url: '/pages/login/index' })
   }
-  const tomyorder = () => {
-    Taro.navigateTo({ url: '/pages/myOrder/index' })
-  }
 
-  const tomytoken = () => {
-    Taro.navigateTo({ url: '/pages/myToken/index' })
-  }
   const onTabClick = (newIndex: number) => {
-    console.log(swiper)
+    console.log(swiper, index, newIndex)
     // swiper.current.next()
     setIndex(newIndex)
+    if (index === 0) {
+    }
   }
 
   return (
@@ -39,10 +36,7 @@ const IndexPage = (props) => {
         </Swiper.Item>
         <Swiper.Item>有味</Swiper.Item>
         <Swiper.Item>
-          我的
-          <Button onClick={toLogin}>login</Button>
-          <Button onClick={tomyorder}>我的订单</Button>
-          <Button onClick={tomytoken}>我的代币</Button>
+          <MineScreen />
         </Swiper.Item>
       </Swiper>
       <TabBar onClick={onTabClick} />

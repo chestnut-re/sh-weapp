@@ -1,8 +1,8 @@
 export default {
   pages: [
-    'pages/mine/index',
     'pages/index/index',
     'pages/myToken/index',
+    'pages/setUp/index',
     'pages/demo/index',
     'pages/login/index',
     'pages/myOrder/index',
