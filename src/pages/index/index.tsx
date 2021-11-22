@@ -32,7 +32,7 @@ const IndexPage = (props) => {
     <View className='IndexPage__root'>
       <Swiper className='swiper' touchable={false} ref={swiper} duration={0} activeIndex={index}>
         <Swiper.Item>
-          <Button onClick={toDemoPage}>跳转到 Demo</Button>
+          <Button onClick={toDemoPage}>跳转到 Demo1</Button>
         </Swiper.Item>
         <Swiper.Item>有味</Swiper.Item>
         <Swiper.Item>

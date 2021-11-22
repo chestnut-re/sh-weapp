@@ -48,8 +48,8 @@ const MyOrderPage = (props) => {
     <View className='MyOrderPage__root'>
       <Tabs className='orderTabs' value={value} onChange={setValue}>
         <Tabs.TabPane title='全部'>
-          <PullRefresh loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
-            <List loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}>
+          <PullRefresh className='list' loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
+            <List loading={loading} hasMore={hasMore} onLoad={onLoad}>
               {list.map((item) => (
                 <Cell key={item}>{item}</Cell>
               ))}
