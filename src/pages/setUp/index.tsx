@@ -28,7 +28,7 @@ const SetUpPage = (props) => {
       <View className='user' onClick={toMyData}>
         <Image className='img'></Image>
         <View className='massage'>
-          <View className='name'>丛林迷雾</View>
+          <View className='name'>丛林迷雾2</View>
           <View className='autograph'>签名： 天空分外晴朗，白云也绽放笑容</View>
           <View className='address'>常住地： 北京市海淀区</View>
         </View>
