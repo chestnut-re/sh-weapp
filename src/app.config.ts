@@ -1,8 +1,8 @@
 export default {
   pages: [
-    'pages/feedBack/index',
-    'pages/myOrder/index',
     'pages/index/index',
+    'pages/myOrder/index',
+    'pages/feedBack/index',
     'pages/setSex/index',
     'pages/setPassword/index',
     'pages/setAutograph/index',

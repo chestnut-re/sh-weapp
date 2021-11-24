@@ -1,16 +1,19 @@
 import Taro from '@tarojs/taro'
 import { usePageScroll, useReachBottom } from '@tarojs/taro' // Taro 专有 Hooks
-import { View, Text } from '@tarojs/components'
+import { View, Text, Image } from '@tarojs/components'
 import { useStore } from '@/store/context'
 import { Button, Field, Tabs, List, Loading, Cell, PullRefresh } from '@taroify/core'
 import { useRef, useState } from 'react'
 import { observer } from 'mobx-react'
-
+import pic from '@/assets/img/common/shg.png'
+import OrderList from './components/list'
 import './index.less'
-
+/**
+ * 我的订单
+ */
 const MyOrderPage = (props) => {
   const { commonStore } = useStore()
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState(0)
   const [hasMore, setHasMore] = useState(true)
   const [list, setList] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
@@ -42,16 +45,39 @@ const MyOrderPage = (props) => {
     setLoading(false)
     onLoad()
   }
-  console.log(commonStore)
-
   return (
     <View className='MyOrderPage__root'>
-      <Tabs className='orderTabs' value={value} onChange={setValue}>
+      <Tabs className='orderTabs' value={value} onChange={setValue} sticky>
         <Tabs.TabPane title='全部'>
           <PullRefresh className='list' loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
             <List loading={loading} hasMore={hasMore} onLoad={onLoad}>
               {list.map((item) => (
-                <Cell key={item}>{item}</Cell>
+                <Cell className='item' key={item}>
+                  <View className='card'>
+                    <View className='state'>待确认</View>
+                    <View className='content'>
+                      <Image className='img' src={pic} />
+                      <View className='name'>
+                        三亚5日自由行(5钻)·直减300「 高 星4晚连住...
+                        <View className='small-name'>
+                          <View>2021/10/22出发</View>
+                          <View>成人X2 儿童X2</View>
+                        </View>
+                      </View>
+                    </View>
+                    <View className='price'>
+                      <View className='discount'>已优惠¥200</View>
+                      <View>
+                        共计<Text className='money'>¥5798</Text>
+                      </View>
+                    </View>
+                    <View className='message'>
+                      <View className='message-one'>咨询</View>
+                      <View className='message-one'>分享给TA</View>
+                      <View className='message-two'>填写出行人信息</View>
+                    </View>
+                  </View>
+                </Cell>
               ))}
               {!refreshingRef.current && (
                 <List.Placeholder>
@@ -62,9 +88,16 @@ const MyOrderPage = (props) => {
             </List>
           </PullRefresh>
         </Tabs.TabPane>
-        <Tabs.TabPane title='待支付'>待支付</Tabs.TabPane>
-        <Tabs.TabPane title='进行中'>进行中</Tabs.TabPane>
-        <Tabs.TabPane title='已完成'>已完成</Tabs.TabPane>
+        <Tabs.TabPane title='待支付'>
+          <OrderList />
+        </Tabs.TabPane>
+        <Tabs.TabPane title='进行中'>
+          <OrderList />
+        </Tabs.TabPane>
+        <Tabs.TabPane title='已完成'>
+          <OrderList />
+        </Tabs.TabPane>
+        <Tabs.TabPane title='售后'>{/* <OrderList /> */}</Tabs.TabPane>
       </Tabs>
     </View>
   )
