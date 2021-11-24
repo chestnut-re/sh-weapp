@@ -50,9 +50,9 @@ const OrderListPage = (props) => {
       <PullRefresh className='list' loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
         <List loading={loading} hasMore={hasMore} onLoad={onLoad}>
           {list.map((item) => (
-            <Cell className='item' key={item}>
+            <View className='item' key={item}>
               <View className='card'>
-                <View className='state'>待确认</View>
+                <View className='state'>待确认1</View>
                 <View className='content'>
                   <Image className='img' src={pic} />
                   <View className='name'>
@@ -75,7 +75,7 @@ const OrderListPage = (props) => {
                   <View className='message-two'>填写出行人信息</View>
                 </View>
               </View>
-            </Cell>
+            </View>
           ))}
           {!refreshingRef.current && (
             <List.Placeholder>

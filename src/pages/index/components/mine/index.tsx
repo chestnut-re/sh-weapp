@@ -32,7 +32,7 @@ const MineScreen = (props) => {
     Taro.navigateTo({ url: '/pages/myData/index' })
   }
   return (
-    <View className='MinePage__root'>
+    <View className='MineScreen__root'>
       <View className='Header__btn'>
         <View className='btn' onClick={toFist}>
           <BullhornOutlined size='20' />

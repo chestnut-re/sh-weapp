@@ -49,44 +49,7 @@ const MyOrderPage = (props) => {
     <View className='MyOrderPage__root'>
       <Tabs className='orderTabs' value={value} onChange={setValue} sticky>
         <Tabs.TabPane title='全部'>
-          <PullRefresh className='list' loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
-            <List loading={loading} hasMore={hasMore} onLoad={onLoad}>
-              {list.map((item) => (
-                <Cell className='item' key={item}>
-                  <View className='card'>
-                    <View className='state'>待确认</View>
-                    <View className='content'>
-                      <Image className='img' src={pic} />
-                      <View className='name'>
-                        三亚5日自由行(5钻)·直减300「 高 星4晚连住...
-                        <View className='small-name'>
-                          <View>2021/10/22出发</View>
-                          <View>成人X2 儿童X2</View>
-                        </View>
-                      </View>
-                    </View>
-                    <View className='price'>
-                      <View className='discount'>已优惠¥200</View>
-                      <View>
-                        共计<Text className='money'>¥5798</Text>
-                      </View>
-                    </View>
-                    <View className='message'>
-                      <View className='message-one'>咨询</View>
-                      <View className='message-one'>分享给TA</View>
-                      <View className='message-two'>填写出行人信息</View>
-                    </View>
-                  </View>
-                </Cell>
-              ))}
-              {!refreshingRef.current && (
-                <List.Placeholder>
-                  {loading && <Loading>加载中...</Loading>}
-                  {!hasMore && '没有更多了'}
-                </List.Placeholder>
-              )}
-            </List>
-          </PullRefresh>
+          <OrderList />
         </Tabs.TabPane>
         <Tabs.TabPane title='待支付'>
           <OrderList />

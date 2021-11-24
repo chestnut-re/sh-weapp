@@ -15,8 +15,6 @@ const IndexPage = (props) => {
   const swiper = useRef<any>({})
   const [index, setIndex] = useState(0)
 
-  
-
   const onTabClick = (newIndex: number) => {
     setIndex(newIndex)
   }
