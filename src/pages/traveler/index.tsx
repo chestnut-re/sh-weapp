@@ -96,7 +96,7 @@ const TravelerPage = (props) => {
                   <View className='left-all'>
                     <View className='left-top'>
                       <View className='user-name'>
-                        <View className='state'>李买买1</View>
+                        <View className='state'>李买买</View>
                         <View className='myself'>本人</View>
                       </View>
                       <View className='tel'>188*****678</View>
