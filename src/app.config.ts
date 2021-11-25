@@ -1,6 +1,7 @@
 export default {
   pages: [
     'pages/index/index',
+    'pages/traveler/index',
     'pages/myOrder/index',
     'pages/feedBack/index',
     'pages/setSex/index',

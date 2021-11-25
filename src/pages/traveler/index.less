@@ -1,0 +1,79 @@
+.TravelerPage__root {
+  box-sizing: border-box;
+  // height: 100vh;
+  background: #f3f4f4;
+  border-radius: 20px 20px 0 0;
+  padding: 24px;
+  position: relative;
+  .add {
+    box-sizing: border-box;
+    height: 140px;
+    background: #ffffff;
+    border-radius: 14px;
+    margin: 19px 0px 2px;
+    padding: 46px;
+    display: flex;
+    justify-content: center;
+    .img {
+      width: 48px;
+      height: 48px;
+      padding-right: 19px;
+    }
+    .add-text {
+      font-size: 28px;
+      color: #a8a8a8;
+      line-height: 48px;
+    }
+  }
+  .traveler-list {
+    .list {
+      .item {
+        margin: 21px 0px;
+        background: #fff;
+        border-radius: 14px;
+        .card {
+          padding: 30px 24px 30px 26px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          .left-all {
+            flex-grow: 1;
+            padding-right: 20px;
+            .left-top {
+              display: flex;
+              justify-content: space-between;
+              .user-name {
+                display: flex;
+                font-size: 28px;
+                font-weight: bold;
+                .myself {
+                  font-size: 24px;
+                  background: rgba(237, 255, 254, 0.96);
+                  border-radius: 16px;
+                  font-size: 24px;
+                  padding: 4px 16px;
+                  color: #20d3c8;
+                  margin-left: 13px;
+                }
+              }
+              .tel {
+                font-size: 28px;
+                font-weight: bold;
+              }
+            }
+            .left-id {
+              font-size: 20px;
+              font-weight: bold;
+              color: #a8a8a8;
+              padding-top: 22px;
+            }
+          }
+          .jump {
+            width: 16px;
+            height: 30px;
+          }
+        }
+      }
+    }
+  }
+}
