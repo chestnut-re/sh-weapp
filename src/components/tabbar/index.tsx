@@ -1,7 +1,9 @@
 import React from 'react'
-import { View, Text } from '@tarojs/components'
+import { View, Text, Image } from '@tarojs/components'
 import './index.less'
-import { ChatOutlined, WapHome, GoodsCollect, Manager } from '@taroify/icons'
+// import { ChatOutlined, WapHome, GoodsCollect, Manager } from '@taroify/icons'
+import pic from '@/assets/img/home/@2x.png'
+import mine from '@/assets/img/home/wodexiao@2x.png'
 
 interface Props {
   onClick: (number) => void
@@ -23,8 +25,8 @@ const TabBar: React.FC<Props> = ({ onClick }) => {
           _itemClick(0)
         }}
       >
-        <WapHome size='30' />
-        <Text>首页</Text>
+        <Image className='img' src={mine} />
+        <View className='text'>首页</View>
       </View>
       <View
         className='tab'
@@ -32,8 +34,8 @@ const TabBar: React.FC<Props> = ({ onClick }) => {
           _itemClick(1)
         }}
       >
-        <GoodsCollect size='30' />
-        <Text>消息</Text>
+        <Image className='img' src={mine} />
+        <View className='text'>消息</View>
       </View>
       <View
         className='tab'
@@ -41,8 +43,8 @@ const TabBar: React.FC<Props> = ({ onClick }) => {
           _itemClick(2)
         }}
       >
-        <Manager size='30' />
-        <Text>我的</Text>
+        <Image className='img' src={mine} />
+        <View className='text'>我的</View>
       </View>
     </View>
   )

@@ -4,6 +4,7 @@ import { useStore } from '@/store/context'
 import { Button, Image } from '@taroify/core'
 import { Arrow } from '@taroify/icons'
 import { observer } from 'mobx-react'
+import pic from '@/assets/img/common/shg.png'
 
 import './index.less'
 
@@ -23,17 +24,23 @@ const SetUpPage = (props) => {
   const toMyData = () => {
     Taro.navigateTo({ url: '/pages/myData/index' })
   }
+  const toSetPassword = () => {
+    Taro.navigateTo({ url: '/pages/setPassword/index' })
+  }
+  const toFeedBack = () => {
+    Taro.navigateTo({ url: '/pages/feedBack/index' })
+  }
   return (
     <View className='SetUpPage__root'>
       <View className='user' onClick={toMyData}>
-        <Image className='img'></Image>
+        <Image className='img' src={pic}></Image>
         <View className='massage'>
           <View className='name'>丛林迷雾2</View>
           <View className='autograph'>签名： 天空分外晴朗，白云也绽放笑容</View>
           <View className='address'>常住地： 北京市海淀区</View>
         </View>
       </View>
-      <View className='password'>
+      <View className='password' onClick={toSetPassword}>
         <View className='password-left'>登陆密码</View>
         <View className='password-right'>
           去设置
@@ -43,7 +50,7 @@ const SetUpPage = (props) => {
         </View>
       </View>
       <View className='content-list'>
-        <View className='content'>
+        <View className='content' onClick={toFeedBack}>
           <View className='content-left'>意见反馈</View>
           <View className='content-right'>
             来告诉我们你的想法吧

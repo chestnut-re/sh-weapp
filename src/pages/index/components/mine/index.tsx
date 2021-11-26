@@ -1,10 +1,10 @@
 import Taro from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View, Text, Image } from '@tarojs/components'
 import { useStore } from '@/store/context'
 import { Button } from '@taroify/core'
 import { BullhornOutlined, SettingOutlined, Scan, Manager, InfoOutlined, Points } from '@taroify/icons'
 import { observer } from 'mobx-react'
-
+import pic from '@/assets/img/common/shg.png'
 import './index.less'
 
 const MineScreen = (props) => {
@@ -35,18 +35,18 @@ const MineScreen = (props) => {
     <View className='MineScreen__root'>
       <View className='Header__btn'>
         <View className='btn' onClick={toFist}>
-          <BullhornOutlined size='20' />
+          <Image className='img' src={pic} />
         </View>
         <View className='btn' onClick={toLogin}>
-          <Scan size='20' />
+          <Image className='img' src={pic} />
         </View>
         <View className='btn' onClick={toSetUp}>
-          <SettingOutlined size='20' />
+          <Image className='img' src={pic} />
         </View>
       </View>
       <View className='user' onClick={toMyData}>
         <View className='User__Img'>
-          <Manager size='50' />
+          <Image className='img' src={pic} />
         </View>
         <View className='User__Name'>
           <Text className='name'>丛林迷雾</Text>
@@ -55,11 +55,11 @@ const MineScreen = (props) => {
       </View>
       <View className='dolor'>
         <View className='details'>
-          <InfoOutlined size='20' style={{ color: '#fff' }} />
+          <Image className='img' src={pic} />
         </View>
         <View className='token'>
           <View className='Token__Img'>
-            <Points size='50' style={{ color: '#fff' }} />
+            <Image className='img' src={pic} />
           </View>
           <Text className='Token__Num'>2800</Text>
         </View>

@@ -1,20 +1,33 @@
 .TabBar__root {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 45px;
   display: flex;
-  background-color: rgba(0, 255, 255, 0.8);
-  // opacity:0.8;
-  width: 86%;
+  background-color: rgba(255, 255, 255, 0.95);
+  // width: 86%;
   margin: 0 auto;
-  margin-bottom: 5%;
   border-radius: 50px;
   flex-direction: row;
+
   .tab {
-    width: 20%;
-    flex: 1;
-    height: 80px;
+    box-sizing: border-box;
+    // width: 20%;
+    // flex: 1;
+    // height: 80px;
     font-size: 24px;
-    padding: 20px 0;
+    padding: 20px 0 11px;
+    margin: 0 80px;
     text-align: center;
     display: flex;
     flex-direction: column;
+    .img {
+      margin: 20px auto;
+      width: 34px;
+      height: 38px;
+    }
+    .text {
+      font-size: 16px;
+    }
   }
 }

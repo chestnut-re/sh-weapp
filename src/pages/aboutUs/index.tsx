@@ -1,10 +1,10 @@
 import Taro from '@tarojs/taro'
-import { View } from '@tarojs/components'
+import { View, Image } from '@tarojs/components'
 import { useStore } from '@/store/context'
 import { Button } from '@taroify/core'
 import { Arrow } from '@taroify/icons'
 import { observer } from 'mobx-react'
-
+import pic from '@/assets/img/common/shg.png'
 import './index.less'
 
 const AboutUsPage = (props) => {
@@ -13,7 +13,9 @@ const AboutUsPage = (props) => {
 
   return (
     <View className='AboutUsPage__root'>
-      <View className='logo'>logo</View>
+      <View className='logo'>
+        <Image className='img' src={pic} />
+      </View>
       {/* <View className='num'>山海云途 V 1.0.1</View> */}
       <View className='list'>
         <View className='item'>
