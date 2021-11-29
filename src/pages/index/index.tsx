@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro'
-import { View, Button, Text } from '@tarojs/components'
+import { View, Button, Text, ScrollView } from '@tarojs/components'
 import { useStore } from '@/store/context'
 import { observer } from 'mobx-react'
 import { useRef, useState } from 'react'
@@ -13,26 +13,32 @@ import './index.less'
 const IndexPage = (props) => {
   const { commonStore } = useStore()
   const swiper = useRef<any>({})
+
   const [index, setIndex] = useState(0)
+  const [scrollTop, setScrollTop] = useState(0)
 
   const onTabClick = (newIndex: number) => {
     setIndex(newIndex)
+    setScrollTop(0.1)
+    console.log(scrollTop)
   }
 
   return (
     <View className='IndexPage__root'>
-      <Swiper className='swiper' touchable={false} ref={swiper} duration={0} activeIndex={index}>
-        <Swiper.Item>
-          <HomeScreen />
-        </Swiper.Item>
-        <Swiper.Item>
-          <MsgScreen />
-        </Swiper.Item>
-        <Swiper.Item>
-          <MineScreen />
-        </Swiper.Item>
-      </Swiper>
-      <TabBar onClick={onTabClick} />
+      <ScrollView scrollY scrollWithAnimation scrollTop={scrollTop}>
+        <Swiper className='swiper' touchable={false} ref={swiper} duration={0} activeIndex={index}>
+          <Swiper.Item>
+            <HomeScreen />
+          </Swiper.Item>
+          <Swiper.Item>
+            <MsgScreen />
+          </Swiper.Item>
+          <Swiper.Item>
+            <MineScreen />
+          </Swiper.Item>
+        </Swiper>
+        <TabBar onClick={onTabClick} />
+      </ScrollView>
     </View>
   )
 }

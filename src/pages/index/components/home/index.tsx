@@ -2,7 +2,7 @@ import Taro from '@tarojs/taro'
 import { View, Text, Button, Image, Input } from '@tarojs/components'
 import { useStore } from '@/store/context'
 import { observer } from 'mobx-react'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './index.less'
 import place from '@/assets/img/home/vdizhi@2x.png'
 import search from '@/assets/img/home/sousuo-2@2x.png'
@@ -21,16 +21,13 @@ const HomeScreen = (props) => {
     'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3152590946,2826023176&fm=26&gp=0.jpg',
     'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3975309943,373981693&fm=26&gp=0.jpg',
   ]
+
   //制造瀑布流单个元素
   const _madeImage = (str, index) => {
     return (
-      <View className='.r-o' style='width:180px;'>
-        <Image src={str} style='width:180px; height:100px' />
-        {index % 2 == 0 ? (
-          <View style='width:80px; height:100px'>哇啦啦啦</View>
-        ) : (
-          <View style='width:80px; height:50px'>啦啦</View>
-        )}
+      <View className='.r-o'>
+        <Image src={str} />
+        {index % 2 == 0 ? <View style='height:100px'>哇啦啦啦</View> : <View style='height:50px'>啦啦</View>}
       </View>
     )
   }
@@ -72,6 +69,9 @@ const HomeScreen = (props) => {
         .exec()
     }, 200)
   }
+
+  useEffect(() => {}, [])
+
   const toDemoPage = () => {
     Taro.navigateTo({ url: '/pages/demo/index' })
   }
@@ -130,9 +130,6 @@ const HomeScreen = (props) => {
       </View>
       <View className='scroll'>
         <View className='r-c'>
-          <Text className='r-t' id='f'>
-            为你推荐
-          </Text>
           <View className='r-i' id='ri' ref={(v) => setF(v)} name='ww'>
             {arr.map((item, index) => {
               return _madeImage(item, index)
@@ -142,7 +139,7 @@ const HomeScreen = (props) => {
       </View>
       <Button onClick={toDemoPage}>跳转到 Demo1</Button>
       <Button onClick={toWebViewPage}>跳转到 WebView</Button>
-      {/* <Button onClick={toscc}>获取瀑布流</Button> */}
+      <Button onClick={toscc}>获取瀑布流</Button>
       <Button
         onClick={() => {
           Taro.scanCode({}).then((res) => {
