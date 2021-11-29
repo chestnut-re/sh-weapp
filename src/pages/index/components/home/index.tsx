@@ -1,74 +1,29 @@
 import Taro from '@tarojs/taro'
+import { usePageScroll, useReachBottom } from '@tarojs/taro' // Taro 专有 Hooks
 import { View, Text, Button, Image, Input } from '@tarojs/components'
+import { List, Loading, PullRefresh } from '@taroify/core'
 import { useStore } from '@/store/context'
 import { observer } from 'mobx-react'
 import { useEffect, useRef, useState } from 'react'
 import './index.less'
 import place from '@/assets/img/home/vdizhi@2x.png'
 import search from '@/assets/img/home/sousuo-2@2x.png'
+import pic from '@/assets/img/common/shg.png'
+import black from '@/assets/img/home/black.png'
+import noLike from '@/assets/img/home/no-like.png'
+import liked from '@/assets/img/home/liked.png'
 /**
  * 首页
  */
 const HomeScreen = (props) => {
   const { commonStore } = useStore()
   const [value, setValue] = useState('北京')
-  const [f, setF] = useState('')
-  const arr = [
-    'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2209999056,1217794382&fm=26&gp=0.jpg',
-    'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2418077635,996250637&fm=26&gp=0.jpg',
-    'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2261944737,731173482&fm=26&gp=0.jpg',
-    'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1874647665,1205912684&fm=26&gp=0.jpg',
-    'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3152590946,2826023176&fm=26&gp=0.jpg',
-    'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3975309943,373981693&fm=26&gp=0.jpg',
-  ]
-
-  //制造瀑布流单个元素
-  const _madeImage = (str, index) => {
-    return (
-      <View className='.r-o'>
-        <Image src={str} />
-        {index % 2 == 0 ? <View style='height:100px'>哇啦啦啦</View> : <View style='height:50px'>啦啦</View>}
-      </View>
-    )
-  }
-  const _getHeight = (nodes, childNodes) => {
-    console.log(nodes, childNodes)
-    //盛放每行高度的数组
-    let heights = []
-    nodes.forEach((item, index) => {
-      //前两个为基准
-      if (index < 2) {
-        heights.push(item.height)
-      } else {
-        //查找最低高度然后放置最后改变最低高度过程
-        let min = Math.min.apply(null, heights)
-        let currentIndex = heights.indexOf(min)
-        let x = nodes[currentIndex].left
-        let y = min
-
-        childNodes[index].style.position = 'absolute'
-
-        childNodes[index].style.left = x - 10 + 'px'
-        childNodes[index].style.top = y + 'px'
-
-        heights[currentIndex] = min + item.height
-      }
-    })
-  }
-
-  const toscc = () => {
-    //200毫秒后获取节点信息,避免取值为null
-    setTimeout(() => {
-      const query = Taro.createSelectorQuery()
-      query
-        .selectAll('.r-o')
-        .boundingClientRect((res) => {
-          // 第二个参数是通过ref获取到的瀑布流的每一个元素
-          _getHeight(res, f.childNodes)
-        })
-        .exec()
-    }, 200)
-  }
+  const [hasMore, setHasMore] = useState(true)
+  const [list, setList] = useState<string[]>([])
+  const [loading, setLoading] = useState(false)
+  const refreshingRef = useRef(false)
+  const [scrollTop, setScrollTop] = useState(0)
+  const [reachTop, setReachTop] = useState(true)
 
   useEffect(() => {}, [])
 
@@ -80,7 +35,30 @@ const HomeScreen = (props) => {
     const url = decodeURIComponent('http://123.56.248.148/protocol/privacy')
     Taro.navigateTo({ url: `/pages/webview/index?url=${url}` })
   }
+  usePageScroll(({ scrollTop: aScrollTop }) => {
+    setScrollTop(aScrollTop)
+    setReachTop(aScrollTop === 0)
+  })
+  const onLoad = () => {
+    setLoading(true)
+    const newList = refreshingRef.current ? [] : list
+    setTimeout(() => {
+      refreshingRef.current = false
+      for (let i = 0; i < 1; i++) {
+        const text = newList.length + 1
+        newList.push(text < 1 ? '0' + text : String(text))
+      }
+      setList(newList)
+      setLoading(false)
+      setHasMore(newList.length < 10)
+    }, 500)
+  }
 
+  function onRefresh() {
+    refreshingRef.current = true
+    setLoading(false)
+    onLoad()
+  }
   return (
     <View className='HomeScreen__root'>
       <View className='home-header'>
@@ -128,18 +106,39 @@ const HomeScreen = (props) => {
         </View>
         <View className='order'>立即下单</View>
       </View>
-      <View className='scroll'>
-        <View className='r-c'>
-          <View className='r-i' id='ri' ref={(v) => setF(v)} name='ww'>
-            {arr.map((item, index) => {
-              return _madeImage(item, index)
-            })}
-          </View>
-        </View>
+      <View className='product-list'>
+        <PullRefresh className='list' loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
+          <List loading={loading} hasMore={hasMore} onLoad={onLoad}>
+            {list.map((item) => (
+              <View className='item' key={item}>
+                <View className='card'>
+                  <View className='big-img'>
+                    <Image className='big' src={pic} />
+                    <View className='label'>
+                      <Image className='black' src={black} />
+                      <Text className='label-pic'>三亚</Text>
+                      <Text className='text'>自由行</Text>
+                    </View>
+                  </View>
+                  <View className='content'>
+                    <View className='text'>三亚5日跟团游「星4晚连 住」</View>
+                    <View className='money'>¥ 2899</View>
+                    <View className='consume'>
+                      <Text>3456人已付款</Text>
+                      <View>
+                        <Image className='is-like' src={noLike} />
+                        2356
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            ))}
+          </List>
+        </PullRefresh>
       </View>
       <Button onClick={toDemoPage}>跳转到 Demo1</Button>
       <Button onClick={toWebViewPage}>跳转到 WebView</Button>
-      <Button onClick={toscc}>获取瀑布流</Button>
       <Button
         onClick={() => {
           Taro.scanCode({}).then((res) => {
