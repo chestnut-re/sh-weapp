@@ -1,160 +1,161 @@
 .HomeScreen__root {
   background: linear-gradient(#7bbeb4, #ffffff);
   padding: 0 24px;
-  .home-header {
-    // background: rgb(121, 158, 158);
-    // box-sizing: border-box;
-    padding: 122px 0px 158px;
-    display: flex;
-    .now-place {
+  .list {
+    .home-header {
+      // background: rgb(121, 158, 158);
+      // box-sizing: border-box;
+      padding: 122px 0px 158px;
       display: flex;
-      align-items: center;
-      font-size: 46px;
-      font-weight: bold;
-      font-family: MStiffHei PRC, MStiffHei PRC-UltraBold;
-      color: #fff;
-      .place {
-        width: 26px;
-        height: 32px;
-        padding-left: 12px;
-        padding-right: 33px;
+      .now-place {
+        display: flex;
+        align-items: center;
+        font-size: 46px;
+        font-weight: bold;
+        font-family: MStiffHei PRC, MStiffHei PRC-UltraBold;
+        color: #fff;
+        .place {
+          width: 26px;
+          height: 32px;
+          padding-left: 12px;
+          padding-right: 33px;
+        }
+      }
+      .search-input {
+        box-sizing: border-box;
+        height: 60px;
+        display: flex;
+        flex: 1;
+        align-items: center;
+        padding: 16px 25px;
+        opacity: 0.65;
+        background: #c1ece9;
+        border-radius: 50px;
+        // box-shadow: 7px 7px 29px 1px rgba(218, 218, 218, 0.39);
+        .search {
+          width: 28px;
+          height: 28px;
+          padding-right: 18px;
+        }
       }
     }
-    .search-input {
-      box-sizing: border-box;
-      height: 60px;
-      display: flex;
-      flex: 1;
-      align-items: center;
-      padding: 16px 25px;
-      opacity: 0.65;
-      background: #c1ece9;
-      border-radius: 50px;
-      // box-shadow: 7px 7px 29px 1px rgba(218, 218, 218, 0.39);
-      .search {
-        width: 28px;
-        height: 28px;
-        padding-right: 18px;
+    .home-body {
+      .route {
+        font-size: 28px;
+        line-height: 42px;
+        color: #dbfffc;
+        padding-bottom: 24px;
+      }
+      .swiper {
+        display: flex;
+        height: 359px;
+        padding: 18px;
+        background: #fff;
+        border-radius: 18px;
+        .select-route {
+          display: flex;
+          padding-bottom: 22px;
+        }
+        .route-text {
+          font-size: 22px;
+          padding-left: 2px;
+          line-height: 42px;
+        }
+        .route-name {
+          font-size: 32px;
+          font-weight: bold;
+        }
+        .swiper-left {
+          background: #9ef0ea;
+          border-radius: 18px;
+          padding: 34px 20px;
+          margin-right: 8px;
+
+          .select-route {
+            .season {
+              width: 81px;
+              height: 42px;
+              background: #0edabb;
+              text-align: center;
+              color: #fff;
+              font-size: 30px;
+              font-weight: bold;
+              font-style: italic;
+              border-radius: 4px;
+              margin-right: 12px;
+            }
+          }
+        }
+        .swiper-right {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          .right-top {
+            box-sizing: border-box;
+            background: #81dbeb;
+            border-radius: 18px;
+            padding: 34px 20px;
+            margin-bottom: 8px;
+            .now {
+              width: 81px;
+              height: 42px;
+              background: #03f0f8;
+              text-align: center;
+              color: #fff;
+              font-size: 30px;
+              font-weight: bold;
+              font-style: italic;
+              border-radius: 4px;
+              margin-right: 12px;
+            }
+          }
+          .right-bottom {
+            flex: 1;
+            box-sizing: border-box;
+            background: #81ebad;
+            border-radius: 18px;
+            padding: 34px 20px;
+            .local {
+              width: 81px;
+              height: 42px;
+              background: #03f892;
+              text-align: center;
+              color: #fff;
+              font-size: 30px;
+              font-weight: bold;
+              font-style: italic;
+              border-radius: 4px;
+              margin-right: 12px;
+            }
+          }
+        }
       }
     }
-  }
-  .home-body {
-    .route {
-      font-size: 28px;
-      line-height: 42px;
-      color: #dbfffc;
-      padding-bottom: 24px;
-    }
-    .swiper {
-      display: flex;
-      height: 359px;
-      padding: 18px;
+    .home-order {
+      padding: 22px 33px;
       background: #fff;
       border-radius: 18px;
-      .select-route {
-        display: flex;
-        padding-bottom: 22px;
-      }
-      .route-text {
-        font-size: 22px;
-        padding-left: 2px;
-        line-height: 42px;
-      }
-      .route-name {
-        font-size: 32px;
+      margin: 24px 0;
+      .order-text {
+        font-size: 28px;
+        // font-family: Microsoft YaHei UI, Microsoft YaHei UI-Bold;
         font-weight: bold;
-      }
-      .swiper-left {
-        background: #9ef0ea;
-        border-radius: 18px;
-        padding: 34px 20px;
-        margin-right: 8px;
-
-        .select-route {
-          .season {
-            width: 81px;
-            height: 42px;
-            background: #0edabb;
-            text-align: center;
-            color: #fff;
-            font-size: 30px;
-            font-weight: bold;
-            font-style: italic;
-            border-radius: 4px;
-            margin-right: 12px;
-          }
+        .red-text {
+          color: #f08484;
         }
       }
-      .swiper-right {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        .right-top {
-          box-sizing: border-box;
-          background: #81dbeb;
-          border-radius: 18px;
-          padding: 34px 20px;
-          margin-bottom: 8px;
-          .now {
-            width: 81px;
-            height: 42px;
-            background: #03f0f8;
-            text-align: center;
-            color: #fff;
-            font-size: 30px;
-            font-weight: bold;
-            font-style: italic;
-            border-radius: 4px;
-            margin-right: 12px;
-          }
-        }
-        .right-bottom {
-          flex: 1;
-          box-sizing: border-box;
-          background: #81ebad;
-          border-radius: 18px;
-          padding: 34px 20px;
-          .local {
-            width: 81px;
-            height: 42px;
-            background: #03f892;
-            text-align: center;
-            color: #fff;
-            font-size: 30px;
-            font-weight: bold;
-            font-style: italic;
-            border-radius: 4px;
-            margin-right: 12px;
-          }
-        }
+      .order {
+        display: inline-block;
+        border: 1px solid #64d0c8;
+        border-radius: 50px;
+        font-size: 20px;
+        padding: 7px 20px;
+        color: #64d0c8;
+        margin-top: 15px;
       }
     }
-  }
-  .home-order {
-    padding: 22px 33px;
-    background: #fff;
-    border-radius: 18px;
-    margin: 24px 0;
-    .order-text {
-      font-size: 28px;
-      // font-family: Microsoft YaHei UI, Microsoft YaHei UI-Bold;
-      font-weight: bold;
-      .red-text {
-        color: #f08484;
-      }
-    }
-    .order {
-      display: inline-block;
-      border: 1px solid #64d0c8;
-      border-radius: 50px;
-      font-size: 20px;
-      padding: 7px 20px;
-      color: #64d0c8;
-      margin-top: 15px;
-    }
-  }
-  .product-list {
-    .list {
+    .product-list {
+      margin-top: 24px;
       .item {
         width: 48.5%;
         margin-bottom: 24px;

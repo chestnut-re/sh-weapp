@@ -11,7 +11,12 @@ import './index.less'
 const MsgScreen = (props) => {
   const { commonStore } = useStore()
 
-  return <View className='MsgScreen__root'>home</View>
+  return (
+    <View className='MsgScreen__root'>
+      <View></View>
+      <View></View>
+    </View>
+  )
 }
 
 export default observer(MsgScreen)

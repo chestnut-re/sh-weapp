@@ -1,9 +1,9 @@
-import Taro from '@tarojs/taro'
+import Taro, { usePageScroll, useReachBottom } from '@tarojs/taro'
 import { View, Text, Image } from '@tarojs/components'
 import { useStore } from '@/store/context'
-import { Button } from '@taroify/core'
-import { BullhornOutlined, SettingOutlined, Scan, Manager, InfoOutlined, Points } from '@taroify/icons'
+import { Button, Steps, List, Loading, PullRefresh } from '@taroify/core'
 import { observer } from 'mobx-react'
+import { useRef, useState } from 'react'
 import pic from '@/assets/img/common/shg.png'
 import lingdang from '@/assets/img/mine/lingdang.png'
 import saoyisao from '@/assets/img/mine/saoyisao.png'
@@ -22,23 +22,27 @@ import kefu from '@/assets/img/mine/kefu.png'
 import wpey from '@/assets/img/mine/wpey.png'
 import peying from '@/assets/img/mine/peying.png'
 import overpey from '@/assets/img/mine/overpey.png'
+import tuanzhang from '@/assets/img/mine/tuanzhang.png'
+import qiandao from '@/assets/img/mine/qiandao.png'
+import close from '@/assets/img/mine/close.png'
 import './index.less'
 
 const MineScreen = (props) => {
   const { commonStore } = useStore()
   console.log(commonStore)
+  const [hasMore, setHasMore] = useState(true)
+  const [list, setList] = useState<string[]>([])
+  const [loading, setLoading] = useState(false)
+  const refreshingRef = useRef(false)
+  const [scrollTop, setScrollTop] = useState(0)
+  const [reachTop, setReachTop] = useState(true)
 
   const toFist = () => {
     Taro.navigateBack()
   }
-  const toLogin = () => {
-    Taro.navigateTo({ url: '/pages/login/index' })
-  }
-
   const toMyOrder = () => {
     Taro.navigateTo({ url: '/pages/myOrder/index' })
   }
-
   const toMyToken = () => {
     Taro.navigateTo({ url: '/pages/myToken/index' })
   }
@@ -48,22 +52,47 @@ const MineScreen = (props) => {
   const toMyData = () => {
     Taro.navigateTo({ url: '/pages/myData/index' })
   }
-
   const toMyBrowse = () => {
     Taro.navigateTo({ url: '/pages/myBrowse/index' })
   }
   const toMyLiked = () => {
     Taro.navigateTo({ url: '/pages/myLiked/index' })
   }
-
+  const toUsual = () => {
+    Taro.navigateTo({ url: '/pages/usualMessage/index' })
+  }
   const toFollowStore = () => {
     Taro.navigateTo({ url: '/pages/followStore/index' })
+  }
+  usePageScroll(({ scrollTop: aScrollTop }) => {
+    setScrollTop(aScrollTop)
+    setReachTop(aScrollTop === 0)
+  })
+  const onLoad = () => {
+    setLoading(true)
+    const newList = refreshingRef.current ? [] : list
+    setTimeout(() => {
+      refreshingRef.current = false
+      for (let i = 0; i < 10; i++) {
+        const text = newList.length + 1
+        newList.push(text < 10 ? '0' + text : String(text))
+      }
+      setList(newList)
+      setLoading(false)
+      setHasMore(newList.length < 40)
+    }, 1000)
+  }
+
+  function onRefresh() {
+    refreshingRef.current = true
+    setLoading(false)
+    onLoad()
   }
   return (
     <View className='MineScreen__root'>
       <View className='Header__btn'>
         <View className='btn' onClick={toFist}>
-          <Image className='img' src={lingdang} />
+          <Image className='img1' src={lingdang} />
         </View>
         <View
           className='btn'
@@ -73,10 +102,10 @@ const MineScreen = (props) => {
             })
           }}
         >
-          <Image className='img' src={saoyisao} />
+          <Image className='img2' src={saoyisao} />
         </View>
         <View className='btn' onClick={toSetUp}>
-          <Image className='img' src={shezhi} />
+          <Image className='img3' src={shezhi} />
         </View>
       </View>
       <View className='user' onClick={toMyData}>
@@ -115,31 +144,7 @@ const MineScreen = (props) => {
           </View>
         </View>
       </View>
-      <View>
-        <View>
-          <View>
-            <View>乐享游玩中</View>
-            <View>我在三亚游玩分享此刻</View>
-          </View>
-          <View>三亚5日自由行(5钻)·直减300『高星4晚连住』</View>
-          <View>进度条</View>
-          <View>
-            <View>
-              <Image className='img' src={jifen} />
-              <View>团长</View>
-              <View>赵大白</View>
-            </View>
-            <View>需要帮助？</View>
-          </View>
-        </View>
-        <View>
-          <View>
-            <View></View>
-            <View></View>
-          </View>
-          <View></View>
-        </View>
-      </View>
+
       <View className='use-list'>
         <View className='item'>
           <Image className='img' src={map} />
@@ -157,7 +162,7 @@ const MineScreen = (props) => {
           <Image className='img' src={yhquan} />
           <View className='item-text'>优惠券</View>
         </View>
-        <View className='item'>
+        <View className='item' onClick={toUsual}>
           <Image className='img' src={cyxx} />
           <View className='item-text'>常用信息</View>
         </View>
@@ -168,6 +173,39 @@ const MineScreen = (props) => {
         <View className='item' onClick={toFollowStore}>
           <Image className='img' src={kefu} />
           <View className='item-text'>关注小店</View>
+        </View>
+      </View>
+      <View className='play-game'>
+        <View className='trip'>
+          <View className='header'>
+            <View className='happy'>乐享游玩中</View>
+            <View className='share'>我在三亚游玩分享此刻</View>
+          </View>
+          <View className='play-name'>三亚5日自由行(5钻)·直减300『高星4晚连住』</View>
+          <View className='step'>
+            <Steps className='custom-color' value={2} alternativeLabel>
+              <Steps.Step>第一天</Steps.Step>
+              <Steps.Step>第二天</Steps.Step>
+              <Steps.Step>第三天</Steps.Step>
+              <Steps.Step>第四天</Steps.Step>
+              <Steps.Step>第五天</Steps.Step>
+            </Steps>
+          </View>
+          <View className='commander'>
+            <View>
+              <Image className='img' src={tuanzhang} />
+              <Text className='call'>团长</Text>
+              <View className='name'>赵大白</View>
+            </View>
+            <View className='help'>需要帮助？</View>
+          </View>
+        </View>
+        <View className='date'>
+          <View>
+            <View className='time'>8:30集合</View>
+            <View className='place'>亚特兰蒂斯酒店大堂</View>
+          </View>
+          <Image className='img' src={qiandao} />
         </View>
       </View>
       <View className='my-order'>
@@ -192,6 +230,60 @@ const MineScreen = (props) => {
             <View>已完成</View>
           </View>
         </View>
+      </View>
+      <View className='join-team'>
+        <View className='close'>
+          <View>
+            <Text>我知道了</Text>
+            <Image className='img' src={close} />
+          </View>
+        </View>
+        <View className='join'>
+          <Image className='img' src={pic} />
+          <View>
+            <View className='ontext'>三亚5日自由行(5钻)·直减300『高星4晚连住...</View>
+            <View className='untext'>已成团，将于2021/10/22出发</View>
+          </View>
+        </View>
+      </View>
+      <View className='order-list'>
+        <List loading={loading} hasMore={hasMore} onLoad={onLoad}>
+          {list.map((item) => (
+            <View className='item' key={item}>
+              <View className='order-card'>
+                <View className='content'>
+                  <Image className='img' src={pic} />
+                  <View className='name'>
+                    三亚5日自由行(5钻)·直减300「高 星4晚连住...
+                    <View className='small-name'>
+                      <View>2021/10/22出发</View>
+                      <View>
+                        <Text>成人X2</Text> <Text>儿童X2</Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+                <View className='price'>
+                  <View className='discount'>已优惠¥200</View>
+                  <View>
+                    共计<Text className='money'>¥5798</Text>
+                  </View>
+                </View>
+                <View className='message'>
+                  <View className='message-one'>咨询</View>
+                  {/* <View className='message-one'>分享给TA</View> */}
+                  <View className='message-two'>去支付</View>
+                </View>
+              </View>
+            </View>
+          ))}
+          {!refreshingRef.current && (
+            <List.Placeholder>
+              {loading && <Loading>加载中...</Loading>}
+              {!hasMore && '没有更多了'}
+            </List.Placeholder>
+          )}
+        </List>
       </View>
     </View>
   )
