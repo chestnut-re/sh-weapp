@@ -278,7 +278,6 @@ const MineScreen = (props) => {
                 </View>
                 <View className='message'>
                   <View className='message-one'>咨询</View>
-                  {/* <View className='message-one'>分享给TA</View> */}
                   <View className='message-two'>去支付</View>
                 </View>
               </View>

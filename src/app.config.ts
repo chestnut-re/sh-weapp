@@ -5,6 +5,8 @@ export default {
     'pages/followStore/index',
     'pages/myBrowse/index',
     'pages/myLiked/index',
+    'pages/myBrowse/index',
+    'pages/followStore/index',
     'pages/usualMessage/index',
     'pages/traveler/index',
     'pages/myOrder/index',
