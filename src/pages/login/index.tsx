@@ -1,42 +1,57 @@
 import Taro from '@tarojs/taro'
-import { View, Text, H2 } from '@tarojs/components'
+import { View, Text } from '@tarojs/components'
 import { useStore } from '@/store/context'
-import { Button, Field} from '@taroify/core'
-import { useRef, useState } from 'react'
+import { Button, Field } from '@taroify/core'
+import { useEffect, useRef, useState } from 'react'
 import { observer } from 'mobx-react'
 
 import './index.less'
 
 const LoginPage = (props) => {
   const { commonStore } = useStore()
-  const [value, setValue] = useState("")
-  console.log(commonStore)
 
-  const toFist = () => {
-    Taro.navigateBack()
+  useEffect(() => {
+    Taro.login().then((res) => {
+      console.log(res)
+    })
+  }, [])
+
+  const getUserInfo = async () => {
+    let res = await Taro.getUserProfile({
+      desc: '用于完善会员资料',
+    })
+    console.log(res)
+    // const sessionKey = await get(SESSION_KEY)
+    // wx.decryptUserInfo(res.encryptedData, res.iv, sessionKey.data).then((res2) => {
+    // })
+    // gender 性别 0：未知、1：男、2：女
+    // this.userInfoWX = res.userInfo
+  }
+
+  const onGetPhoneNumberEventDetail = async (res) => {
+    console.log(res)
+    if (!res.detail.encryptedData) {
+      // 手机号授权失败, 推到第一步授权
+      return
+    }
+    // const sessionKey = await get(SESSION_KEY)
+    // const phoneRes = await wx.decryptUserInfo(res.detail.encryptedData, res.detail.iv, sessionKey.data)
+    // await save(PHONE_NUMBER, phoneRes.data.phoneNumber)
+    // 获取真实姓名
   }
 
   return (
     <View className='LoginPage__root'>
-        {/* <Button onClick={toFist}>Swiper Demo</Button> */}
-        <View className='FirText'>登陆后开启旅程</View>
-        <View className='SecText'>世界那样美好 待你游历细品</View>
-        <Field
-          value={value}
-          placeholder='请输入手机号码'
-          onChange={(e) => setValue(e.detail.value)}
-        />
-        <View>已阅读并同意 
-            <Text>用户协议</Text>、
-            <Text>隐私政策</Text>、
-            <Text>买家须知</Text>及<Text>联通统一认证服务条
-            </Text>
-        </View>
-        <Button color='primary' block>获取验证码</Button>
-        <View>
-            <Button  variant='text'>用密码登陆</Button>
-            <Button  variant='text'>收不到验证码？</Button>
-        </View>   
+      <Button color='primary' block>
+        获取验证码
+      </Button>
+      <Button className='btn' onClick={getUserInfo}>
+        <Text>授权用户信息</Text>
+      </Button>
+
+      <Button className='btn' lang='zh_CN' openType='getPhoneNumber' onGetPhoneNumber={onGetPhoneNumberEventDetail}>
+        授权手机号
+      </Button>
     </View>
   )
 }

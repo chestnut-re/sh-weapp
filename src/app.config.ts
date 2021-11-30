@@ -1,6 +1,7 @@
 export default {
   pages: [
     'pages/index/index',
+    'pages/login/index',
     'pages/followStore/index',
     'pages/myBrowse/index',
     'pages/myLiked/index',
@@ -17,7 +18,6 @@ export default {
     'pages/aboutUs/index',
     'pages/myToken/index',
     'pages/demo/index',
-    'pages/login/index',
     'pages/webview/index',
     ],
   window: {
