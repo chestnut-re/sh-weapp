@@ -1191,22 +1191,31 @@
   resolved "https://registry.yarnpkg.com/@stencil/core/-/core-2.9.0.tgz#cbac84b996475b8fc983931539ed1261174e2df3"
   integrity sha512-kY3xYolZoJO1MKslL0NQccHy72R3TIl1prHgfmIrEoGcnMgc6uiskdWaGMuI5/sCGz9T+QuTVz76B1H2ySyBZg==
 
-"@taroify/core@^0.0.17-alpha.4":
-  version "0.0.17-alpha.4"
-  resolved "https://registry.yarnpkg.com/@taroify/core/-/core-0.0.17-alpha.4.tgz#217324d7562502cf307b84988913a583c1dfd8eb"
-  integrity sha512-d1XYSF7/Tyvf3v9e6Uagf1LaP+d/UJymWvz/NYf5MqW0PpObRgOkTcSGuShmiF3wfhGiV+JhUMXvLnzoJ/SA2A==
+"@taroify/core@^0.0.19-alpha.0":
+  version "0.0.19-alpha.0"
+  resolved "https://registry.yarnpkg.com/@taroify/core/-/core-0.0.19-alpha.0.tgz#451405b619b03f74edfadac937743868c36d25fb"
+  integrity sha512-W1B7B96nIaXKF1+RVT0VMQjxz4zHMG8aK6CFuYfMc3yQ3qAkeQf314oW+/8pW6SgNEXaxYSjA4RhXtobipXSWw==
   dependencies:
-    "@taroify/icons" "^0.0.17-alpha.4"
+    "@taroify/hooks" "^0.0.19-alpha.0"
+    "@taroify/icons" "^0.0.19-alpha.0"
     classnames "^2.2.6"
     lodash "^4.17.21"
     raf "^3.4.1"
     react-is "^17.0.2"
     react-transition-group "^4.4.1"
 
-"@taroify/icons@^0.0.17-alpha.4":
-  version "0.0.17-alpha.4"
-  resolved "https://registry.yarnpkg.com/@taroify/icons/-/icons-0.0.17-alpha.4.tgz#4ff56240cac906ab2e253d553f412fadf73e4261"
-  integrity sha512-s1Y6jNvQU3YbgUNLpy21DrU0S4Kas8xK4gWGIMQ98x+Vg/eEArr5vX6zFZX0GZbMfVBdkdL6QTK5x+ZZmAvWfQ==
+"@taroify/hooks@^0.0.19-alpha.0":
+  version "0.0.19-alpha.0"
+  resolved "https://registry.yarnpkg.com/@taroify/hooks/-/hooks-0.0.19-alpha.0.tgz#5f4bab81b2216549eff6e5f543d80fc8e6b047ff"
+  integrity sha512-Naxxcuiw1CmzAk3Uaa0R8SpUakHhqUqpUeVT/0pn/15zddJ0q9ZVCMys/RMCPlyE69itoCa4TnZBxwmCRxzKsA==
+  dependencies:
+    lodash "^4.17.21"
+    react "^17.0.2"
+
+"@taroify/icons@^0.0.19-alpha.0":
+  version "0.0.19-alpha.0"
+  resolved "https://registry.yarnpkg.com/@taroify/icons/-/icons-0.0.19-alpha.0.tgz#34f8118a935b76dab68753024dea44405e4c4b74"
+  integrity sha512-naXXDzNfz9SCL0u0AGRWN1mAHvoKdeQ+piCq3LlZMErL9VMPiREFYeFAHwVIinCyKDWw5XM3UzKp01eMcHNwWA==
   dependencies:
     classnames "^2.2.6"
 
@@ -8321,7 +8330,7 @@ react-transition-group@^4.4.1:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react@^17.0.0:
+react@^17.0.0, react@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
   integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
