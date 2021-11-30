@@ -61,8 +61,12 @@ const MyBrowsePage = (props) => {
               <View className='item' key={item}>
                 <View className='date'>2021/11/03</View>
                 <View className='card'>
-                  <Image className='jump' src={pic} />
-                  <View className='right-all'>
+                  <View>
+                    {item % 2 ? <View className='no-jump'>已下架</View> : null}
+                    <Image className='jump' src={pic} />
+                  </View>
+
+                  <View className={item % 2 ? 'no-right-all' : 'right-all'}>
                     <View className='text'>三亚5日自由行(5钻)·直减300『高星4…</View>
                     <View className='money'>¥2899</View>
                   </View>

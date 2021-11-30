@@ -7,6 +7,7 @@ import { observer } from 'mobx-react'
 
 import './index.less'
 import pic from '@/assets/img/common/shg.png'
+import success from '@/assets/img/yjfk/success.png'
 /**
  * 意见反馈
  */
@@ -19,7 +20,12 @@ const FeedBackPage = (props) => {
     Taro.navigateBack()
   }
   const toMyData = () => {
-    Taro.navigateTo({ url: '/pages/myData/index' })
+    Taro.showToast({
+      image: success,
+      title: '感谢您的反馈',
+      duration: 2000,
+    })
+    // Taro.navigateTo({ url: '/pages/myData/index' })
   }
   const getWords = (e) => {
     let value = e.detail.value
