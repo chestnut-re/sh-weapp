@@ -1,0 +1,22 @@
+import { h5Domain } from './c'
+
+/// h5 协议地址
+export class H5 {
+  /// 隐私协议
+  static privacy = `${h5Domain}/protocol/privac`
+
+  /// 服务协议
+  static service = `${h5Domain}/protocol/service`
+
+  /// 参考行程
+  static referenceRouter = `${h5Domain}/travel/route`
+
+  /// 团小店
+  static abulkShop = `${h5Domain}/abulkshop`
+
+  /// 订单详情页
+  static orderDetail = `${h5Domain}/order/detail`
+
+  /// H5 测试页面
+  static testPage = `${h5Domain}/test/page`
+}

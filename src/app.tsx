@@ -1,10 +1,10 @@
 import Taro from '@tarojs/taro'
-import { Component } from 'react'
+import { Component, useEffect } from 'react'
 import { Provider, userStore } from './store/context'
 
 import './app.less'
 
-Taro.addInterceptor(Taro.interceptors.logInterceptor);
+Taro.addInterceptor(Taro.interceptors.logInterceptor)
 
 // /**
 //  * 检查登入状态
@@ -27,10 +27,8 @@ Taro.addInterceptor(Taro.interceptors.logInterceptor);
 // }
 // Taro.addInterceptor(loginStateCheck)
 
-class App extends Component {
-  render() {
-    return <Provider>{this.props.children}</Provider>
-  }
+const App = ({ children }) => {
+  return <Provider>{children}</Provider>
 }
 
 export default App

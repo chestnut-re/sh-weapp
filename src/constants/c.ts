@@ -1,12 +1,17 @@
 /**
  * BASE_URL
  */
-export const BASE_URL = 'https://ck.hydzlkj.com:8089'
+export const BASE_URL = 'http://192.168.10.59:19001'
 
 /**
- * SESSION_KEY
+ * H5 url 地址
  */
+export const h5Domain = 'http://123.56.248.148'
+
+/**SESSION_KEY */
 export const SESSION_KEY = 'SESSION_KEY'
+/** 用户 token */
+export const ACCESS_TOKEN = 'ACCESS_TOKEN'
 
 /**
  * OPEN_ID

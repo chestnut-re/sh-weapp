@@ -1,7 +1,7 @@
 export default {
   pages: [
-    'pages/index/index',
     'pages/login/index',
+    'pages/index/index',
     'pages/myBrowse/index',
     'pages/myLiked/index',
     'pages/usualMessage/index',

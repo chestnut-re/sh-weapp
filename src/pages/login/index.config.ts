@@ -1,3 +1,3 @@
 export default {
-    navigationBarTitleText: '注册/登陆'
-  }
+  navigationBarTitleText: '登录',
+}
