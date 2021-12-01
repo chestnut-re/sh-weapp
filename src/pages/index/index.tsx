@@ -19,14 +19,14 @@ const IndexPage = (props) => {
 
   const onTabClick = (newIndex: number) => {
     setIndex(newIndex)
-    setScrollTop(0.1)
-    console.log(scrollTop)
+    // setScrollTop(0.1)
+    // console.log(scrollTop)
   }
 
   return (
     <View className='IndexPage__root'>
       <ScrollView scrollY scrollWithAnimation scrollTop={scrollTop}>
-        <Swiper className='swiper' touchable={false} ref={swiper} duration={0} activeIndex={index}>
+        <Swiper className='swiper' touchable={false} ref={swiper} duration={0} value={index}>
           <Swiper.Item>
             <HomeScreen />
           </Swiper.Item>
