@@ -20,6 +20,7 @@ const MyBrowsePage = (props) => {
   usePageScroll(({ scrollTop: aScrollTop }) => {
     setScrollTop(aScrollTop)
     setReachTop(aScrollTop === 0)
+    console.log('333')
   })
 
   const onLoad = () => {

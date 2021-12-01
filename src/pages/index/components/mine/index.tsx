@@ -29,7 +29,7 @@ import './index.less'
 
 const MineScreen = (props) => {
   const { commonStore } = useStore()
-  console.log(commonStore)
+  // console.log(commonStore)
   const [hasMore, setHasMore] = useState(true)
   const [list, setList] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
@@ -80,13 +80,13 @@ const MineScreen = (props) => {
     const newList = refreshingRef.current ? [] : list
     setTimeout(() => {
       refreshingRef.current = false
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 20; i++) {
         const text = newList.length + 1
-        newList.push(text < 10 ? '0' + text : String(text))
+        newList.push(text < 1 ? '0' + text : String(text))
       }
       setList(newList)
       setLoading(false)
-      setHasMore(newList.length < 40)
+      setHasMore(newList.length < 21)
     }, 1000)
   }
 
@@ -254,7 +254,23 @@ const MineScreen = (props) => {
         </View>
       </View>
       <View className='order-list'>
-        <List loading={loading} hasMore={hasMore} onLoad={onLoad}>
+        <List
+          loading={loading}
+          hasMore={hasMore}
+          scrollTop={scrollTop}
+          onLoad={() => {
+            setLoading(true)
+            setTimeout(() => {
+              for (let i = 0; i < 10; i++) {
+                const text = list.length + 1
+                list.push(text < 10 ? '0' + text : String(text))
+              }
+              setList([...list])
+              setHasMore(list.length < 40)
+              setLoading(false)
+            }, 1000)
+          }}
+        >
           {list.map((item) => (
             <View className='item' key={item}>
               <View className='order-card'>
@@ -283,12 +299,6 @@ const MineScreen = (props) => {
               </View>
             </View>
           ))}
-          {!refreshingRef.current && (
-            <List.Placeholder>
-              {loading && <Loading>加载中...</Loading>}
-              {!hasMore && '没有更多了'}
-            </List.Placeholder>
-          )}
         </List>
       </View>
     </View>

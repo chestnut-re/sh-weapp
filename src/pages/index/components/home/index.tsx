@@ -45,13 +45,13 @@ const HomeScreen = (props) => {
     const newList = refreshingRef.current ? [] : list
     setTimeout(() => {
       refreshingRef.current = false
-      for (let i = 0; i < 1; i++) {
+      for (let i = 0; i < 20; i++) {
         const text = newList.length + 1
         newList.push(text < 1 ? '0' + text : String(text))
       }
       setList(newList)
       setLoading(false)
-      setHasMore(newList.length < 10)
+      setHasMore(newList.length < 21)
     }, 500)
   }
 
@@ -62,93 +62,88 @@ const HomeScreen = (props) => {
   }
   return (
     <View className='HomeScreen__root'>
-      <PullRefresh className='list' loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
-        <View className='home-header'>
-          <View className='now-place'>
-            <Text className='text'>{value}</Text>
-            <Image className='place' src={place} />
-          </View>
-          <View className='search-input'>
-            <Image className='search' src={search} />
-            <Input type='text' placeholder='养殖基地直发海参' />
-          </View>
+      {/* <PullRefresh loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}> */}
+      <View className='home-header'>
+        <View className='now-place'>
+          <Text className='text'>{value}</Text>
+          <Image className='place' src={place} />
         </View>
-        <View className='home-body'>
-          <View className='route'>大连路线站字符</View>
-          <View className='swiper'>
-            <View className='swiper-left'>
+        <View className='search-input'>
+          <Image className='search' src={search} />
+          <Input type='text' placeholder='养殖基地直发海参' />
+        </View>
+      </View>
+      <View className='home-body'>
+        <View className='route'>大连路线站字符</View>
+        <View className='swiper'>
+          <View className='swiper-left'>
+            <View className='select-route'>
+              <View className='season'>当季</View>
+              <View className='route-name'>甄选路线</View>
+            </View>
+            <View className='route-text'>丽江 + 大理 + 香格里拉</View>
+            <View className='route-text'>双飞6日</View>
+          </View>
+          <View className='swiper-right'>
+            <View className='right-top'>
               <View className='select-route'>
-                <View className='season'>当季</View>
-                <View className='route-name'>甄选路线</View>
+                <View className='now'>即刻</View>
+                <View className='route-name'>就走游周边</View>
               </View>
-              <View className='route-text'>丽江 + 大理 + 香格里拉</View>
-              <View className='route-text'>双飞6日</View>
+              <View className='route-text'>古水北镇2日1晚 赏红叶</View>
             </View>
-            <View className='swiper-right'>
-              <View className='right-top'>
-                <View className='select-route'>
-                  <View className='now'>即刻</View>
-                  <View className='route-name'>就走游周边</View>
-                </View>
-                <View className='route-text'>古水北镇2日1晚 赏红叶</View>
+            <View className='right-bottom'>
+              <View className='select-route'>
+                <View className='local'>当地</View>
+                <View className='route-name'>吃喝玩乐</View>
               </View>
-              <View className='right-bottom'>
-                <View className='select-route'>
-                  <View className='local'>当地</View>
-                  <View className='route-name'>吃喝玩乐</View>
-                </View>
-                <View className='route-text'>古水北镇2日1晚 赏红叶</View>
-              </View>
+              <View className='route-text'>古水北镇2日1晚 赏红叶</View>
             </View>
           </View>
         </View>
-        {/* <View className='home-order'>
+      </View>
+      {/* <View className='home-order'>
           <View className='order-text'>
             优惠 <Text className='red-text'>「福利」</Text>路线！
           </View>
           <View className='order'>立即下单</View>
         </View> */}
-        <View className='product-list'>
-          <List loading={loading} hasMore={hasMore} onLoad={onLoad}>
-            {list.map((item) => (
-              <View className='item' key={item}>
-                <View className='card'>
-                  <View className='big-img'>
-                    <Image className='big' src={pic} />
-                    <View className='label'>
-                      <Image className='black' src={black} />
-                      <Text className='label-pic'>三亚</Text>
-                      <Text className='text'>自由行</Text>
-                    </View>
+      <View className='product-list'>
+        <List loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}>
+          {list.map((item) => (
+            <View className='item' key={item}>
+              <View className='card'>
+                <View className='big-img'>
+                  <Image className='big' src={pic} />
+                  <View className='label'>
+                    <Image className='black' src={black} />
+                    <Text className='label-pic'>三亚</Text>
+                    <Text className='text'>自由行</Text>
                   </View>
-                  <View className='content'>
-                    <View className='text'>三亚5日跟团游「星4晚连 住」</View>
-                    <View className='money'>¥ 2899</View>
-                    <View className='consume'>
-                      <Text>3456人已付款</Text>
-                      <View>
-                        <Image className='is-like' src={noLike} />
-                        2356
-                      </View>
+                </View>
+                <View className='content'>
+                  <View className='text'>三亚5日跟团游「星4晚连 住」</View>
+                  <View className='money'>¥ 2899</View>
+                  <View className='consume'>
+                    <Text>3456人已付款</Text>
+                    <View>
+                      <Image className='is-like' src={noLike} />
+                      2356
                     </View>
                   </View>
                 </View>
               </View>
-            ))}
-          </List>
-        </View>
-        <Button onClick={toDemoPage}>跳转到 Demo1</Button>
-        <Button onClick={toWebViewPage}>跳转到 WebView</Button>
-        <Button
-          onClick={() => {
-            Taro.scanCode({}).then((res) => {
-              console.log(res)
-            })
-          }}
-        >
-          扫码
-        </Button>
-      </PullRefresh>
+            </View>
+          ))}
+          {!refreshingRef.current && (
+            <List.Placeholder>
+              {loading && <Loading>加载中...</Loading>}
+              {!hasMore && '没有更多了'}
+            </List.Placeholder>
+          )}
+        </List>
+      </View>
+      {/* </PullRefresh> */}
     </View>
   )
 }

@@ -22,12 +22,6 @@ const MyLikedPage = (props) => {
   const [scrollTop, setScrollTop] = useState(0)
   const [reachTop, setReachTop] = useState(true)
 
-  const toFist = () => {
-    Taro.navigateBack()
-  }
-  const toAboutUs = () => {
-    Taro.navigateTo({ url: '/pages/aboutUs/index' })
-  }
   usePageScroll(({ scrollTop: aScrollTop }) => {
     setScrollTop(aScrollTop)
     setReachTop(aScrollTop === 0)
@@ -37,14 +31,14 @@ const MyLikedPage = (props) => {
     const newList = refreshingRef.current ? [] : list
     setTimeout(() => {
       refreshingRef.current = false
-      for (let i = 0; i < 1; i++) {
+      for (let i = 0; i < 20; i++) {
         const text = newList.length + 1
         newList.push(text < 1 ? '0' + text : String(text))
       }
       setList(newList)
       setLoading(false)
-      setHasMore(newList.length < 10)
-    }, 500)
+      setHasMore(newList.length < 21)
+    }, 1000)
   }
 
   function onRefresh() {
@@ -56,7 +50,7 @@ const MyLikedPage = (props) => {
     <View className='MyLikedPage__root'>
       <View className='liked-list'>
         <PullRefresh className='list' loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
-          <List loading={loading} hasMore={hasMore} onLoad={onLoad}>
+          <List loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}>
             {list.map((item) => (
               <View className='item' key={item}>
                 <View className='date'>2021/11/03</View>
