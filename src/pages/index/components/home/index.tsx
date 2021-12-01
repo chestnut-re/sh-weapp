@@ -38,6 +38,7 @@ const HomeScreen = (props) => {
   usePageScroll(({ scrollTop: aScrollTop }) => {
     setScrollTop(aScrollTop)
     setReachTop(aScrollTop === 0)
+    console.log(reachTop)
   })
   const onLoad = () => {
     setLoading(true)
@@ -69,7 +70,7 @@ const HomeScreen = (props) => {
           </View>
           <View className='search-input'>
             <Image className='search' src={search} />
-            <Input type='text' placeholder='养殖基地直发海参' focus />
+            <Input type='text' placeholder='养殖基地直发海参' />
           </View>
         </View>
         <View className='home-body'>

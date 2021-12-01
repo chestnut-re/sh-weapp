@@ -2,8 +2,6 @@ export default {
   pages: [
     'pages/index/index',
     'pages/login/index',
-    'pages/followStore/index',
-    'pages/myBrowse/index',
     'pages/myLiked/index',
     'pages/myBrowse/index',
     'pages/followStore/index',

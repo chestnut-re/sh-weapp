@@ -6,7 +6,7 @@ import { useRef, useState } from 'react'
 import { observer } from 'mobx-react'
 
 import './index.less'
-import pic from '@/assets/img/common/shg.png'
+import camera from '@/assets/img/yjfk/croma.png'
 import success from '@/assets/img/yjfk/success.png'
 /**
  * 意见反馈
@@ -51,7 +51,7 @@ const FeedBackPage = (props) => {
         <Textarea className='text' placeholder='来告诉我们你的想法吧' onInput={getWords} maxlength={400} autoFocus />
         <View className='text-num'>{noteNowLen} / 400</View>
         <View className='upload' onClick={upLoad}>
-          <Image className='img' src={pic} />
+          <Image className='img' src={camera} />
           <View className='img-text'>上传图片</View>
         </View>
       </View>
