@@ -1,7 +1,8 @@
 export default {
   pages: [
-    'pages/login/index',
     'pages/index/index',
+    'pages/aboutUs/index',
+    'pages/login/index',
     'pages/setUp/index',
     'pages/setPassword/index',
     'pages/myBrowse/index',
@@ -14,9 +15,9 @@ export default {
     'pages/setAutograph/index',
     'pages/setName/index',
     'pages/myData/index',
-    'pages/aboutUs/index',
     'pages/myToken/index',
     'pages/demo/index',
+    'pages/followStore/index',
     'pages/webview/index',
     ],
   window: {

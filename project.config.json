@@ -4,7 +4,7 @@
     "description": "sh travel miniapp",
     "appid": "wx99c32486e840e570",
     "setting": {
-        "urlCheck": true,
+        "urlCheck": false,
         "es6": false,
         "enhance": true,
         "postcss": false,

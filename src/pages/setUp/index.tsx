@@ -2,10 +2,10 @@ import Taro from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { useStore } from '@/store/context'
 import { Button, Image, Dialog } from '@taroify/core'
-import { Arrow } from '@taroify/icons'
 import { observer } from 'mobx-react'
 import { useRef, useState } from 'react'
 import pic from '@/assets/img/common/shg.png'
+import jump from '@/assets/img/yjfk/jump.png'
 
 import './index.less'
 
@@ -51,7 +51,7 @@ const SetUpPage = (props) => {
         <View className='password-right'>
           去设置
           <View className='password-left'>
-            <Arrow />
+            <Image className='jump' src={jump}></Image>
           </View>
         </View>
       </View>
@@ -61,7 +61,7 @@ const SetUpPage = (props) => {
           <View className='content-right'>
             来告诉我们你的想法吧
             <View className='content-left'>
-              <Arrow />
+              <Image className='jump' src={jump}></Image>
             </View>
           </View>
         </View>
@@ -71,7 +71,7 @@ const SetUpPage = (props) => {
           <View className='content-right'>
             {value}
             <View className='content-left'>
-              <Arrow />
+              <Image className='jump' src={jump}></Image>
             </View>
           </View>
         </View>
@@ -80,7 +80,7 @@ const SetUpPage = (props) => {
           <View className='content-left'>关于我们</View>
           <View className='content-right'>
             <View className='content-left'>
-              <Arrow />
+              <Image className='jump' src={jump}></Image>
             </View>
           </View>
         </View>

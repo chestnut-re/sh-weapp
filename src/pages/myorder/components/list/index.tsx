@@ -6,7 +6,7 @@ import { Button, Field, Tabs, List, Loading, Cell, PullRefresh } from '@taroify/
 import { useRef, useState } from 'react'
 import { observer } from 'mobx-react'
 import pic from '@/assets/img/common/shg.png'
-
+import { H5 } from '@/constants/h5'
 import './index.less'
 /**
  * 我的订单
@@ -25,6 +25,9 @@ const OrderListPage = (props) => {
     setScrollTop(aScrollTop)
     setReachTop(aScrollTop === 0)
   })
+  const toOrderDetail = () => {
+    Taro.navigateTo({ url: `/pages/webview/index?url=${H5.orderDetail}` })
+  }
   const onLoad = () => {
     setLoading(true)
     const newList = refreshingRef.current ? [] : list
@@ -50,7 +53,7 @@ const OrderListPage = (props) => {
       <PullRefresh className='list' loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
         <List loading={loading} hasMore={hasMore} onLoad={onLoad}>
           {list.map((item) => (
-            <View className='item' key={item}>
+            <View className='item' key={item} onClick={toOrderDetail}>
               <View className='card'>
                 <View className='state'>待确认1</View>
                 <View className='content'>

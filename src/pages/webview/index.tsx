@@ -14,6 +14,7 @@ const WebViewPage = (props) => {
 
   useEffect(() => {
     setInitUrl(Taro.getCurrentInstance()?.router?.params?.url ?? '')
+    // setInitUrl('http://123.56.248.148/protocol/service')
   }, [])
 
   const handleMessage = (event: any) => {

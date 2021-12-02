@@ -13,6 +13,7 @@ const LoginPage = (props) => {
   const { userStore } = useStore()
 
   const onGetPhoneNumberEventDetail = async (res) => {
+    console.log(res)
     const result = await WXService.bindMobile(res.detail.encryptedData, res.detail.iv, userStore.sessionKey)
     // await save(PHONE_NUMBER, phoneRes.data.phoneNumber)
     // 获取真实姓名

@@ -10,6 +10,7 @@ import { observer } from 'mobx-react'
 
 import './index.less'
 import pic from '@/assets/img/common/shg.png'
+import { H5 } from '@/constants/h5'
 /**
  * 我的浏览
  */
@@ -23,11 +24,8 @@ const MyBrowsePage = (props) => {
   const [reachTop, setReachTop] = useState(true)
   const [follow, setFollow] = useState(false)
 
-  const toFist = () => {
-    Taro.navigateBack()
-  }
-  const toAboutUs = () => {
-    Taro.navigateTo({ url: '/pages/aboutUs/index' })
+  const toAbulkshop = () => {
+    Taro.navigateTo({ url: `/pages/webview/index?url=${H5.abulkShop}` })
   }
   usePageScroll(({ scrollTop: aScrollTop }) => {
     setScrollTop(aScrollTop)
@@ -75,7 +73,7 @@ const MyBrowsePage = (props) => {
                       {follow ? '已关注' : '关注'}
                     </View>
                   </View>
-                  <View className='top-all'>
+                  <View className='top-all' onClick={toAbulkshop}>
                     <Image className='header' src={pic} />
                     <View className='text'>
                       <View className='store-name'>五星团长 张三</View>

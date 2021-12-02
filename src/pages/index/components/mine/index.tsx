@@ -26,6 +26,7 @@ import tuanzhang from '@/assets/img/mine/tuanzhang.png'
 import qiandao from '@/assets/img/mine/qiandao.png'
 import close from '@/assets/img/mine/close.png'
 import './index.less'
+import { H5 } from '@/constants/h5'
 
 const MineScreen = (props) => {
   const { commonStore } = useStore()
@@ -70,6 +71,9 @@ const MineScreen = (props) => {
   }
   const toFollowStore = () => {
     Taro.navigateTo({ url: '/pages/followStore/index' })
+  }
+  const toReferenceRouter = () => {
+    Taro.navigateTo({ url: `/pages/webview/index?url=${H5.referenceRouter}` })
   }
   usePageScroll(({ scrollTop: aScrollTop }) => {
     setScrollTop(aScrollTop)
@@ -182,7 +186,7 @@ const MineScreen = (props) => {
           <View className='item-text'>关注小店</View>
         </View>
       </View>
-      <View className='play-game'>
+      <View className='play-game' onClick={toReferenceRouter}>
         <View className='trip'>
           <View className='header'>
             <View className='happy'>乐享游玩中</View>
