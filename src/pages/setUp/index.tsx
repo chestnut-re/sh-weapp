@@ -1,9 +1,10 @@
 import Taro from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { useStore } from '@/store/context'
-import { Button, Image } from '@taroify/core'
+import { Button, Image, Dialog } from '@taroify/core'
 import { Arrow } from '@taroify/icons'
 import { observer } from 'mobx-react'
+import { useRef, useState } from 'react'
 import pic from '@/assets/img/common/shg.png'
 
 import './index.less'
@@ -14,7 +15,8 @@ import './index.less'
 const SetUpPage = (props) => {
   const { commonStore } = useStore()
   console.log(commonStore)
-
+  const [open, setOpen] = useState(false)
+  const [value, setValue] = useState('20.32Mb')
   const toFist = () => {
     Taro.navigateBack()
   }
@@ -29,6 +31,10 @@ const SetUpPage = (props) => {
   }
   const toFeedBack = () => {
     Taro.navigateTo({ url: '/pages/feedBack/index' })
+  }
+  const clear = () => {
+    setValue('')
+    setOpen(false)
   }
   return (
     <View className='SetUpPage__root'>
@@ -60,9 +66,10 @@ const SetUpPage = (props) => {
           </View>
         </View>
         <View className='divide' />
-        <View className='content'>
+        <View className='content' onClick={() => setOpen(true)}>
           <View className='content-left'>清除缓存</View>
           <View className='content-right'>
+            {value}
             <View className='content-left'>
               <Arrow />
             </View>
@@ -83,6 +90,13 @@ const SetUpPage = (props) => {
       </Button>
       {/* <Button onClick={toLogin}>Go to Login</Button> */}
       {/* <Button color='primary'>主要按钮</Button> */}
+      <Dialog className='dialog' open={open} onClose={setOpen}>
+        <Dialog.Content>将清除{value}缓存数据</Dialog.Content>
+        <Dialog.Actions theme='round'>
+          <Button onClick={() => setOpen(false)}>取消</Button>
+          <Button onClick={clear}>确认</Button>
+        </Dialog.Actions>
+      </Dialog>
     </View>
   )
 }
