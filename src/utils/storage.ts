@@ -8,7 +8,7 @@ import Taro from '@tarojs/taro'
  * @param {string} key
  * @param {string} data
  */
-export const save = async (key, data) => {
+export const save = async (key: string, data: any) => {
   await Taro.setStorage({
     key: key,
     data: data,
@@ -18,9 +18,8 @@ export const save = async (key, data) => {
 /**
  * 获取存储数据
  * @param {string} key
- * @param {string} data
  */
-export const get = async (key) => {
+export const get = async (key: string) => {
   return await Taro.getStorage({
     key: key,
   })
@@ -29,9 +28,8 @@ export const get = async (key) => {
 /**
  * 删除存储数据
  * @param {string} key
- * @param {string} data
  */
-export const remove = async (key) => {
+export const remove = async (key: string) => {
   return await Taro.removeStorage({
     key: key,
   })

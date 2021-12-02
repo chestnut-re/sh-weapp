@@ -1,7 +1,7 @@
 export default {
   pages: [
-    'pages/login/index',
     'pages/index/index',
+    'pages/login/index',
     'pages/setUp/index',
     'pages/setPassword/index',
     'pages/myBrowse/index',

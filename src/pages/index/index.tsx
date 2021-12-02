@@ -13,9 +13,7 @@ const IndexPage = (props) => {
   const [index, setIndex] = useState(0)
   const [scrollTop, setScrollTop] = useState(0)
 
-  useEffect(() => {
-    userStore.init()
-  }, [])
+  useEffect(() => {}, [])
 
   const onTabClick = (newIndex: number) => {
     setIndex(newIndex)

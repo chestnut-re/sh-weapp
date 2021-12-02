@@ -6,5 +6,5 @@
  * 1
  */
 export function now() {
-  return new Date().now
+  return Date.now()
 }
