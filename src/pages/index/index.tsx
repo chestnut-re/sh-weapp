@@ -33,7 +33,7 @@ const IndexPage = (props) => {
       <View style={index == 2 ? { display: 'block ' } : { display: 'none' }}>
         <MineScreen />
       </View>
-      <TabBar onClick={onTabClick} />
+      <TabBar onClick={onTabClick} value={index} />
     </View>
   )
 }

@@ -10,51 +10,50 @@ import './index.less'
 
 interface Props {
   onClick: (number) => void
+  value: number
 }
 
 /**
  * TabBar
  */
-const TabBar: React.FC<Props> = ({ onClick }) => {
-  const [activeIndex, setActiveIndex] = useState(0)
+const TabBar: React.FC<Props> = ({ onClick, value }) => {
   const _itemClick = (index: number) => {
     onClick(index)
-    setActiveIndex(index)
   }
 
   return (
     <View className='TabBar__root__wrap'>
       <View className='TabBar__root'>
         <View
-          className={['tab', activeIndex === 0 ? 'active' : null].join(' ')}
+          className={['tab', value === 0 ? 'active' : null].join(' ')}
           onClick={() => {
             _itemClick(0)
           }}
         >
           <View>
-            <Image className='img' src={activeIndex === 0 ? homeSelected : home} />
+            <Image className='img' src={value === 0 ? homeSelected : home} />
           </View>
           <View className='text'>首页</View>
         </View>
         <View
-          className={['tab', activeIndex === 1 ? 'active' : null].join(' ')}
+          className={['tab', value === 1 ? 'active' : null].join(' ')}
           onClick={() => {
             _itemClick(1)
           }}
         >
           <View>
-            <Image className='img' src={activeIndex === 1 ? messageSelected : message} />
+            <Image className='img' src={value === 1 ? messageSelected : message} />
           </View>
           <View className='text'>消息</View>
         </View>
         <View
-          className={['tab', activeIndex === 2 ? 'active' : null].join(' ')}
+          className={['tab', value === 2 ? 'active' : null].join(' ')}
           onClick={() => {
             _itemClick(2)
           }}
         >
           <View>
-            <Image className='img' src={activeIndex === 2 ? mineSelected : mine} />
+            <Image className='img' src={value === 2 ? mineSelected : mine} />
           </View>
           <View className='text'>我的</View>
         </View>
