@@ -1,13 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { View, Text, Image } from '@tarojs/components'
-import './index.less'
-// import { ChatOutlined, WapHome, GoodsCollect, Manager } from '@taroify/icons'
+import React, { useState } from 'react'
+import { View, Image } from '@tarojs/components'
 import home from '@/assets/img/home/home.png'
 import homeSelected from '@/assets/img/home/home-selected.png'
 import message from '@/assets/img/home/message.png'
 import messageSelected from '@/assets/img/home/message-selected.png'
 import mine from '@/assets/img/home/mine.png'
 import mineSelected from '@/assets/img/home/mine-selected.png'
+import './index.less'
 
 interface Props {
   onClick: (number) => void
@@ -21,7 +20,6 @@ const TabBar: React.FC<Props> = ({ onClick }) => {
   const _itemClick = (index: number) => {
     onClick(index)
     setActiveIndex(index)
-    console.log(activeIndex)
   }
 
   return (
