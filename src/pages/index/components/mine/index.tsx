@@ -46,13 +46,6 @@ const MineScreen = (props) => {
   }
   const toMyToken = () => {
     Taro.navigateTo({ url: '/pages/myToken/index' })
-
-    // const loginRes = await Taro.login()
-    // console.log(loginRes);
-    // // const netLoginRes = await wx.wxLogin(loginRes.code)
-    // // await save(SESSION_KEY, netLoginRes.data.session_key)
-    // // await save(OPEN_ID, netLoginRes.data.openid)
-    // // this.props.store.userStore.setOpenId(netLoginRes.data.openid)
   }
   const toSetUp = () => {
     Taro.navigateTo({ url: '/pages/setUp/index' })

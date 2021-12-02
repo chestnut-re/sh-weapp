@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN, SESSION_KEY } from '@/constants/c'
+import { ACCESS_TOKEN, REFRESH_TOKEN, SESSION_KEY } from '@/constants/c'
 import { WXService } from '@/service/wx'
 import { save } from '@/utils/storage'
 import Taro, { showToast } from '@tarojs/taro'
@@ -14,7 +14,7 @@ class UserData {
   userInfo = null
   openId = null
   /**isBindMobile: 是否已经绑定手机号，0未绑定，1已绑定 */
-  isBindMobile = null
+  _isBindMobile = null
   sessionKey = null
   /** user token */
   accessToken = null
@@ -24,9 +24,9 @@ class UserData {
   constructor() {
     makeObservable(this, {
       userInfo: observable,
+      init: action,
       login: action,
       loginOut: action,
-      init: action,
     })
     this.init()
   }
@@ -34,26 +34,10 @@ class UserData {
   /// 初始化
   init() {
     console.log('wx user init')
-    Taro.login().then((wxRes) => {
-      console.log(wxRes)
-      WXService.getOpenId(wxRes.code).then((res) => {
-        console.log(res)
-        // if(res.data.code == 200){
-        // }else{
-        // }
-
-        this.accessToken = res.data.data.accessToken
-        this.refreshToken = res.data.data.refreshToken
-
-        this.openId = res.data.data.userDetails.openId
-        this.isBindMobile = res.data.data.userDetails.isBindMobile
-        this.sessionKey = res.data.data.userDetails.sessionKey
-        save(SESSION_KEY, this.sessionKey!)
-        save(ACCESS_TOKEN, this.accessToken!)
-      })
-    })
+    this.login()
   }
 
+  /**登录 */
   login() {
     Taro.login().then((wxRes) => {
       console.log(wxRes)
@@ -62,15 +46,15 @@ class UserData {
         // if(res.data.code == 200){
         // }else{
         // }
-
         this.accessToken = res.data.data.accessToken
         this.refreshToken = res.data.data.refreshToken
 
         this.openId = res.data.data.userDetails.openId
-        this.isBindMobile = res.data.data.userDetails.isBindMobile
+        this._isBindMobile = res.data.data.userDetails.isBindMobile
         this.sessionKey = res.data.data.userDetails.sessionKey
-
-        console.log('login:', this.accessToken)
+        save(SESSION_KEY, this.sessionKey!)
+        save(ACCESS_TOKEN, this.accessToken!)
+        save(REFRESH_TOKEN, this.refreshToken!)
       })
     })
   }
@@ -80,6 +64,11 @@ class UserData {
   /**是否已经登录 */
   get isLogin() {
     return this.accessToken!!
+  }
+
+  /**true: 表示已经绑定 */
+  get isBindMobile() {
+    return this._isBindMobile === 1
   }
 }
 

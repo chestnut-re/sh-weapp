@@ -1,8 +1,8 @@
 export default {
   pages: [
     'pages/index/index',
-    'pages/aboutUs/index',
     'pages/login/index',
+    'pages/aboutUs/index',
     'pages/setUp/index',
     'pages/setPassword/index',
     'pages/myBrowse/index',

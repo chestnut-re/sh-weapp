@@ -1,3 +1,4 @@
+import Taro from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { useStore } from '@/store/context'
 import { observer } from 'mobx-react'
@@ -11,16 +12,14 @@ import './index.less'
 const IndexPage = (props) => {
   const { userStore } = useStore()
   const [index, setIndex] = useState(0)
-  const [scrollTop, setScrollTop] = useState(0)
-
-  useEffect(() => {
-    userStore.init()
-  }, [])
 
   const onTabClick = (newIndex: number) => {
+    if ((newIndex == 1 || newIndex == 2) && !userStore.isBindMobile) {
+      // 未登录
+      Taro.navigateTo({ url: '/pages/login/index' })
+      return
+    }
     setIndex(newIndex)
-    // setScrollTop(0.1)
-    // console.log(scrollTop)
   }
 
   return (
@@ -34,7 +33,7 @@ const IndexPage = (props) => {
       <View style={index == 2 ? { display: 'block ' } : { display: 'none' }}>
         <MineScreen />
       </View>
-      <TabBar onClick={onTabClick} />
+      <TabBar onClick={onTabClick} value={index} />
     </View>
   )
 }
