@@ -1,5 +1,9 @@
 export default {
   pages: [
+    'pages/location/index',
+    'pages/search/index',
+    'pages/verification/index',
+    'pages/password/index',
     'pages/index/index',
     'pages/login/index',
     'pages/aboutUs/index',

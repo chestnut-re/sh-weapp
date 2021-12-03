@@ -60,15 +60,21 @@ const HomeScreen = (props) => {
     setLoading(false)
     onLoad()
   }
+  const toSearch = () => {
+    Taro.navigateTo({ url: '/pages/search/index' })
+  }
+  const toLocation = () => {
+    Taro.navigateTo({ url: '/pages/location/index' })
+  }
   return (
     <View className='HomeScreen__root'>
       {/* <PullRefresh loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}> */}
       <View className='home-header'>
-        <View className='now-place'>
+        <View className='now-place' onClick={toLocation}>
           <Text className='text'>{value}</Text>
           <Image className='place' src={place} />
         </View>
-        <View className='search-input'>
+        <View className='search-input' onClick={toSearch}>
           <Image className='search' src={search} />
           <Input type='text' placeholder='养殖基地直发海参' />
         </View>

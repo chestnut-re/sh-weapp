@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: '设置密码'
+  navigationBarTitleText: '修改密码'
 }

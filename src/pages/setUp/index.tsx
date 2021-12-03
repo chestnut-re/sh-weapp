@@ -27,7 +27,7 @@ const SetUpPage = (props) => {
     Taro.navigateTo({ url: '/pages/myData/index' })
   }
   const toSetPassword = () => {
-    Taro.navigateTo({ url: '/pages/setPassword/index' })
+    Taro.navigateTo({ url: '/pages/password/index' })
   }
   const toFeedBack = () => {
     Taro.navigateTo({ url: '/pages/feedBack/index' })
