@@ -16,7 +16,7 @@ import back from '@/assets/img/yjfk/back.png'
 import lose from '@/assets/img/yjfk/lose.png'
 import del from '@/assets/img/password/del.png'
 /**
- * 首页
+ * 搜索
  */
 const SearchPage = (props) => {
   const { commonStore } = useStore()

@@ -1,14 +1,14 @@
 export default {
   pages: [
+    'pages/index/index',
+    'pages/setUp/index',
+    'pages/setPassword/index',
+    'pages/password/index',
     'pages/location/index',
     'pages/search/index',
     'pages/verification/index',
-    'pages/password/index',
-    'pages/index/index',
     'pages/login/index',
     'pages/aboutUs/index',
-    'pages/setUp/index',
-    'pages/setPassword/index',
     'pages/myBrowse/index',
     'pages/myLiked/index',
     'pages/usualMessage/index',
