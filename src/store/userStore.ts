@@ -1,7 +1,7 @@
 import { ACCESS_TOKEN, REFRESH_TOKEN, SESSION_KEY } from '@/constants/c'
 import { WXService } from '@/service/wx'
-import { save } from '@/utils/storage'
-import Taro, { showToast } from '@tarojs/taro'
+import { clearStorage, save } from '@/utils/storage'
+import Taro from '@tarojs/taro'
 import { makeObservable, observable, action } from 'mobx'
 
 /**
@@ -59,14 +59,21 @@ class UserData {
     })
   }
 
-  loginOut() {}
-
-  /**是否已经登录 */
-  get isLogin() {
-    return this.accessToken!!
+  /**退出登录 */
+  loginOut() {
+    this.accessToken = null
+    this.refreshToken = null
+    this.openId = null
+    this._isBindMobile = null
+    this.sessionKey = null
+    clearStorage()
+    // 回到首页
+    Taro.reLaunch({
+      url: '/pages/index/index',
+    })
   }
 
-  /**true: 表示已经绑定 */
+  /**true: 表示已经绑定，用这个判断是否已经登录 */
   get isBindMobile() {
     return this._isBindMobile === 1
   }

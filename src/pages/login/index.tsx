@@ -5,6 +5,7 @@ import { Button } from '@taroify/core'
 import { observer } from 'mobx-react'
 import pic from '@/assets/img/common/shg.png'
 import './index.less'
+import Taro, { showToast } from '@tarojs/taro'
 
 /**
  * 登录页
@@ -15,8 +16,12 @@ const LoginPage = (props) => {
   const onGetPhoneNumberEventDetail = async (res) => {
     console.log(res)
     const result = await WXService.bindMobile(res.detail.encryptedData, res.detail.iv, userStore.sessionKey)
-    // await save(PHONE_NUMBER, phoneRes.data.phoneNumber)
-    // 获取真实姓名
+    if (result.data.code == 200) {
+      // 成功
+      Taro.reLaunch({ url: '/pages/index/index' })
+    } else {
+      showToast(result.data.msg ?? '登录失败')
+    }
   }
 
   return (
