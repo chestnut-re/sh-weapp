@@ -17,6 +17,7 @@ const LoginPage = (props) => {
     showLoading()
     const result = await WXService.bindMobile(res.detail.encryptedData, res.detail.iv, userStore.sessionKey)
     hideLoading()
+    console.log(result.data.code);
     if (result.data.code == 200) {
       // 成功
       Taro.reLaunch({ url: '/pages/index/index' })

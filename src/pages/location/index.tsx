@@ -1,12 +1,3 @@
-import Taro from '@tarojs/taro'
-import { usePageScroll, useReachBottom } from '@tarojs/taro' // Taro 专有 Hooks
-import { View, Text, Button, Image, Input, ScrollView } from '@tarojs/components'
-import { List, Loading, PullRefresh, Sticky } from '@taroify/core'
-import { useStore } from '@/store/context'
-import { observer } from 'mobx-react'
-import { useEffect, useRef, useState } from 'react'
-import './index.less'
-// import storage from '@/utils/storage'
 import place from '@/assets/img/home/vdizhi@2x.png'
 import search from '@/assets/img/yjfk/seachtwo.png'
 import pic from '@/assets/img/common/shg.png'
@@ -17,6 +8,14 @@ import back from '@/assets/img/yjfk/back.png'
 import lose from '@/assets/img/yjfk/lose.png'
 import location from '@/assets/img/yjfk/location.png'
 import del from '@/assets/img/password/del.png'
+import Taro, { usePageScroll, useReachBottom } from '@tarojs/taro' // Taro 专有 Hooks
+import { View, Text, Button, Image, Input, ScrollView } from '@tarojs/components'
+import { List, Loading, PullRefresh, Sticky } from '@taroify/core'
+import { useStore } from '@/store/context'
+import { observer } from 'mobx-react'
+import { useEffect, useRef, useState } from 'react'
+import './index.less'
+// import storage from '@/utils/storage'
 
 /**
  * 定位
