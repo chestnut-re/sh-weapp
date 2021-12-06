@@ -1,12 +1,12 @@
 export default {
   pages: [
     'pages/index/index',
+    'pages/verification/index',
     'pages/setUp/index',
     'pages/setPassword/index',
     'pages/password/index',
     'pages/location/index',
     'pages/search/index',
-    'pages/verification/index',
     'pages/login/index',
     'pages/aboutUs/index',
     'pages/myBrowse/index',

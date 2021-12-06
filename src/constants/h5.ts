@@ -11,7 +11,10 @@ export class H5 {
   /// 参考行程
   static referenceRouter = `${h5Domain}/travel/route`
 
-  /// 团小店
+  /// 我的行程
+  static myTravel = `${h5Domain}/myTravel`
+ 
+ /// 团小店
   static abulkShop = `${h5Domain}/abulkshop`
 
   /// 订单详情页

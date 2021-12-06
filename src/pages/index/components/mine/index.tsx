@@ -68,6 +68,9 @@ const MineScreen = (props) => {
   const toReferenceRouter = () => {
     Taro.navigateTo({ url: `/pages/webview/index?url=${H5.referenceRouter}` })
   }
+  const toMyTravel = () => {
+    Taro.navigateTo({ url: `/pages/webview/index?url=${H5.myTravel}` })
+  }
   usePageScroll(({ scrollTop: aScrollTop }) => {
     setScrollTop(aScrollTop)
     setReachTop(aScrollTop === 0)
@@ -177,6 +180,10 @@ const MineScreen = (props) => {
         <View className='item' onClick={toFollowStore}>
           <Image className='img' src={kefu} />
           <View className='item-text'>关注小店</View>
+        </View>
+        <View className='item' onClick={toMyTravel}>
+          <Image className='img' src={kefu} />
+          <View className='item-text'>我的行程</View>
         </View>
       </View>
       <View className='play-game' onClick={toReferenceRouter}>

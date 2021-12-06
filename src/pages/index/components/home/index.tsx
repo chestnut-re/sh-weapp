@@ -12,6 +12,7 @@ import pic from '@/assets/img/common/shg.png'
 import black from '@/assets/img/home/black.png'
 import noLike from '@/assets/img/home/no-like.png'
 import liked from '@/assets/img/home/liked.png'
+import { H5 } from '@/constants/h5'
 /**
  * 首页
  */
@@ -66,6 +67,9 @@ const HomeScreen = (props) => {
   const toLocation = () => {
     Taro.navigateTo({ url: '/pages/location/index' })
   }
+  // const toMyTravel = () => {
+  //   Taro.navigateTo({ url: `/pages/webview/index?url=${H5.myTravel}` })
+  // }
   return (
     <View className='HomeScreen__root'>
       {/* <PullRefresh loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}> */}
