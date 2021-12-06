@@ -1,3 +1,4 @@
+import Taro, { hideLoading, showLoading, showToast } from '@tarojs/taro'
 import { View, Image } from '@tarojs/components'
 import { WXService } from '@/service/wx'
 import { useStore } from '@/store/context'
@@ -5,7 +6,6 @@ import { Button } from '@taroify/core'
 import { observer } from 'mobx-react'
 import pic from '@/assets/img/common/shg.png'
 import './index.less'
-import Taro, { showToast } from '@tarojs/taro'
 
 /**
  * 登录页
@@ -14,13 +14,13 @@ const LoginPage = (props) => {
   const { userStore } = useStore()
 
   const onGetPhoneNumberEventDetail = async (res) => {
-    console.log(userStore.sessionKey)
-    console.log(res.detail.encryptedData)
-    console.log(res.detail.iv)
+    showLoading()
     const result = await WXService.bindMobile(res.detail.encryptedData, res.detail.iv, userStore.sessionKey)
+    hideLoading()
     if (result.data.code == 200) {
       // 成功
       Taro.reLaunch({ url: '/pages/index/index' })
+      userStore.init()
     } else {
       showToast(result.data.msg ?? '登录失败')
     }
