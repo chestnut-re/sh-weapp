@@ -25,6 +25,8 @@ import overpey from '@/assets/img/mine/overpey.png'
 import tuanzhang from '@/assets/img/mine/tuanzhang.png'
 import qiandao from '@/assets/img/mine/qiandao.png'
 import close from '@/assets/img/mine/close.png'
+import db from '@/assets/img/mine/db.png'
+import store from '@/assets/img/mine/store.png'
 import './index.less'
 import { H5 } from '@/constants/h5'
 
@@ -129,10 +131,10 @@ const MineScreen = (props) => {
           <Image className='img' src={tishi} />
         </View>
         <View className='token'>
-          <View className='Token__Img'>
-            <Image className='img' src={jifen} />
-          </View>
           <Text className='Token__Num'>2800</Text>
+          <View className='Token__Img'>
+            <Image className='img' src={db} />
+          </View>
         </View>
       </View>
       <View className='card'>
@@ -178,7 +180,7 @@ const MineScreen = (props) => {
           <View className='item-text'>专属客服</View>
         </View>
         <View className='item' onClick={toFollowStore}>
-          <Image className='img' src={kefu} />
+          <Image className='img' src={store} />
           <View className='item-text'>关注小店</View>
         </View>
         <View className='item' onClick={toMyTravel}>
