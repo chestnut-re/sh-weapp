@@ -26,7 +26,7 @@ const OrderListPage = (props) => {
     setReachTop(aScrollTop === 0)
   })
   const toOrderDetail = () => {
-    Taro.navigateTo({ url: `/pages/webview/index?url=${H5.orderDetail}` })
+    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(H5.orderDetail)}` })
   }
   const onLoad = () => {
     setLoading(true)

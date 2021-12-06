@@ -18,7 +18,7 @@ export class H5 {
   static abulkShop = `${h5Domain}/abulkshop`
 
   /// 订单详情页
-  static orderDetail = `${h5Domain}/order/detail`
+  static orderDetail = `${h5Domain}/orderdetail?type=1`
 
   /// H5 测试页面
   static testPage = `${h5Domain}/test/page`

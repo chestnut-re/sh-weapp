@@ -1,6 +1,8 @@
 export default {
   pages: [
     'pages/index/index',
+    'pages/myBrowse/index',
+    'pages/myOrder/index',
     'pages/verification/index',
     'pages/setUp/index',
     'pages/setPassword/index',
@@ -9,11 +11,9 @@ export default {
     'pages/search/index',
     'pages/login/index',
     'pages/aboutUs/index',
-    'pages/myBrowse/index',
     'pages/myLiked/index',
     'pages/usualMessage/index',
     'pages/traveler/index',
-    'pages/myOrder/index',
     'pages/feedBack/index',
     'pages/setSex/index',
     'pages/setAutograph/index',

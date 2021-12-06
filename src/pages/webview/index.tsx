@@ -13,7 +13,7 @@ const WebViewPage = (props) => {
   const [initUrl, setInitUrl] = useState('')
 
   useEffect(() => {
-    setInitUrl(Taro.getCurrentInstance()?.router?.params?.url ?? '')
+    setInitUrl(decodeURIComponent(Taro.getCurrentInstance()?.router?.params?.url ?? ''))
     // setInitUrl('http://123.56.248.148/protocol/service')
   }, [])
 
