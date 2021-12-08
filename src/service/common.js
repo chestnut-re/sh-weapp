@@ -1,7 +1,8 @@
 import Taro from '@tarojs/taro'
 import { userStore } from '@/store/context'
-import { BASE_URL } from '../constants/c'
 import { getHeader } from '@/utils/request'
+import { BASE_URL } from '../constants/c'
+
 
 export default {
   getUser() {

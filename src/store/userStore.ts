@@ -1,7 +1,7 @@
 import { ACCESS_TOKEN, REFRESH_TOKEN, SESSION_KEY } from '@/constants/c'
 import { WXService } from '@/service/wx'
 import { clearStorage, save } from '@/utils/storage'
-import Taro from '@tarojs/taro'
+import Taro, { showToast } from '@tarojs/taro'
 import { makeObservable, observable, action } from 'mobx'
 
 /**
@@ -37,26 +37,33 @@ class UserData {
     this.login()
   }
 
-  /**登录 */
-  login() {
-    Taro.login().then((wxRes) => {
-      console.log(wxRes)
-      WXService.getOpenId(wxRes.code).then((res) => {
-        console.log(res)
-        // if(res.data.code == 200){
-        // }else{
-        // }
-        this.accessToken = res.data.data.accessToken
-        this.refreshToken = res.data.data.refreshToken
+  async loginIfNeed() {
+    if (!this.accessToken) {
+      // 需要登录
+      await this.login()
+    }
+  }
 
-        this.openId = res.data.data.userDetails.openId
-        this._isBindMobile = res.data.data.userDetails.isBindMobile
-        this.sessionKey = res.data.data.userDetails.sessionKey
-        save(SESSION_KEY, this.sessionKey!)
-        save(ACCESS_TOKEN, this.accessToken!)
-        save(REFRESH_TOKEN, this.refreshToken!)
-      })
-    })
+  /**登录 */
+  async login() {
+    const wxRes = await Taro.login()
+    console.log(wxRes)
+    const openIdRes = await WXService.getOpenId(wxRes.code)
+
+    console.log('res', openIdRes)
+    if (openIdRes.data.code == 200) {
+      this.accessToken = openIdRes.data.data.accessToken
+      this.refreshToken = openIdRes.data.data.refreshToken
+
+      this.openId = openIdRes.data.data.userDetails.openId
+      this._isBindMobile = openIdRes.data.data.userDetails.isBindMobile
+      this.sessionKey = openIdRes.data.data.userDetails.sessionKey
+      save(SESSION_KEY, this.sessionKey!)
+      save(ACCESS_TOKEN, this.accessToken!)
+      save(REFRESH_TOKEN, this.refreshToken!)
+    } else {
+      showToast(openIdRes.data.msg)
+    }
   }
 
   /**退出登录 */
