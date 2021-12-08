@@ -4,7 +4,8 @@
 // export const BASE_URL = 'http://192.168.10.59:19001'
 
 /**测试服务器 */
-export const BASE_URL = 'http://47.94.45.53:39010'
+// export const BASE_URL = 'http://47.94.45.53:39010'
+export const BASE_URL = 'https://testapi.mountainseas.cn/'
 
 
 /**
