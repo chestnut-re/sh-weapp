@@ -1,2 +1,52 @@
-.tokenpage {
+.MyTokenPage__root {
+  background-image: url(../../assets/img/token/back.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding: 50px 24px;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 28px 30px;
+    View:first-child {
+      Text {
+        font-size: 58px;
+        font-weight: 500;
+        color: #333;
+        line-height: 84px;
+        padding-right: 19px;
+      }
+      .img {
+        width: 44px;
+        height: 44px;
+      }
+    }
+    View:last-child {
+      font-size: 28px;
+      display: inline-table;
+      font-weight: 500;
+      color: #4dcfc5;
+      background: #fff;
+      border-radius: 50px;
+      padding: 8px 62px;
+    }
+  }
+  .card {
+    background-image: url(../../assets/img/token/card.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    margin: 0 28px;
+    padding: 62px 50px 106px 52px;
+    View:first-child {
+      font-size: 36px;
+      font-weight: 500;
+      color: #fff;
+      padding-bottom: 16px;
+    }
+    View:last-child {
+      font-size: 24px;
+      font-weight: 400;
+      color: #fff;
+    }
+  }
 }

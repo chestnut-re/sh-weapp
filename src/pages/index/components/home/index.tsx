@@ -17,7 +17,7 @@ import { H5 } from '@/constants/h5'
  * 首页
  */
 const HomeScreen = (props) => {
-  const { commonStore } = useStore()
+  const { userStore } = useStore()
   const [value, setValue] = useState('北京')
   const [hasMore, setHasMore] = useState(true)
   const [list, setList] = useState<string[]>([])
@@ -70,6 +70,13 @@ const HomeScreen = (props) => {
   // const toMyTravel = () => {
   //   Taro.navigateTo({ url: `/pages/webview/index?url=${H5.myTravel}` })
   // }
+  const anOrder = () => {
+    if (!userStore.isBindMobile) {
+      // 未登录
+      Taro.navigateTo({ url: '/pages/login/index' })
+      return
+    }
+  }
   return (
     <View className='HomeScreen__root'>
       {/* <PullRefresh loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}> */}
@@ -121,7 +128,7 @@ const HomeScreen = (props) => {
       <View className='product-list'>
         <List loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}>
           {list.map((item) => (
-            <View className='item' key={item}>
+            <View className='item' key={item} onClick={anOrder}>
               <View className='card'>
                 <View className='big-img'>
                   <Image className='big' src={pic} />

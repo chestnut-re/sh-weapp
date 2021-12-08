@@ -1,5 +1,6 @@
 export default {
   pages: [
+    'pages/myToken/index',
     'pages/index/index',
     'pages/myBrowse/index',
     'pages/myOrder/index',
@@ -19,7 +20,6 @@ export default {
     'pages/setAutograph/index',
     'pages/setName/index',
     'pages/myData/index',
-    'pages/myToken/index',
     'pages/demo/index',
     'pages/followStore/index',
     'pages/webview/index',
