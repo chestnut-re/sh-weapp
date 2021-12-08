@@ -13,12 +13,13 @@ import './index.less'
  * 设置页
  */
 const SetUpPage = (props) => {
-  const { commonStore } = useStore()
-  console.log(commonStore)
+  const { userStore } = useStore()
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState('20.32Mb')
-  const toFist = () => {
-    Taro.navigateBack()
+
+  /**退出登录并回到首页 */
+  const _logout = () => {
+    userStore.loginOut()
   }
   const toAboutUs = () => {
     Taro.navigateTo({ url: '/pages/aboutUs/index' })
@@ -85,7 +86,7 @@ const SetUpPage = (props) => {
           </View>
         </View>
       </View>
-      <Button className='btn' onClick={toFist}>
+      <Button className='btn' onClick={_logout}>
         退出当前账号
       </Button>
       {/* <Button onClick={toLogin}>Go to Login</Button> */}
