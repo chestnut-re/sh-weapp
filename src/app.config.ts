@@ -1,7 +1,7 @@
 export default {
   pages: [
-    'pages/myToken/index',
     'pages/index/index',
+    'pages/myToken/index',
     'pages/myBrowse/index',
     'pages/myOrder/index',
     'pages/verification/index',
