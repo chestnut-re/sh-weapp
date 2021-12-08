@@ -42,7 +42,7 @@ class UserData {
     Taro.login().then((wxRes) => {
       console.log(wxRes)
       WXService.getOpenId(wxRes.code).then((res) => {
-        console.log(res)
+        console.log('res', res)
         // if(res.data.code == 200){
         // }else{
         // }
