@@ -1,4 +1,5 @@
 import Taro, { hideLoading, showLoading, showToast } from '@tarojs/taro'
+import { useEffect } from 'react'
 import { View, Image } from '@tarojs/components'
 import { WXService } from '@/service/wx'
 import { useStore } from '@/store/context'
@@ -13,11 +14,18 @@ import './index.less'
 const LoginPage = (props) => {
   const { userStore } = useStore()
 
+  useEffect(() => {
+    showLoading()
+    userStore.loginIfNeed().then(() => {
+      hideLoading()
+    })
+  }, [])
+
   const onGetPhoneNumberEventDetail = async (res) => {
     showLoading()
     const result = await WXService.bindMobile(res.detail.encryptedData, res.detail.iv, userStore.sessionKey)
     hideLoading()
-    console.log(result.data.code);
+    console.log(result.data.code)
     if (result.data.code == 200) {
       // 成功
       Taro.reLaunch({ url: '/pages/index/index' })
