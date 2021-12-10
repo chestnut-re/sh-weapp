@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro'
 import { usePageScroll, useReachBottom } from '@tarojs/taro' // Taro 专有 Hooks
 import { View, Text, Button, Image, Input } from '@tarojs/components'
-import { List, Loading, PullRefresh } from '@taroify/core'
+import { List, Loading, PullRefresh, Swiper } from '@taroify/core'
 import { useStore } from '@/store/context'
 import { observer } from 'mobx-react'
 import { useEffect, useRef, useState } from 'react'
@@ -13,6 +13,7 @@ import black from '@/assets/img/home/black.png'
 import noLike from '@/assets/img/home/no-like.png'
 import liked from '@/assets/img/home/liked.png'
 import { H5 } from '@/constants/h5'
+import { HomeService } from '@/service/home'
 /**
  * 首页
  */
@@ -25,6 +26,7 @@ const HomeScreen = (props) => {
   const refreshingRef = useRef(false)
   const [scrollTop, setScrollTop] = useState(0)
   const [reachTop, setReachTop] = useState(true)
+  const [num, setNum] = useState(0)
 
   useEffect(() => {}, [])
 
@@ -75,10 +77,34 @@ const HomeScreen = (props) => {
       // 未登录
       Taro.navigateTo({ url: '/pages/login/index' })
       return
+    } else {
+      Taro.navigateTo({ url: `/pages/webview/index?url=${H5.goodsDetail}` })
     }
+  }
+  //获取banner
+  const getBanner = async () => {
+    const result = await HomeService.getBanner()
+    console.log(result)
+  }
+  //getGoods
+  const getGoods = async () => {
+    const result = await HomeService.getGoods('', '', '', '', '', '')
+    console.log(result)
+  }
+  //getActivity
+  const getActivity = async () => {
+    const result = await HomeService.getActivity()
+    console.log(result)
   }
   return (
     <View className='HomeScreen__root'>
+      <Swiper className='top-s' autoplay={1000} onChange={setNum}>
+        <Swiper.Item className='item'>1</Swiper.Item>
+        <Swiper.Item className='item'>2</Swiper.Item>
+        <Swiper.Item className='item'>3</Swiper.Item>
+        <Swiper.Item className='item'>4</Swiper.Item>
+        <Swiper.Indicator className='custom-indicator'>{num + 1}/4</Swiper.Indicator>
+      </Swiper>
       {/* <PullRefresh loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}> */}
       <View className='home-header'>
         <View className='now-place' onClick={toLocation}>
@@ -91,30 +117,37 @@ const HomeScreen = (props) => {
         </View>
       </View>
       <View className='home-body'>
-        <View className='route'>大连路线站字符</View>
+        <View className='route' onClick={getBanner}>
+          大连路线站字符
+          {/* <View onClick={getGoods}>商品列表</View> */}
+          {/* <View onClick={getActivity}>活动列表</View> */}
+        </View>
         <View className='swiper'>
           <View className='swiper-left'>
-            <View className='select-route'>
+            <Image className='first' src='https://s1.ax1x.com/2021/12/10/o5jW9S.png' />
+            {/* <View className='select-route'>
               <View className='season'>当季</View>
               <View className='route-name'>甄选路线</View>
             </View>
             <View className='route-text'>丽江 + 大理 + 香格里拉</View>
-            <View className='route-text'>双飞6日</View>
+            <View className='route-text'>双飞6日</View> */}
           </View>
           <View className='swiper-right'>
             <View className='right-top'>
-              <View className='select-route'>
+              <Image className='second' src='https://s1.ax1x.com/2021/12/10/o5WvXF.png' />
+              {/* <View className='select-route'>
                 <View className='now'>即刻</View>
                 <View className='route-name'>就走游周边</View>
               </View>
-              <View className='route-text'>古水北镇2日1晚 赏红叶</View>
+              <View className='route-text'>古水北镇2日1晚 赏红叶</View> */}
             </View>
             <View className='right-bottom'>
-              <View className='select-route'>
+              <Image className='third' src='https://s1.ax1x.com/2021/12/10/o5vEge.png' />
+              {/* <View className='select-route'>
                 <View className='local'>当地</View>
                 <View className='route-name'>吃喝玩乐</View>
               </View>
-              <View className='route-text'>古水北镇2日1晚 赏红叶</View>
+              <View className='route-text'>古水北镇2日1晚 赏红叶</View> */}
             </View>
           </View>
         </View>
@@ -131,7 +164,15 @@ const HomeScreen = (props) => {
             <View className='item' key={item} onClick={anOrder}>
               <View className='card'>
                 <View className='big-img'>
-                  <Image className='big' src={pic} />
+                  {/* <Image className='big' src={pic} /> */}
+                  <Image
+                    className='big'
+                    src={
+                      Number(item) % 2
+                        ? 'https://s1.ax1x.com/2021/12/09/ohR9jH.jpg'
+                        : 'https://s1.ax1x.com/2021/12/09/ohRPud.jpg'
+                    }
+                  />
                   <View className='label'>
                     <Image className='black' src={black} />
                     <Text className='label-pic'>三亚</Text>

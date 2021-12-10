@@ -2,6 +2,7 @@ export default {
   pages: [
     'pages/index/index',
     'pages/myToken/index',
+    'pages/login/index',
     'pages/myBrowse/index',
     'pages/myOrder/index',
     'pages/verification/index',
@@ -10,7 +11,6 @@ export default {
     'pages/password/index',
     'pages/location/index',
     'pages/search/index',
-    'pages/login/index',
     'pages/aboutUs/index',
     'pages/myLiked/index',
     'pages/usualMessage/index',

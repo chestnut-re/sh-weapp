@@ -47,7 +47,7 @@ const MineScreen = (props) => {
     Taro.navigateTo({ url: '/pages/myOrder/index' })
   }
   const toMyToken = () => {
-    Taro.navigateTo({ url: '/pages/myToken/index' })
+    Taro.navigateTo({ url: `/pages/webview/index?url=${H5.myToken}` })
   }
   const toSetUp = () => {
     Taro.navigateTo({ url: '/pages/setUp/index' })

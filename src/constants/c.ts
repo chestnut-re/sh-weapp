@@ -11,7 +11,8 @@ export const BASE_URL = 'https://testapi.mountainseas.cn'
 /**
  * H5 url 地址
  */
-export const h5Domain = 'http://123.56.248.148'
+// export const h5Domain = 'http://123.56.248.148'
+export const h5Domain = 'https://travel.mountainseas.cn'
 
 /**SESSION_KEY */
 export const SESSION_KEY = 'SESSION_KEY'

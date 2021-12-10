@@ -12,8 +12,14 @@ export class H5 {
   static referenceRouter = `${h5Domain}/travel/route`
 
   /// 我的行程
-  static myTravel = `${h5Domain}/myTravel`
- 
+  static myTravel = `${h5Domain}/my-travel`
+
+  /// 我的代币
+  static myToken = `${h5Domain}/my-token`
+
+  /// 商品详情
+  static goodsDetail = `${h5Domain}/goods-detail`
+
  /// 团小店
   static abulkShop = `${h5Domain}/abulkshop`
 
