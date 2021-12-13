@@ -9,7 +9,7 @@ import lingdang from '@/assets/img/mine/lingdang.png'
 import saoyisao from '@/assets/img/mine/saoyisao.png'
 import shezhi from '@/assets/img/mine/shezhi.png'
 import myPhoto from '@/assets/img/mine/myphoto.png'
-import jifen from '@/assets/img/mine/jifen.png'
+import jump from '@/assets/img/yjfk/jump.png'
 import tishi from '@/assets/img/mine/tishi.png'
 import liulan from '@/assets/img/mine/liulan.png'
 import good from '@/assets/img/mine/good.png'
@@ -28,6 +28,7 @@ import close from '@/assets/img/mine/close.png'
 import db from '@/assets/img/mine/coin.png'
 import store from '@/assets/img/mine/store.png'
 import './index.less'
+// eslint-disable-next-line import/first
 import { H5 } from '@/constants/h5'
 
 const MineScreen = (props) => {
@@ -132,9 +133,9 @@ const MineScreen = (props) => {
         </View>
         <View className='token'>
           <Text className='Token__Num'>2800</Text>
-          <View className='Token__Img'>
-            <Image className='img' src={db} />
-          </View>
+          {/* <View className='Token__Img'> */}
+          <Image className='img' src={db} />
+          {/* </View> */}
         </View>
       </View>
       <View className='card'>
@@ -155,22 +156,6 @@ const MineScreen = (props) => {
       </View>
 
       <View className='use-list'>
-        <View className='item'>
-          <Image className='img' src={map} />
-          <View className='item-text'>游记地图</View>
-        </View>
-        <View className='item'>
-          <Image className='img' src={join} />
-          <View className='item-text'>邀请好友</View>
-        </View>
-        <View className='item'>
-          <Image className='img' src={renzheng} />
-          <View className='item-text'>学生认证</View>
-        </View>
-        <View className='item'>
-          <Image className='img' src={yhquan} />
-          <View className='item-text'>优惠券</View>
-        </View>
         <View className='item' onClick={toUsual}>
           <Image className='img' src={cyxx} />
           <View className='item-text'>常用信息</View>
@@ -183,9 +168,59 @@ const MineScreen = (props) => {
           <Image className='img' src={store} />
           <View className='item-text'>关注小店</View>
         </View>
-        <View className='item' onClick={toMyTravel}>
-          <Image className='img' src={kefu} />
-          <View className='item-text'>我的行程</View>
+        <View className='item'>
+          <Image className='img' src={join} />
+          <View className='item-text'>邀请好友</View>
+        </View>
+        {/* <View className='item'>
+          <Image className='img' src={renzheng} />
+          <View className='item-text'>学生认证</View>
+        </View>
+        <View className='item'>
+          <Image className='img' src={yhquan} />
+          <View className='item-text'>优惠券</View>
+        </View>
+        <View className='item'>
+          <Image className='img' src={map} />
+          <View className='item-text'>游记地图</View>
+        </View> */}
+      </View>
+      <View className='travel' onClick={toMyTravel}>
+        <View className='travel-title'>
+          <View className='my'>我的行程</View>
+          <View className='all'>
+            全部行程 <Image className='img' src={jump} />
+          </View>
+        </View>
+        <View className='travel-text'>
+          <Image className='img' src={pic} />
+          <View className='trip'>
+            <View className='one'>三亚5日自由行(5钻)·直减300『高星4…</View>
+            <View className='two'>本次行程已开始，祝您旅途愉快</View>
+          </View>
+        </View>
+      </View>
+      <View className='my-order'>
+        <View className='order-tab'>
+          <View className='tab'>我的订单</View>
+          <View className='all-order' onClick={toMyOrder}>
+            全部订单
+            <Image className='img' src={jump} />
+          </View>
+        </View>
+        <View className='order-type'>
+          <View onClick={toMyOrder}>
+            <Image src={wpey} />
+            <View>待付款</View>
+          </View>
+          <View className='sec' onClick={toMyOrder}>
+            <Image src={peying} />
+            <View>进行中</View>
+          </View>
+          <View onClick={toMyOrder}>
+            <Image src={overpey} />
+            <View>已完成</View>
+          </View>
         </View>
       </View>
       <View className='play-game' onClick={toReferenceRouter}>
@@ -221,29 +256,7 @@ const MineScreen = (props) => {
           <Image className='img' src={qiandao} />
         </View>
       </View>
-      <View className='my-order'>
-        <View className='order-tab'>
-          <View className='tab'>我的订单</View>
-          <View className='all-order' onClick={toMyOrder}>
-            全部订单
-            <Image className='img' src={tishi} />
-          </View>
-        </View>
-        <View className='order-list'>
-          <View onClick={toMyOrder}>
-            <Image src={wpey} />
-            <View>待支付</View>
-          </View>
-          <View className='sec' onClick={toMyOrder}>
-            <Image src={peying} />
-            <View>进行中</View>
-          </View>
-          <View onClick={toMyOrder}>
-            <Image src={overpey} />
-            <View>已完成</View>
-          </View>
-        </View>
-      </View>
+
       <View className='join-team'>
         <View className='close'>
           <View>

@@ -56,23 +56,25 @@
     background: #4dcfc5;
     border-radius: 14px;
     .details .img {
-      width: 34px;
-      height: 34px;
+      width: 36px;
+      height: 36px;
       position: absolute;
-      top: 32px;
-      right: 32px;
+      top: 18px;
+      right: 18px;
     }
     .token {
       display: flex;
       align-items: center;
       padding: 45px 30px;
-      .Token__Img .img {
+      .img {
         width: 44px;
         height: 44px;
       }
       .Token__Num {
         color: #fff;
-        font-size: 70px;
+        font-size: 58px;
+        font-weight: 600;
+        line-height: 82px;
         font-weight: bold;
         padding-right: 16px;
       }
@@ -82,15 +84,16 @@
     display: flex;
     margin: 30px 0;
     .Card__Left {
-      margin-right: 17px;
+      margin-right: 18px;
     }
     .Card__Item {
-      height: 95px;
+      height: 112px;
       display: flex;
       justify-content: center;
       align-items: center;
       flex: 1;
-      background: #fff;
+      background: linear-gradient(180deg, #f0fffe, #ffffff 37%, #feffff 99%, #ffffff);
+
       border-radius: 14px;
       .img {
         width: 50px;
@@ -102,7 +105,8 @@
         font-weight: bold;
       }
       .text {
-        font-size: 16px;
+        font-size: 22px;
+        line-height: 32px;
         color: #9e9e9e;
       }
     }
@@ -226,78 +230,72 @@
     }
   }
   .use-list {
-    margin-top: 24px;
+    margin-top: 20px;
     display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+    justify-content: space-between;
     border-radius: 14px;
-    background-color: #fff;
-    padding: 8px 23px;
+    background: linear-gradient(180deg, #f0fffe, #ffffff 37%, #feffff 99%, #ffffff);
+
+    padding: 0 27px;
     .item {
-      width: 25%;
       display: flex;
       align-items: center;
       flex-direction: column;
       box-sizing: border-box;
-      padding: 22px 41px;
+      padding: 26px 0 24px;
       .img {
-        width: 50px;
-        height: 40px;
-        padding-bottom: 18px;
+        width: 52px;
+        height: 52px;
+        margin-bottom: 2px;
       }
       .item-text {
-        font-size: 20px;
-        line-height: 42px;
+        font-size: 24px;
+        line-height: 34px;
+        font-weight: 400;
       }
     }
   }
   .my-order {
-    margin-top: 44px;
+    margin-top: 18px;
+    background: linear-gradient(180deg, #f0fffe, #ffffff 37%, #feffff 99%, #ffffff);
+    border-radius: 20px;
+    padding: 32px 22px 36px 28px;
     .order-tab {
       display: flex;
       justify-content: space-between;
-      padding-left: 28px;
+      font-size: 28px;
+      line-height: 40px;
+      font-weight: 400;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 28px;
       .tab {
-        font-size: 26px;
-        line-height: 42px;
-        font-weight: bold;
+        color: #333;
       }
       .all-order {
-        font-size: 26px;
-        line-height: 42px;
-        font-weight: bold;
-        color: #a8a8a8;
+        color: #999;
         .img {
-          width: 20px;
+          margin-left: 12px;
+          width: 12px;
           height: 20px;
         }
       }
     }
-    .order-list {
-      margin-top: 19px;
+    .order-type {
+      padding-top: 50px;
       display: flex;
-      align-items: center;
-      align-content: center;
       View {
-        height: 177px;
         flex: 1;
-        background: #fff;
-        border-radius: 14px;
-        font-size: 20px;
-        line-height: 42px;
-        font-weight: bold;
+        font-size: 24px;
+        line-height: 34px;
+        font-weight: 400;
         display: flex;
         flex-direction: column;
         align-items: center;
-
         Image {
-          padding-top: 43px;
-          width: 70px;
-          height: 68px;
+          width: 60px;
+          height: 60px;
+          margin-bottom: 10px;
         }
-      }
-      .sec {
-        margin: 0 26px;
       }
     }
   }
@@ -439,6 +437,59 @@
             color: #fff;
             text-align: center;
           }
+        }
+      }
+    }
+  }
+  .travel {
+    margin-top: 20px;
+    padding: 30px 22px 30px 26px;
+    background: linear-gradient(180deg, #f0fffe, #ffffff 37%, #feffff 99%, #ffffff);
+    border-radius: 20px;
+    .travel-title {
+      display: flex;
+      justify-content: space-between;
+      font-size: 28px;
+      font-weight: 400;
+      line-height: 40px;
+      padding-bottom: 28px;
+      border-bottom: 2px solid #eee;
+      .my {
+        color: #333;
+      }
+      .all {
+        color: #999;
+        .img {
+          width: 12px;
+          height: 20px;
+          margin-left: 12px;
+        }
+      }
+    }
+    .travel-text {
+      padding-top: 30px;
+      display: flex;
+      align-items: center;
+      .img {
+        display: table;
+        width: 124px;
+        height: 128px;
+        border-radius: 18px;
+      }
+      .trip {
+        padding-left: 21px;
+        .one {
+          font-size: 28px;
+          font-weight: 500;
+          color: #333;
+          line-height: 40px;
+        }
+        .two {
+          font-size: 24px;
+          font-weight: 500;
+          color: #999;
+          line-height: 34px;
+          padding-top: 14px;
         }
       }
     }

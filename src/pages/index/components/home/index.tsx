@@ -174,18 +174,18 @@ const HomeScreen = (props) => {
                     }
                   />
                   <View className='label'>
-                    <Image className='black' src={black} />
-                    <Text className='label-pic'>三亚</Text>
-                    <Text className='text'>自由行</Text>
+                    {/* <Image className='black' src={black} /> */}
+                    <View className='label-pic'>三亚</View>
+                    <View className='text'>自由行</View>
                   </View>
                 </View>
                 <View className='content'>
-                  <View className='text'>三亚5日跟团游「星4晚连 住」</View>
+                  <View className='text'>三亚5日跟团游「星4晚连住」</View>
                   <View className='money'>¥ 2899</View>
                   <View className='consume'>
                     <Text>3456人已付款</Text>
                     <View>
-                      <Image className='is-like' src={noLike} />
+                      <Image className='is-like' src={Number(item) % 2 ? noLike : liked} />
                       2356
                     </View>
                   </View>
