@@ -42,6 +42,11 @@ const HomeScreen = (props) => {
     setScrollTop(aScrollTop)
     setReachTop(aScrollTop === 0)
     console.log(reachTop)
+    if (aScrollTop > 160) {
+      document.getElementsByClassName('home-header')[0].style.backgroundColor = 'rgba(200,200,200,.9)'
+    } else {
+      document.getElementsByClassName('home-header')[0].style.backgroundColor = 'null'
+    }
   })
   const onLoad = () => {
     setLoading(true)
@@ -98,12 +103,21 @@ const HomeScreen = (props) => {
   }
   return (
     <View className='HomeScreen__root'>
-      <Swiper className='top-s' autoplay={1000} onChange={setNum}>
-        <Swiper.Item className='item'>1</Swiper.Item>
-        <Swiper.Item className='item'>2</Swiper.Item>
-        <Swiper.Item className='item'>3</Swiper.Item>
-        <Swiper.Item className='item'>4</Swiper.Item>
-        <Swiper.Indicator className='custom-indicator'>{num + 1}/4</Swiper.Indicator>
+      <Swiper className='top-s' autoplay={3000} onChange={setNum}>
+        <Swiper.Item className='item'>
+          <View onClick={getBanner}>大连路线站字符</View>
+        </Swiper.Item>
+        <Swiper.Item className='item'>
+          <View onClick={getBanner}>大连路线站字符</View>
+        </Swiper.Item>
+        <Swiper.Item className='item'>
+          <View onClick={getBanner}>大连路线站字符</View>
+        </Swiper.Item>
+        <Swiper.Item className='item'>
+          <View onClick={getBanner}>大连路线站字符</View>
+        </Swiper.Item>
+        {/* <Swiper.Indicator className='custom-indicator'>{num + 1}/4</Swiper.Indicator> */}
+        <Swiper.Indicator className='basic-swiped' />
       </Swiper>
       {/* <PullRefresh loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}> */}
       <View className='home-header'>
@@ -117,11 +131,6 @@ const HomeScreen = (props) => {
         </View>
       </View>
       <View className='home-body'>
-        <View className='route' onClick={getBanner}>
-          大连路线站字符
-          {/* <View onClick={getGoods}>商品列表</View> */}
-          {/* <View onClick={getActivity}>活动列表</View> */}
-        </View>
         <View className='swiper'>
           <View className='swiper-left'>
             <Image className='first' src='https://s1.ax1x.com/2021/12/10/o5jW9S.png' />

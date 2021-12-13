@@ -123,8 +123,8 @@ const MineScreen = (props) => {
           <Image className='img' src={myPhoto} />
         </View>
         <View className='User__Name'>
-          <Text className='name'>丛林迷雾</Text>
-          <Text className='autograph'>天空分外晴朗,白云也绽露笑容</Text>
+          <View className='name'>丛林迷雾</View>
+          <View className='autograph'>天空分外晴朗,白云也绽露笑容</View>
         </View>
       </View>
       <View className='dolor' onClick={toMyToken}>
