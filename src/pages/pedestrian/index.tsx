@@ -7,12 +7,13 @@ import { useRef, useState } from 'react'
 import { observer } from 'mobx-react'
 import jump from '@/assets/img/yjfk/jump.png'
 import add from '@/assets/img/traveler/add.png'
-import per from '@/assets/img/traveler/per.png'
+import pic from '@/assets/img/common/shg.png'
+import UsalMessageList from './components/usalMessageList'
 import './index.less'
 /**
- * 常用信息
+ * 出行人信息
  */
-const UsualMessageListPage = (props) => {
+const PedestrianPage = (props) => {
   const { commonStore } = useStore()
   const [value, setValue] = useState(0)
   const [hasMore, setHasMore] = useState(true)
@@ -21,7 +22,7 @@ const UsualMessageListPage = (props) => {
   const refreshingRef = useRef(false)
   const [scrollTop, setScrollTop] = useState(0)
   const [reachTop, setReachTop] = useState(true)
-  // console.log(this.props.property)
+
   usePageScroll(({ scrollTop: aScrollTop }) => {
     setScrollTop(aScrollTop)
     setReachTop(aScrollTop === 0)
@@ -37,7 +38,7 @@ const UsualMessageListPage = (props) => {
       }
       setList(newList)
       setLoading(false)
-      setHasMore(newList.length < 11)
+      setHasMore(newList.length < 40)
     }, 1000)
   }
 
@@ -47,18 +48,14 @@ const UsualMessageListPage = (props) => {
     onLoad()
   }
   return (
-    <View className='usual-list'>
-      <View className='add-mode'>
-        <View className='add'>
-          <Image className='img' src={add} />
-          <Text className='add-text'>添加{props.onName ? '出行人' : '收货地址'}</Text>
-        </View>
-        <View className='add'>
-          <Image className='img' src={per} />
-          <Text className='add-text'>邀请好友填写</Text>
-        </View>
-      </View>
+    <View className='PedestrianPage__root'>
       <PullRefresh className='list' loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
+        <View className='add-mode'>
+          <View className='add'>
+            <Image className='img' src={add} />
+            <Text className='add-text'>添加出行人</Text>
+          </View>
+        </View>
         <List loading={loading} hasMore={hasMore} onLoad={onLoad}>
           {list.map((item) => (
             <View className='item' key={item}>
@@ -67,18 +64,11 @@ const UsualMessageListPage = (props) => {
                   <View className='left-top'>
                     <View className='user-name'>
                       <View className='state'>李买买</View>
-                      {item === '01' && props.onName === '出行人' ? <View className='myself'>本人</View> : null}
-                      {item === '01' && props.onName === '地址' ? <View className='default'>默认</View> : null}
+                      {item === '01' ? <View className='myself'>本人</View> : null}
                     </View>
                     <View className='tel'>188*****678</View>
                   </View>
-                  <View className='left-id'>
-                    {props.onName === '出行人' && Number(item) % 2
-                      ? '身份证 1100 **** **** **8899'
-                      : props.onName === '地址'
-                      ? '北京市海淀区 中关村大厦A-888'
-                      : '护照 11****99'}
-                  </View>
+                  <View className='left-id'>{Number(item) % 2 ? '身份证 1100 **** **** **8899' : '护照 11****99'}</View>
                 </View>
                 <Image className='jump' src={jump} />
               </View>
@@ -92,8 +82,9 @@ const UsualMessageListPage = (props) => {
           )}
         </List>
       </PullRefresh>
+      {/* <UsalMessageList onName='出行人' /> */}
     </View>
   )
 }
 
-export default observer(UsualMessageListPage)
+export default observer(PedestrianPage)

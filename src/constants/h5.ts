@@ -3,7 +3,7 @@ import { h5Domain } from './c'
 /// h5 协议地址
 export class H5 {
   /// 隐私协议
-  static privacy = `${h5Domain}/protocol/privac`
+  static privacy = `${h5Domain}/protocol/privacy`
 
   /// 服务协议
   static service = `${h5Domain}/protocol/service`
@@ -21,10 +21,10 @@ export class H5 {
   static goodsDetail = `${h5Domain}/goods-detail`
 
  /// 团小店
-  static abulkShop = `${h5Domain}/abulkshop`
+  static groupShop = `${h5Domain}/group-shop`
 
   /// 订单详情页
-  static orderDetail = `${h5Domain}/orderdetail?type=1`
+  static orderDetail = `${h5Domain}/order-detail?type=1`
 
   /// H5 测试页面
   static testPage = `${h5Domain}/test/page`

@@ -1,6 +1,7 @@
 export default {
   pages: [
     'pages/index/index',
+    'pages/pedestrian/index',
     'pages/myToken/index',
     'pages/login/index',
     'pages/myBrowse/index',

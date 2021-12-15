@@ -60,7 +60,9 @@ const MyOrderPage = (props) => {
         <Tabs.TabPane title='已完成'>
           <OrderList />
         </Tabs.TabPane>
-        <Tabs.TabPane title='售后'>{/* <OrderList /> */}</Tabs.TabPane>
+        <Tabs.TabPane title='售后'>
+          <OrderList />
+        </Tabs.TabPane>
       </Tabs>
     </View>
   )

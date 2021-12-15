@@ -11,10 +11,10 @@ import { BASE_URL } from '../constants/c'
   }
 
    ///商品列表
-   static getGoods (goodsDetailUrl: string, goodsName: string, price: string, sales: string, likes: string, goodsId: string) {
+   static getGoods (areaId) {
      return doGetAction({
        url: `${BASE_URL}/operation/home/goods/list`, data: {
-        goodsDetailUrl,goodsName, price,sales,likes,goodsId
+        areaId
    } })
   }
    

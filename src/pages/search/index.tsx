@@ -20,7 +20,7 @@ import del from '@/assets/img/password/del.png'
  */
 const SearchPage = (props) => {
   const { commonStore } = useStore()
-  const [value, setValue] = useState('北京')
+  const [value, setValue] = useState('请输入')
   const [hasMore, setHasMore] = useState(true)
   const [list, setList] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
@@ -68,7 +68,7 @@ const SearchPage = (props) => {
           </View>
           <View className='search-input'>
             <Image className='search' src={search} />
-            <Input className='input' type='text' placeholder='北京' />
+            <Input className='input' type='text' placeholder='请输入' />
             <Image className='del' src={del} />
           </View>
         </View>
@@ -76,7 +76,7 @@ const SearchPage = (props) => {
       <View className='all-in'>
         <View className='home-body'>
           <Image className='lose' src={lose} />
-          <View className='route'>没有搜索到”北京“的结果</View>
+          <View className='route'>没有搜索到”xx“相关的结果</View>
         </View>
         <View className='product-list'>
           <View>猜你喜欢</View>

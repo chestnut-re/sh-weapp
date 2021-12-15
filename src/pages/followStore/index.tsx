@@ -25,7 +25,7 @@ const MyBrowsePage = (props) => {
   const [follow, setFollow] = useState(false)
 
   const toAbulkshop = () => {
-    Taro.navigateTo({ url: `/pages/webview/index?url=${H5.abulkShop}` })
+    Taro.navigateTo({ url: `/pages/webview/index?url=${H5.groupShop}` })
   }
   usePageScroll(({ scrollTop: aScrollTop }) => {
     setScrollTop(aScrollTop)

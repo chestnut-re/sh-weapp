@@ -1,25 +1,18 @@
 .HomeScreen__root {
   background: #f3f4f4;
-  // background: linear-gradient(#7bbeb4, #ffffff);
-  // padding: 0 24px;
   min-height: 100vh;
-  // overflow: scroll;
   .top-s {
     height: 450px;
-    // .item {
-    //   background: url('https://s1.ax1x.com/2021/12/10/o5ouWR.png') no-repeat center 32%,
-    //     url('https://s1.ax1x.com/2021/12/10/o5hkUs.png') no-repeat center top;
-    //   background-size: cover, cover;
-    // }
     .item {
-      background: url('https://s1.ax1x.com/2021/12/10/o5hkUs.png') no-repeat center top;
-      background-size: cover;
-      box-shadow: 0px -30px 20px #f3f4f4 inset;
-      display: flex;
-      flex-direction: column-reverse;
+      Image {
+        width: 100%;
+        height: 100%;
+        // box-shadow: 0px -30px 20px #f3f4f4 inset;
+      }
       View {
-        margin-left: 24px;
-        margin-bottom: 80px;
+        position: absolute;
+        bottom: 170px;
+        left: 30px;
         color: #dbfffc;
         font-size: 28px;
         font-weight: bold;
@@ -27,6 +20,12 @@
         letter-spacing: 3px;
       }
     }
+  }
+  .un-done {
+    position: absolute;
+    width: 100%;
+    margin-top: 20px;
+    box-shadow: 0px -20px 20px 20px #f3f4f4;
   }
   .home-header {
     position: fixed;
@@ -39,7 +38,7 @@
     .now-place {
       display: flex;
       align-items: center;
-      font-size: 46px;
+      font-size: 36px;
       font-weight: bold;
       color: #fff;
       .place {
@@ -72,8 +71,14 @@
       }
     }
   }
+  .go-done {
+    position: absolute;
+    top: 300px;
+    // background: #f3f4f4;
+    // box-shadow: -3px -2px 20px 20px #f3f4f4;
+  }
   .home-body {
-    margin: 0 24px;
+    margin: 24px 24px;
     .s-s .route {
       font-size: 28px;
       line-height: 42px;
@@ -292,7 +297,7 @@
 .basic-swiped {
   position: absolute;
   left: 80px;
-  bottom: 50px;
+  bottom: 150px;
 }
 .taroify-swiper__indicator--active {
   background: #64d0c8;

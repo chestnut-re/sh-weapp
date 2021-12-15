@@ -53,10 +53,6 @@ const UsualMessageListPage = (props) => {
           <Image className='img' src={add} />
           <Text className='add-text'>添加{props.onName ? '出行人' : '收货地址'}</Text>
         </View>
-        <View className='add'>
-          <Image className='img' src={per} />
-          <Text className='add-text'>邀请好友填写</Text>
-        </View>
       </View>
       <PullRefresh className='list' loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
         <List loading={loading} hasMore={hasMore} onLoad={onLoad}>
