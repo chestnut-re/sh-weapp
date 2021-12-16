@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable import/first */
 import search from '@/assets/img/yjfk/seachtwo.png'
 import back from '@/assets/img/yjfk/back.png'
 import location from '@/assets/img/yjfk/location.png'
@@ -9,6 +9,7 @@ import { Sticky } from '@taroify/core'
 import { observer } from 'mobx-react'
 import { useEffect, useRef, useState } from 'react'
 import './index.less'
+import { LocationService } from '@/service/LocationService'
 
 /**
  * 定位
@@ -209,6 +210,8 @@ const LocationPage = () => {
   }
   useEffect(() => {
     setCityData(abc)
+    // getAreaList()
+    // getProdAreaList()
   }, [])
 
   usePageScroll(({ scrollTop: aScrollTop }) => {
@@ -219,6 +222,26 @@ const LocationPage = () => {
 
   const toHome = () => {
     Taro.navigateTo({ url: '/pages/index/index' })
+  }
+  //获取城市列表
+  const getAreaList = async () => {
+    const result = await LocationService.getAreaList()
+    console.log(result)
+    // if (result.statusCode === 200) {
+    //   setBannerList(result.data.data)
+    // }
+  }
+  //获取有商品城市列表
+  const getProdAreaList = async () => {
+    const result = await LocationService.getProdAreaList()
+    console.log(result)
+    // if (result.statusCode === 200) {
+    //   setBannerList(result.data.data)
+    // }
+  }
+  const getCity = (a) => {
+    console.log(a)
+    setViewInto(a)
   }
   return (
     <View className='LocationPage__root' ref={container}>
@@ -267,7 +290,7 @@ const LocationPage = () => {
               🌟
             </View>
             {Object.keys(cityData.city).map((key: string, index: number) => (
-              <View key={index} className='order-item' onClick={() => setViewInto(key)}>
+              <View key={index} className='order-item' onClick={() => getCity(key)}>
                 {key}
               </View>
             ))}

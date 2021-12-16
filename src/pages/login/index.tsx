@@ -2,7 +2,7 @@
 import Taro, { hideLoading, showLoading, showToast } from '@tarojs/taro'
 import { useEffect, useState } from 'react'
 import { View, Image } from '@tarojs/components'
-import { WXService } from '@/service/wx'
+import { WXService } from '@/service/WXService'
 import { useStore } from '@/store/context'
 import { Button, Toast } from '@taroify/core'
 import { observer } from 'mobx-react'

@@ -15,11 +15,11 @@ import black from '@/assets/img/home/black.png'
 import noLike from '@/assets/img/home/no-like.png'
 import liked from '@/assets/img/home/liked.png'
 import { H5 } from '@/constants/h5'
-import { HomeService } from '@/service/home'
+import { HomeService } from '@/service/HomeService'
 /**
  * 首页
  */
-const HomeScreen = (props) => {
+const HomeScreen = () => {
   const { userStore } = useStore()
   const [value, setValue] = useState('北京')
   const [hasMore, setHasMore] = useState(true)
@@ -37,14 +37,6 @@ const HomeScreen = (props) => {
     getBanner()
     getActivity()
   }, [])
-  const acc = [
-    { img: 'https://s1.ax1x.com/2021/12/10/o5jW9S.png' },
-    { img: 'https://s1.ax1x.com/2021/12/10/o5jW9S.png' },
-    { img: 'https://s1.ax1x.com/2021/12/10/o5jW9S.png' },
-  ]
-  const toDemoPage = () => {
-    Taro.navigateTo({ url: '/pages/demo/index' })
-  }
 
   const toWebViewPage = () => {
     const url = decodeURIComponent('http://123.56.248.148/protocol/privacy')
