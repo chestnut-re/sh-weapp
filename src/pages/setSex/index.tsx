@@ -1,8 +1,8 @@
+/* eslint-disable import/first */
 import Taro from '@tarojs/taro'
-import { View, Input, Text, Image } from '@tarojs/components'
-import { useStore } from '@/store/context'
+import { View, Image } from '@tarojs/components'
 import { Button } from '@taroify/core'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { observer } from 'mobx-react'
 
 import './index.less'
@@ -10,16 +10,10 @@ import pic from '@/assets/img/common/shg.png'
 /**
  * 设置性别
  */
-const SetSexPage = (props) => {
-  const { commonStore } = useStore()
+const SetSexPage = () => {
   const [showMan, setShowMan] = useState('block')
   const [showWomen, setShowWomen] = useState('none')
 
-  console.log(commonStore)
-
-  const toFist = () => {
-    Taro.navigateBack()
-  }
   const toMyData = () => {
     Taro.navigateTo({ url: '/pages/myData/index' })
   }

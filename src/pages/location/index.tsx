@@ -1,35 +1,22 @@
-import place from '@/assets/img/home/vdizhi@2x.png'
+/* eslint-disable react-hooks/exhaustive-deps */
 import search from '@/assets/img/yjfk/seachtwo.png'
-import pic from '@/assets/img/common/shg.png'
-import black from '@/assets/img/home/black.png'
-import noLike from '@/assets/img/home/no-like.png'
-import liked from '@/assets/img/home/liked.png'
 import back from '@/assets/img/yjfk/back.png'
-import lose from '@/assets/img/yjfk/lose.png'
 import location from '@/assets/img/yjfk/location.png'
 import del from '@/assets/img/password/del.png'
-import Taro, { usePageScroll, useReachBottom } from '@tarojs/taro' // Taro 专有 Hooks
-import { View, Text, Button, Image, Input, ScrollView } from '@tarojs/components'
-import { List, Loading, PullRefresh, Sticky } from '@taroify/core'
-import { useStore } from '@/store/context'
+import Taro, { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
+import { View, Image, Input, ScrollView } from '@tarojs/components'
+import { Sticky } from '@taroify/core'
 import { observer } from 'mobx-react'
 import { useEffect, useRef, useState } from 'react'
 import './index.less'
-// import storage from '@/utils/storage'
 
 /**
  * 定位
  */
-const LocationPage = (props) => {
-  const { commonStore } = useStore()
+const LocationPage = () => {
   const [value, setValue] = useState('北京')
-  const [hasMore, setHasMore] = useState(true)
-  const [list, setList] = useState<string[]>([])
-  const [loading, setLoading] = useState(false)
-  const refreshingRef = useRef(false)
   const [scrollTop, setScrollTop] = useState(0)
   const [reachTop, setReachTop] = useState(true)
-  const [scrollTopId, setScrollTopId] = useState('')
   const container = useRef()
 
   const INIT_VIEW = 'hot'
@@ -229,26 +216,7 @@ const LocationPage = (props) => {
     setReachTop(aScrollTop === 0)
     console.log(reachTop)
   })
-  const onLoad = () => {
-    setLoading(true)
-    const newList = refreshingRef.current ? [] : list
-    setTimeout(() => {
-      refreshingRef.current = false
-      for (let i = 0; i < 20; i++) {
-        const text = newList.length + 1
-        newList.push(text < 1 ? '0' + text : String(text))
-      }
-      setList(newList)
-      setLoading(false)
-      setHasMore(newList.length < 21)
-    }, 500)
-  }
 
-  function onRefresh() {
-    refreshingRef.current = true
-    setLoading(false)
-    onLoad()
-  }
   const toHome = () => {
     Taro.navigateTo({ url: '/pages/index/index' })
   }

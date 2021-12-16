@@ -9,7 +9,7 @@ import './index.less'
 /**
  * 我的代币
  */
-const MyTokenPage = (props) => {
+const MyTokenPage = () => {
   const { commonStore } = useStore()
   console.log(commonStore)
 

@@ -1,5 +1,6 @@
+/* eslint-disable import/first */
 import Taro from '@tarojs/taro'
-import { View, Input, Text, Image } from '@tarojs/components'
+import { View, Input, Image } from '@tarojs/components'
 import { useStore } from '@/store/context'
 import { Button } from '@taroify/core'
 
@@ -13,14 +14,9 @@ import pic from '@/assets/img/common/shg.png'
 const SetNamePage = (props) => {
   const { commonStore } = useStore()
   console.log(commonStore)
-
-  const toFist = () => {
-    Taro.navigateBack()
-  }
   const toMyData = () => {
     Taro.navigateTo({ url: '/pages/myData/index' })
   }
-
   return (
     <View className='SetNamePage__root'>
       <View className='name-img'>

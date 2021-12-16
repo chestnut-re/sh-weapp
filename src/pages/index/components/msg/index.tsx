@@ -1,6 +1,4 @@
-import Taro from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
-import { useStore } from '@/store/context'
+import { View } from '@tarojs/components'
 import { observer } from 'mobx-react'
 
 import './index.less'
@@ -8,13 +6,11 @@ import './index.less'
 /**
  * 消息
  */
-const MsgScreen = (props) => {
-  const { commonStore } = useStore()
-
+const MsgScreen = () => {
   return (
     <View className='MsgScreen__root'>
-      <View></View>
-      <View></View>
+      <View>消息界面</View>
+      <View>。。。</View>
     </View>
   )
 }

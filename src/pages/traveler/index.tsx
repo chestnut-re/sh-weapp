@@ -1,10 +1,8 @@
-import Taro from '@tarojs/taro'
-import { usePageScroll, useReachBottom } from '@tarojs/taro' // Taro 专有 Hooks
+/* eslint-disable import/first */
+import Taro, { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
 import { View, Text, Image } from '@tarojs/components'
-import { useStore } from '@/store/context'
-import { Button, List, Loading, PullRefresh } from '@taroify/core'
+import { List, PullRefresh } from '@taroify/core'
 import { useRef, useState } from 'react'
-import { Arrow } from '@taroify/icons'
 
 import { observer } from 'mobx-react'
 
@@ -13,8 +11,7 @@ import pic from '@/assets/img/traveler/add.png'
 /**
  * 出行人信息
  */
-const TravelerPage = (props) => {
-  const { commonStore } = useStore()
+const TravelerPage = () => {
   const [hasMore, setHasMore] = useState(true)
   const [list, setList] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
@@ -22,12 +19,6 @@ const TravelerPage = (props) => {
   const [scrollTop, setScrollTop] = useState(0)
   const [reachTop, setReachTop] = useState(true)
 
-  const toFist = () => {
-    Taro.navigateBack()
-  }
-  const toAboutUs = () => {
-    Taro.navigateTo({ url: '/pages/aboutUs/index' })
-  }
   usePageScroll(({ scrollTop: aScrollTop }) => {
     setScrollTop(aScrollTop)
     setReachTop(aScrollTop === 0)

@@ -1,8 +1,9 @@
+/* eslint-disable import/first */
 import Taro from '@tarojs/taro'
-import { View, Input, Text, Image, Textarea } from '@tarojs/components'
+import { View, Image, Textarea } from '@tarojs/components'
 import { useStore } from '@/store/context'
 import { Button } from '@taroify/core'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { observer } from 'mobx-react'
 
 import './index.less'
@@ -11,14 +12,11 @@ import success from '@/assets/img/yjfk/success.png'
 /**
  * 意见反馈
  */
-const FeedBackPage = (props) => {
+const FeedBackPage = () => {
   const { commonStore } = useStore()
   const [noteNowLen, setNoteNowLen] = useState(0)
   console.log(commonStore)
 
-  const toFist = () => {
-    Taro.navigateBack()
-  }
   const toMyData = () => {
     Taro.showToast({
       image: success,
@@ -39,9 +37,8 @@ const FeedBackPage = (props) => {
       count: 1, // 默认9
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有，在H5浏览器端支持使用 `user` 和 `environment`分别指定为前后摄像头
-      success: function (res) {
+      success: function () {
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-        var tempFilePaths = res.tempFilePaths
       },
     })
   }

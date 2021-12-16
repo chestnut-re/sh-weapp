@@ -3,7 +3,7 @@ import { View } from '@tarojs/components'
 import { useStore } from '@/store/context'
 import { Button, Image, Dialog } from '@taroify/core'
 import { observer } from 'mobx-react'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import pic from '@/assets/img/common/shg.png'
 import jump from '@/assets/img/yjfk/jump.png'
 
@@ -12,7 +12,7 @@ import './index.less'
 /**
  * 设置页
  */
-const SetUpPage = (props) => {
+const SetUpPage = () => {
   const { userStore } = useStore()
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState('20.32Mb')

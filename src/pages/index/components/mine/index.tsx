@@ -1,9 +1,8 @@
-import Taro, { usePageScroll, useReachBottom, useShareAppMessage } from '@tarojs/taro'
+import Taro, { usePageScroll, useShareAppMessage } from '@tarojs/taro'
 import { Button, View, Text, Image, Canvas } from '@tarojs/components'
-import { useStore } from '@/store/context'
-import { Steps, List, Loading, PullRefresh, ShareSheet, Popup } from '@taroify/core'
+import { Steps, List, Popup } from '@taroify/core'
 import { observer } from 'mobx-react'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import pic from '@/assets/img/common/shg.png'
 import lingdang from '@/assets/img/mine/lingdang.png'
 import saoyisao from '@/assets/img/mine/saoyisao.png'
@@ -38,12 +37,10 @@ import { H5 } from '@/constants/h5'
 /**
  * 我的页面
  */
-const MineScreen = (props) => {
-  const { commonStore } = useStore()
+const MineScreen = () => {
   const [hasMore, setHasMore] = useState(true)
   const [list, setList] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
-  const refreshingRef = useRef(false)
   const [scrollTop, setScrollTop] = useState(0)
   const [reachTop, setReachTop] = useState(true)
   const [open, setOpen] = useState(false)
@@ -87,36 +84,22 @@ const MineScreen = (props) => {
     setScrollTop(aScrollTop)
     setReachTop(aScrollTop === 0)
   })
-  const onLoad = () => {
-    setLoading(true)
-    const newList = refreshingRef.current ? [] : list
-    setTimeout(() => {
-      refreshingRef.current = false
-      for (let i = 0; i < 20; i++) {
-        const text = newList.length + 1
-        newList.push(text < 1 ? '0' + text : String(text))
-      }
-      setList(newList)
-      setLoading(false)
-      setHasMore(newList.length < 21)
-    }, 1000)
-  }
-  function onRefresh() {
-    refreshingRef.current = true
-    setLoading(false)
-    onLoad()
-  }
+
   useShareAppMessage((res) => {
     console.log(res)
     if (res.from === 'button') {
       // 来自页面内转发按钮
       console.log(res.target)
-      if (res.target.id == 1) {
+      if (res.target?.['id'] == 1) {
         return {
           title: `欢迎浏览${cityName}的名片哦！`,
           path: '/page/user?id=123',
         }
       }
+    }
+    return {
+      title: ``,
+      path: '',
     }
   })
   /**

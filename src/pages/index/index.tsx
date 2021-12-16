@@ -1,25 +1,22 @@
-import Taro from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import { useStore } from '@/store/context'
 import { observer } from 'mobx-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import TabBar from '../../components/tabbar'
 import MineScreen from './components/mine'
 import MsgScreen from './components/msg'
 import HomeScreen from './components/home'
 import './index.less'
 
-const IndexPage = (props) => {
-  const { userStore } = useStore()
+const IndexPage = () => {
   const [index, setIndex] = useState(0)
 
   const onTabClick = (newIndex: number) => {
-    if ((newIndex == 1 || newIndex == 2) && !userStore.isBindMobile) {
-      console.log(userStore.isBindMobile)
-      // 未登录
-      Taro.navigateTo({ url: '/pages/login/index' })
-      return
-    }
+    // if ((newIndex == 1 || newIndex == 2) && !userStore.isBindMobile) {
+    //   console.log(userStore.isBindMobile)
+    //   // 未登录
+    //   Taro.navigateTo({ url: '/pages/login/index' })
+    //   return
+    // }
     setIndex(newIndex)
   }
 

@@ -1,6 +1,6 @@
+/* eslint-disable import/first */
 import Taro from '@tarojs/taro'
-import { View, Input, Text, Image } from '@tarojs/components'
-import { useStore } from '@/store/context'
+import { View, Input, Image } from '@tarojs/components'
 import { Button } from '@taroify/core'
 
 import { observer } from 'mobx-react'
@@ -10,17 +10,10 @@ import pic from '@/assets/img/common/shg.png'
 /**
  * 设置签名
  */
-const SetAutographPage = (props) => {
-  const { commonStore } = useStore()
-  console.log(commonStore)
-
-  const toFist = () => {
-    Taro.navigateBack()
-  }
+const SetAutographPage = () => {
   const toMyData = () => {
     Taro.navigateTo({ url: '/pages/myData/index' })
   }
-
   return (
     <View className='SetAutographPage__root'>
       <View className='name-img'>

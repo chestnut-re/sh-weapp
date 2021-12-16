@@ -1,26 +1,21 @@
-import Taro from '@tarojs/taro'
-import { usePageScroll, useReachBottom } from '@tarojs/taro' // Taro 专有 Hooks
-import { View, Text, Button, Image, Input } from '@tarojs/components'
-import { List, Loading, PullRefresh, Sticky } from '@taroify/core'
-import { useStore } from '@/store/context'
+/* eslint-disable import/first */
+import Taro, { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
+import { View, Text, Image, Input } from '@tarojs/components'
+import { List, Loading, Sticky } from '@taroify/core'
 import { observer } from 'mobx-react'
 import { useEffect, useRef, useState } from 'react'
 import './index.less'
-import place from '@/assets/img/home/vdizhi@2x.png'
 import search from '@/assets/img/yjfk/seachtwo.png'
 import pic from '@/assets/img/common/shg.png'
 import black from '@/assets/img/home/black.png'
 import noLike from '@/assets/img/home/no-like.png'
-import liked from '@/assets/img/home/liked.png'
 import back from '@/assets/img/yjfk/back.png'
 import lose from '@/assets/img/yjfk/lose.png'
 import del from '@/assets/img/password/del.png'
 /**
  * 搜索
  */
-const SearchPage = (props) => {
-  const { commonStore } = useStore()
-  const [value, setValue] = useState('请输入')
+const SearchPage = () => {
   const [hasMore, setHasMore] = useState(true)
   const [list, setList] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
@@ -48,12 +43,6 @@ const SearchPage = (props) => {
       setLoading(false)
       setHasMore(newList.length < 21)
     }, 500)
-  }
-
-  function onRefresh() {
-    refreshingRef.current = true
-    setLoading(false)
-    onLoad()
   }
   const toHome = () => {
     Taro.navigateTo({ url: '/pages/index/index' })

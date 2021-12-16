@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Taro from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { useStore } from '@/store/context'

@@ -1,14 +1,16 @@
 import Taro from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { useStore } from '@/store/context'
-import { Button, Image } from '@taroify/core'
-import { Arrow } from '@taroify/icons'
+import { Image } from '@taroify/core'
 import { observer } from 'mobx-react'
 import pic from '@/assets/img/common/shg.png'
+import jump from '@/assets/img/yjfk/jump.png'
 
 import './index.less'
-
-const MyDataPage = (props) => {
+/**
+ * 个人信息
+ */
+const MyDataPage = () => {
   const { commonStore } = useStore()
   console.log(commonStore)
   const toSetName = () => {
@@ -27,9 +29,7 @@ const MyDataPage = (props) => {
           <View className='item-left'>头像</View>
           <View className='item-right'>
             <Image className='img' src={pic}></Image>
-            <View className='item-left'>
-              <Arrow />
-            </View>
+            <Image className='img-left' src={jump}></Image>
           </View>
         </View>
         <View className='divide' />
@@ -37,19 +37,14 @@ const MyDataPage = (props) => {
           <View className='item-left'>昵称</View>
           <View className='item-right'>
             丛林迷雾
-            <View className='item-left'>
-              <Arrow />
-            </View>
+            <Image className='img-left' src={jump}></Image>
           </View>
         </View>
         <View className='divide' />
         <View className='item' onClick={toSetSex}>
           <View className='item-left'>性别</View>
           <View className='item-right'>
-            女
-            <View className='item-left'>
-              <Arrow />
-            </View>
+            女<Image className='img-left' src={jump}></Image>
           </View>
         </View>
         <View className='divide' />
@@ -57,9 +52,7 @@ const MyDataPage = (props) => {
           <View className='item-left'>生日</View>
           <View className='item-right'>
             2000/02/27
-            <View className='item-left'>
-              <Arrow />
-            </View>
+            <Image className='img-left' src={jump}></Image>
           </View>
         </View>
         <View className='divide' />
@@ -67,9 +60,7 @@ const MyDataPage = (props) => {
           <View className='item-left'>常住地</View>
           <View className='item-right'>
             北京市 朝阳区
-            <View className='item-left'>
-              <Arrow />
-            </View>
+            <Image className='img-left' src={jump}></Image>
           </View>
         </View>
         <View className='divide' />
@@ -77,9 +68,7 @@ const MyDataPage = (props) => {
           <View className='item-left'>签名</View>
           <View className='item-right'>
             天空分外晴朗，白云也绽露笑容
-            <View className='item-left'>
-              <Arrow />
-            </View>
+            <Image className='img-left' src={jump}></Image>
           </View>
         </View>
       </View>

@@ -1,10 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Taro, { hideLoading, showLoading, showToast } from '@tarojs/taro'
 import { useEffect, useState } from 'react'
 import { View, Image } from '@tarojs/components'
 import { WXService } from '@/service/wx'
 import { useStore } from '@/store/context'
 import { Button, Toast } from '@taroify/core'
-
 import { observer } from 'mobx-react'
 import pic from '@/assets/img/common/shg.png'
 import './index.less'
@@ -12,7 +12,7 @@ import './index.less'
 /**
  * 登录页
  */
-const LoginPage = (props) => {
+const LoginPage = () => {
   const { userStore } = useStore()
   const [open, setOpen] = useState(false)
   useEffect(() => {

@@ -9,7 +9,7 @@ import './index.less'
 /**
  * 我的浏览
  */
-const MyBrowsePage = (props) => {
+const MyBrowsePage = () => {
   const [hasMore, setHasMore] = useState(true)
   const [list, setList] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
@@ -20,7 +20,6 @@ const MyBrowsePage = (props) => {
   usePageScroll(({ scrollTop: aScrollTop }) => {
     setScrollTop(aScrollTop)
     setReachTop(aScrollTop === 0)
-    console.log('333')
   })
 
   const onLoad = () => {
@@ -32,19 +31,16 @@ const MyBrowsePage = (props) => {
         const text = newList.length + 1
         newList.push(text < 1 ? '0' + text : String(text))
       }
-
       setList(newList)
       setLoading(false)
       setHasMore(newList.length < 21)
     }, 1000)
   }
-
   function onRefresh() {
     refreshingRef.current = true
     setLoading(false)
     onLoad()
   }
-
   return (
     <View className='MyBrowsePage__root'>
       <PullRefresh loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>

@@ -1,20 +1,15 @@
-import Taro from '@tarojs/taro'
-import { usePageScroll, useReachBottom } from '@tarojs/taro' // Taro 专有 Hooks
-import { View, Text, Image } from '@tarojs/components'
-import { useStore } from '@/store/context'
-import { Button, List, Loading, PullRefresh } from '@taroify/core'
+/* eslint-disable import/first */
+import { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
+import { View, Image } from '@tarojs/components'
+import { List, PullRefresh } from '@taroify/core'
 import { useRef, useState } from 'react'
-import { Arrow } from '@taroify/icons'
-
 import { observer } from 'mobx-react'
-
 import './index.less'
 import pic from '@/assets/img/common/shg.png'
 /**
  * 我的点赞
  */
-const MyLikedPage = (props) => {
-  const { commonStore } = useStore()
+const MyLikedPage = () => {
   const [hasMore, setHasMore] = useState(true)
   const [list, setList] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
@@ -55,9 +50,9 @@ const MyLikedPage = (props) => {
               <View className='item' key={item}>
                 <View className='date'>2021/11/03</View>
                 <View className='card'>
-                  {item == 2 ? <View className='no-jump'>已下架</View> : null}
+                  {Number(item) == 2 ? <View className='no-jump'>已下架</View> : null}
                   <Image className='jump' src={pic} />
-                  <View className={item == 2 ? 'no-right-all' : 'right-all'}>
+                  <View className={Number(item) == 2 ? 'no-right-all' : 'right-all'}>
                     <View className='text'>三亚5日自由行(5钻)·直减300『高星4…</View>
                     <View className='money'>¥2899</View>
                   </View>

@@ -1,15 +1,14 @@
+/* eslint-disable import/first */
 import Taro from '@tarojs/taro'
 import { View, Image } from '@tarojs/components'
 import { useStore } from '@/store/context'
-import { Button } from '@taroify/core'
-import { Arrow } from '@taroify/icons'
 import { observer } from 'mobx-react'
 import pic from '@/assets/img/common/shg.png'
 import './index.less'
 import { H5 } from '@/constants/h5'
 import jump from '@/assets/img/yjfk/jump.png'
 
-const AboutUsPage = (props) => {
+const AboutUsPage = () => {
   const { commonStore } = useStore()
   console.log(commonStore)
   const toPrivacy = () => {

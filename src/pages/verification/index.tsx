@@ -1,26 +1,17 @@
-import Taro from '@tarojs/taro'
-import { View, Input, Text, Image } from '@tarojs/components'
+import { View, Input, Text } from '@tarojs/components'
 import { useStore } from '@/store/context'
 import { Button } from '@taroify/core'
 
 import { observer } from 'mobx-react'
 import { useState } from 'react'
 import './index.less'
-import del from '@/assets/img/password/del.png'
-import pic from '@/assets/img/common/shg.png'
 /**
  * 设置密码
  */
-const VerificationPage = (props) => {
+const VerificationPage = () => {
   const { commonStore } = useStore()
   console.log(commonStore)
   const [phone, SetPhone] = useState('166 1234 0000')
-  const toFist = () => {
-    Taro.navigateBack()
-  }
-  const toSetUp = () => {
-    Taro.navigateTo({ url: '/pages/setUp/index' })
-  }
 
   return (
     <View className='VerificationPage__root'>

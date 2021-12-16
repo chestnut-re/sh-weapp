@@ -1,8 +1,6 @@
-import Taro from '@tarojs/taro'
-import { usePageScroll, useReachBottom } from '@tarojs/taro' // Taro 专有 Hooks
+import Taro, { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
 import { View, Text, Image } from '@tarojs/components'
-import { useStore } from '@/store/context'
-import { Button, Field, Tabs, List, Loading, Cell, PullRefresh } from '@taroify/core'
+import { List, Loading, PullRefresh } from '@taroify/core'
 import { useRef, useState } from 'react'
 import { observer } from 'mobx-react'
 import pic from '@/assets/img/common/shg.png'
@@ -11,9 +9,7 @@ import './index.less'
 /**
  * 我的订单
  */
-const OrderListPage = (props) => {
-  const { commonStore } = useStore()
-  const [value, setValue] = useState(0)
+const OrderListPage = () => {
   const [hasMore, setHasMore] = useState(true)
   const [list, setList] = useState<string[]>([])
   const [loading, setLoading] = useState(false)

@@ -1,21 +1,16 @@
-import Taro from '@tarojs/taro'
-import { usePageScroll, useReachBottom } from '@tarojs/taro' // Taro 专有 Hooks
-import { View, Text, Image } from '@tarojs/components'
-import { useStore } from '@/store/context'
-import { Button, List, Loading, PullRefresh } from '@taroify/core'
+/* eslint-disable import/first */
+import Taro, { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
+import { View, Image } from '@tarojs/components'
+import { List, PullRefresh } from '@taroify/core'
 import { useRef, useState } from 'react'
-import { Arrow } from '@taroify/icons'
-
 import { observer } from 'mobx-react'
-
 import './index.less'
 import pic from '@/assets/img/common/shg.png'
 import { H5 } from '@/constants/h5'
 /**
  * 我的浏览
  */
-const MyBrowsePage = (props) => {
-  const { commonStore } = useStore()
+const MyBrowsePage = () => {
   const [hasMore, setHasMore] = useState(true)
   const [list, setList] = useState<string[]>([])
   const [loading, setLoading] = useState(false)

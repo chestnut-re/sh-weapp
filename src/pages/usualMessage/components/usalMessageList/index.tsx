@@ -1,8 +1,6 @@
-import Taro from '@tarojs/taro'
-import { usePageScroll, useReachBottom } from '@tarojs/taro' // Taro 专有 Hooks
+import { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
 import { View, Text, Image } from '@tarojs/components'
-import { useStore } from '@/store/context'
-import { Button, Field, Tabs, List, Loading, Cell, PullRefresh } from '@taroify/core'
+import { List, Loading, PullRefresh } from '@taroify/core'
 import { useRef, useState } from 'react'
 import { observer } from 'mobx-react'
 import jump from '@/assets/img/yjfk/jump.png'
@@ -13,15 +11,12 @@ import './index.less'
  * 常用信息
  */
 const UsualMessageListPage = (props) => {
-  const { commonStore } = useStore()
-  const [value, setValue] = useState(0)
   const [hasMore, setHasMore] = useState(true)
   const [list, setList] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
   const refreshingRef = useRef(false)
   const [scrollTop, setScrollTop] = useState(0)
   const [reachTop, setReachTop] = useState(true)
-  // console.log(this.props.property)
   usePageScroll(({ scrollTop: aScrollTop }) => {
     setScrollTop(aScrollTop)
     setReachTop(aScrollTop === 0)
