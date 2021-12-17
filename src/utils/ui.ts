@@ -55,7 +55,7 @@ export function showDialog(title, msg, onSuccess) {
  * Toast
  * @param {string} content 内容
  */
-function showMToast(content) {
+export function showMToast(content) {
   Taro.showToast({
     title: content,
     duration: 2000,

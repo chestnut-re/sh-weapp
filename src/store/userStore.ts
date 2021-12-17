@@ -5,6 +5,7 @@ import { UserService } from '@/service/UserService'
 import { clearStorage, save } from '@/utils/storage'
 import Taro, { showToast } from '@tarojs/taro'
 import { makeObservable, observable, action } from 'mobx'
+import { showMToast } from '@/utils/ui'
 
 /**
  * 用户相关数据
@@ -67,7 +68,7 @@ class UserData {
       const  useInfo = await UserService.getUserInfo()
       console.log('userRes',useInfo)
     } else {
-      showToast(openIdRes.data.msg)
+      showMToast(openIdRes.data.msg)
     }
   }
 
