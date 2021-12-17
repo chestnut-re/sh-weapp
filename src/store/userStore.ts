@@ -67,7 +67,7 @@ class UserData {
       const  useInfo = await UserService.getUserInfo()
       console.log('userRes',useInfo)
     } else {
-      showToast(openIdRes.data.msg)
+      showToast({title:openIdRes.data.msg,icon:'loading',duration:2000})
     }
   }
 

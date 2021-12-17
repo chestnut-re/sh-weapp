@@ -24,7 +24,6 @@ const LoginPage = () => {
   const onGetPhoneNumberEventDetail = async (res) => {
     if (res.detail.errMsg == 'getPhoneNumber:ok') {
       showLoading()
-      console.log(res)
       const result = await WXService.bindMobile(res.detail.encryptedData, res.detail.iv, userStore.sessionKey)
       hideLoading()
       console.log(result.data.code)
@@ -33,7 +32,7 @@ const LoginPage = () => {
         Taro.reLaunch({ url: '/pages/index/index' })
         userStore.init()
       } else {
-        showToast(result.data.msg ?? '登录失败')
+        showToast({ title: result.data.msg ?? '登录失败', icon: 'none', duration: 2000 })
       }
     } else if (res.detail.errMsg == 'getPhoneNumber:fail user deny') {
       console.log(res.detail)
