@@ -199,12 +199,12 @@ const LocationPage = () => {
   const renderCityList = (cityList: any) => {
     return (
       <View className='city-item-list'>
-        {cityList.length > 0 &&
+        {/* {cityList.length > 0 &&
           cityList.map((item: any, index: number) => (
             <View key={index} className='city-name'>
               {item.short_name}
             </View>
-          ))}
+          ))} */}
       </View>
     )
   }
@@ -228,12 +228,12 @@ const LocationPage = () => {
   const getProdAreaList = async () => {
     const result = await LocationService.getProdAreaList()
     console.log(result)
-    // if (result.statusCode === 200) {
-    //   setBannerList(result.data.data)
-    // }
+    if (result.statusCode === 200) {
+      // setBannerList(result.data.data)
+    }
   }
-  const getCity = (a) => {
-    console.log(a)
+  const getCity = (a, b) => {
+    console.log(a, b)
     setViewInto(a)
   }
   return (
@@ -283,7 +283,7 @@ const LocationPage = () => {
               🌟
             </View>
             {Object.keys(cityData.city).map((key: string, index: number) => (
-              <View key={index} className='order-item' onClick={() => getCity(key)}>
+              <View key={index} className='order-item' onClick={() => getCity(key, index)}>
                 {key}
               </View>
             ))}

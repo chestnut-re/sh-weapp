@@ -81,13 +81,7 @@ const HomeScreen = () => {
   //   Taro.navigateTo({ url: `/pages/webview/index?url=${H5.myTravel}` })
   // }
   const anOrder = () => {
-    if (!userStore.isBindMobile) {
-      // 未登录
-      Taro.navigateTo({ url: '/pages/login/index' })
-      return
-    } else {
-      Taro.navigateTo({ url: `/pages/webview/index?url=${H5.goodsDetail}` })
-    }
+    Taro.navigateTo({ url: `/pages/webview/index?url=${H5.goodsDetail}` })
   }
   //获取banner
   const getBanner = async () => {
