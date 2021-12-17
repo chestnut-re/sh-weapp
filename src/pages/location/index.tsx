@@ -211,7 +211,7 @@ const LocationPage = () => {
   useEffect(() => {
     setCityData(abc)
     // getAreaList()
-    // getProdAreaList()
+    getProdAreaList()
   }, [])
 
   usePageScroll(({ scrollTop: aScrollTop }) => {
@@ -223,14 +223,7 @@ const LocationPage = () => {
   const toHome = () => {
     Taro.navigateTo({ url: '/pages/index/index' })
   }
-  //获取城市列表
-  const getAreaList = async () => {
-    const result = await LocationService.getAreaList()
-    console.log(result)
-    // if (result.statusCode === 200) {
-    //   setBannerList(result.data.data)
-    // }
-  }
+
   //获取有商品城市列表
   const getProdAreaList = async () => {
     const result = await LocationService.getProdAreaList()

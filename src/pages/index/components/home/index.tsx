@@ -108,13 +108,19 @@ const HomeScreen = () => {
       setActivityList(result.data.data)
     }
   }
+  const toBannerUrl = (url) => {
+    Taro.navigateTo({ url: `/pages/webview/index?url=${url}` })
+  }
+  const toActivityUrl = (url) => {
+    Taro.navigateTo({ url: `/pages/webview/index?url=${url}` })
+  }
   return (
     <View className='HomeScreen__root'>
       {bannerList.length > 0 && (
         <View>
           <Swiper className='top-s' autoplay={3000}>
             {bannerList.map((item) => (
-              <Swiper.Item className='item' key={item.id}>
+              <Swiper.Item className='item' key={item.id} onClick={() => toBannerUrl(item.bannerUrl)}>
                 <Image src={item.bannerImg}></Image>
                 <View>{item.title}</View>
               </Swiper.Item>
@@ -142,7 +148,7 @@ const HomeScreen = () => {
       <View className='go-done'>
         <View className='home-body'>
           {activityList.length > 0 && (
-            <View className='swiper'>
+            <View className='swiper' onClick={() => toActivityUrl(activityList[0].activityUrl)}>
               <View className='swiper-left'>
                 <Image className='first' src={activityList[0].activityImg} />
                 {/* <View className='select-route'>
@@ -153,7 +159,7 @@ const HomeScreen = () => {
             <View className='route-text'>双飞6日</View> */}
               </View>
               <View className='swiper-right'>
-                <View className='right-top'>
+                <View className='right-top' onClick={() => toActivityUrl(activityList[1].activityUrl)}>
                   <Image className='second' src={activityList[1].activityImg} />
                   {/* <View className='select-route'>
                 <View className='now'>即刻</View>
@@ -161,7 +167,7 @@ const HomeScreen = () => {
               </View>
               <View className='route-text'>古水北镇2日1晚 赏红叶</View> */}
                 </View>
-                <View className='right-bottom'>
+                <View className='right-bottom' onClick={() => toActivityUrl(activityList[2].activityUrl)}>
                   <Image className='third' src={activityList[2].activityImg} />
                   {/* <View className='select-route'>
                 <View className='local'>当地</View>

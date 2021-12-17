@@ -1,9 +1,9 @@
 export default {
   pages: [
     'pages/index/index',
-    'pages/setPassword/index',
-    'pages/myData/index',
     'pages/usualMessage/index',
+    'pages/myData/index',
+    'pages/setPassword/index',
     'pages/pedestrian/index',
     'pages/myToken/index',
     'pages/login/index',

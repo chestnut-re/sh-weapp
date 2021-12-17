@@ -1,33 +1,99 @@
+/* eslint-disable import/first */
 import { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
-import { View } from '@tarojs/components'
-import { Tabs } from '@taroify/core'
-import { useState } from 'react'
+import { View, Text, Image } from '@tarojs/components'
+import { Tabs, List, Loading, PullRefresh } from '@taroify/core'
+import { useRef, useState } from 'react'
 import { observer } from 'mobx-react'
 import UsalMessageList from './components/usalMessageList'
+import jump from '@/assets/img/yjfk/jump.png'
+import add from '@/assets/img/traveler/add.png'
+import per from '@/assets/img/traveler/per.png'
 import './index.less'
+import { UserService } from '@/service/UserService'
+import { useStore } from '@/store/context'
 /**
  * 常用信息
  */
 const UsualMessagePage = () => {
-  const [value, setValue] = useState(0)
+  const { userStore } = useStore()
+  const [hasMore, setHasMore] = useState(true)
+  const [list, setList] = useState<string[]>([])
+  const [loading, setLoading] = useState(false)
+  const refreshingRef = useRef(false)
   const [scrollTop, setScrollTop] = useState(0)
   const [reachTop, setReachTop] = useState(true)
-
   usePageScroll(({ scrollTop: aScrollTop }) => {
     setScrollTop(aScrollTop)
     setReachTop(aScrollTop === 0)
   })
+  const onLoad = () => {
+    setLoading(true)
+    const newList = refreshingRef.current ? [] : list
+    setTimeout(() => {
+      refreshingRef.current = false
+      for (let i = 0; i < 10; i++) {
+        const text = newList.length + 1
+        newList.push(text < 10 ? '0' + text : String(text))
+      }
+      setList(newList)
+      setLoading(false)
+      setHasMore(newList.length < 11)
+    }, 1000)
+  }
 
+  function onRefresh() {
+    refreshingRef.current = true
+    setLoading(false)
+    onLoad()
+  }
+  const getUserInfo = () => {
+    console.log(userStore)
+    const result = UserService.getUserInfo()
+    console.log(result)
+  }
   return (
     <View className='UsualMessagePage__root'>
-      <Tabs className='orderTabs' value={value} onChange={setValue}>
+      {/* <Tabs className='orderTabs' value={value} onChange={setValue}>
         <Tabs.TabPane title='出行人'>
           <UsalMessageList onName='出行人' />
         </Tabs.TabPane>
         <Tabs.TabPane title='地址'>
           <UsalMessageList onName='地址' />
         </Tabs.TabPane>
-      </Tabs>
+      </Tabs> */}
+      <View className='add-mode'>
+        <View className='add' onClick={getUserInfo}>
+          <Image className='img' src={add} />
+          <Text className='add-text'>添加 出行人</Text>
+        </View>
+      </View>
+      <PullRefresh className='list' loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
+        <List loading={loading} hasMore={hasMore} onLoad={onLoad}>
+          {list.map((item) => (
+            <View className='item' key={item}>
+              <View className='card'>
+                <View className='left-all'>
+                  <View className='left-top'>
+                    <View className='user-name'>
+                      <View className='state'>李买买</View>
+                      {item === '01' ? <View className='myself'>本人</View> : null}
+                    </View>
+                    <View className='tel'>188*****678</View>
+                  </View>
+                  <View className='left-id'>{Number(item) % 2 ? '身份证 1100 **** **** **8899' : '护照 11****99'}</View>
+                </View>
+                <Image className='jump' src={jump} />
+              </View>
+            </View>
+          ))}
+          {!refreshingRef.current && (
+            <List.Placeholder>
+              {loading && <Loading>加载中...</Loading>}
+              {!hasMore && '没有更多了'}
+            </List.Placeholder>
+          )}
+        </List>
+      </PullRefresh>
     </View>
   )
 }
