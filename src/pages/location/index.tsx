@@ -1,14 +1,13 @@
 import search from '@/assets/img/yjfk/seachtwo.png'
 import location from '@/assets/img/yjfk/location.png'
-import del from '@/assets/img/password/del.png'
-import { View, Image, Input, ScrollView } from '@tarojs/components'
+import refreshPNG from '@/assets/img/location/refresh.png'
+import { View, Image, Input, ScrollView, Text } from '@tarojs/components'
 import { Sticky } from '@taroify/core'
 import { observer } from 'mobx-react'
 import { useEffect, useRef, useState } from 'react'
 import { LocationService } from '@/service/LocationService'
 import { getFirstPingYin } from '@/utils/pingyin'
 import { useStore } from '@/store/context'
-import { getSuggestCity } from '@/utils/location'
 import Taro from '@tarojs/taro'
 
 import './index.less'
@@ -18,8 +17,6 @@ import './index.less'
  */
 const LocationPage = () => {
   const { userStore } = useStore()
-  const container = useRef()
-  const [city, setCity] = useState<any>({})
   const [viewInto, setViewInto] = useState<any>('A')
   const [cityData, setCityData] = useState<any>({})
 
@@ -49,8 +46,6 @@ const LocationPage = () => {
   }
   useEffect(() => {
     getProdAreaList()
-
-    setCity(getSuggestCity())
   }, [])
 
   //获取有商品城市列表
@@ -82,9 +77,13 @@ const LocationPage = () => {
     setViewInto(a)
   }
 
+  const _refreshLocation = () => {
+    userStore.initCity(true)
+  }
+
   return (
-    <View className='LocationPage__root' ref={container}>
-      {/* <Sticky className='sticky' container={container}>
+    <View className='LocationPage__root'>
+      {/* <Sticky className='sticky'>
         <View className='home-header'>
           <View className='search-input'>
             <Image className='search' src={search} />
@@ -96,8 +95,15 @@ const LocationPage = () => {
       <View className='location'>
         <View className='now'>当前定位</View>
         <View className='place-text'>
-          <Image className='place' src={location} />
-          {city.name ?? ''}
+          <View className='place-text-container'>
+            <Image className='place' src={location} />
+            {userStore.city?.name ?? '正在获取定位'}
+          </View>
+
+          <View onClick={_refreshLocation}>
+            <Image className='refresh-ic' src={refreshPNG} />
+            <Text className='refresh-text'>重新定位</Text>
+          </View>
         </View>
       </View>
       <View className='list-city'>

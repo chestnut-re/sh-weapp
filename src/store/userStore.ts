@@ -105,9 +105,14 @@ class UserData {
   }
 
   /**初始化城市信息 */
-  async initCity() {
-    const res = await get(CITY_INFO)
-    if (res) {
+  async initCity(force = false) {
+    let res
+    try {
+      res = await get(CITY_INFO)
+    } catch (error) {
+      console.log(error)
+    }
+    if (res && !force) {
       this.setCityCode(JSON.parse(res.data))
     } else {
       const suggestCity = await getSuggestCity()

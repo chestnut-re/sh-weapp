@@ -1,3 +1,4 @@
+import { LocationService } from '@/service/LocationService'
 import Taro from '@tarojs/taro'
 
 /**
@@ -5,7 +6,7 @@ import Taro from '@tarojs/taro'
  */
 export const getSuggestCity = async () => {
   const locationInfo = await Taro.getLocation({})
-  console.log(locationInfo)
-  // latitude， longitude
-  // TODO：接口，获取最近城市
+  console.log('定位数据:', locationInfo)
+  const ret = await LocationService.getClosestCityByLI({ lat: locationInfo.latitude, lng: locationInfo.longitude })
+  return ret.data?.data
 }
