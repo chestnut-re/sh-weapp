@@ -34,6 +34,8 @@ const HomeScreen = () => {
   useReady(() => {})
   useDidShow(() => {})
   useEffect(() => {
+    console.log('getBanner')
+
     getBanner()
     getActivity()
   }, [])
@@ -56,7 +58,7 @@ const HomeScreen = () => {
     const newList = refreshingRef.current ? [] : list
     setTimeout(() => {
       refreshingRef.current = false
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 30; i++) {
         const text = newList.length + 1
         newList.push(text < 1 ? '0' + text : String(text))
       }

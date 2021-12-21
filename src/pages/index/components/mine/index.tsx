@@ -1,4 +1,5 @@
 import Taro, { usePageScroll, useShareAppMessage } from '@tarojs/taro'
+import { useStore } from '@/store/context'
 import { Button, View, Text, Image, Canvas } from '@tarojs/components'
 import { Steps, List, Popup } from '@taroify/core'
 import { observer } from 'mobx-react'
@@ -34,10 +35,13 @@ import del from '@/assets/img/mine/del.png'
 import './index.less'
 // eslint-disable-next-line import/first
 import { H5 } from '@/constants/h5'
+
 /**
  * 我的页面
  */
 const MineScreen = () => {
+  const { userStore } = useStore()
+  console.log('???', userStore.userInfo?.nickName)
   const [hasMore, setHasMore] = useState(true)
   const [list, setList] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
@@ -255,6 +259,7 @@ const MineScreen = () => {
           </View>
         )}
       </View>
+
       <View className='Header__btn'>
         <View className='btn' onClick={toFist}>
           <Image className='img1' src={lingdang} />
@@ -275,11 +280,11 @@ const MineScreen = () => {
       </View>
       <View className='user' onClick={toMyData}>
         <View className='User__Img'>
-          <Image className='img' src={myPhoto} />
+          <Image className='img' src={userStore.userInfo?.pic ? userStore.userInfo?.pic : myPhoto} />
         </View>
         <View className='User__Name'>
-          <View className='name'>丛林迷雾</View>
-          <View className='autograph'>天空分外晴朗,白云也绽露笑容</View>
+          <View className='name'>{userStore.userInfo?.nickName}</View>
+          <View className='autograph'>{userStore.userInfo?.pic ? userStore.userInfo?.pic : '编辑个性签名'}</View>
         </View>
       </View>
       <View className='dolor' onClick={toMyToken}>

@@ -199,15 +199,16 @@ const LocationPage = () => {
   const renderCityList = (cityList: any) => {
     return (
       <View className='city-item-list'>
-        {/* {cityList.length > 0 &&
+        {cityList.length > 0 &&
           cityList.map((item: any, index: number) => (
             <View key={index} className='city-name'>
               {item.short_name}
             </View>
-          ))} */}
+          ))}
       </View>
     )
   }
+  usePageScroll(() => {})
   useEffect(() => {
     setCityData(abc)
     // getAreaList()

@@ -1,8 +1,11 @@
 export default {
   pages: [
     'pages/index/index',
-    'pages/usualMessage/index',
     'pages/myData/index',
+    'pages/setPic/index',
+    'pages/setAutograph/index',
+    'pages/setName/index',
+    'pages/usualMessage/index',
     'pages/setPassword/index',
     'pages/pedestrian/index',
     'pages/myToken/index',
@@ -19,12 +22,10 @@ export default {
     'pages/traveler/index',
     'pages/feedBack/index',
     'pages/setSex/index',
-    'pages/setAutograph/index',
-    'pages/setName/index',
     'pages/demo/index',
     'pages/followStore/index',
     'pages/webview/index',
-    ],
+  ],
   window: {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#fff',

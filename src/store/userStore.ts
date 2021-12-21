@@ -63,11 +63,20 @@ class UserData {
       save(SESSION_KEY, this.sessionKey!)
       save(ACCESS_TOKEN, this.accessToken!)
       save(REFRESH_TOKEN, this.refreshToken!)
-      //获取用户信息 
-      const  useInfo = await UserService.getUserInfo()
-      console.log('userRes',useInfo)
+      this.getUserInfo()
     } else {
       showMToast(openIdRes.data.msg)
+    }
+  }
+
+  //获取用户信息
+  async getUserInfo() {
+    const useInfo = await UserService.getUserInfo()
+    console.log('userRes', useInfo)
+    if (useInfo.data.code == 200) {
+      this.userInfo = useInfo.data.data
+    } else {
+      showToast(useInfo.data.msg)
     }
   }
 
