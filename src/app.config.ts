@@ -1,6 +1,7 @@
 export default {
   pages: [
     'pages/index/index',
+    'pages/location/index',
     'pages/myData/index',
     'pages/setPic/index',
     'pages/setAutograph/index',
@@ -15,7 +16,6 @@ export default {
     'pages/verification/index',
     'pages/setUp/index',
     'pages/password/index',
-    'pages/location/index',
     'pages/search/index',
     'pages/aboutUs/index',
     'pages/myLiked/index',
@@ -31,5 +31,10 @@ export default {
     navigationBarBackgroundColor: '#fff',
     navigationBarTitleText: 'WeChat',
     navigationBarTextStyle: 'black',
+  },
+  permission: {
+    'scope.userLocation': {
+      desc: '获取定位设置用户当前城市',
+    },
   },
 }

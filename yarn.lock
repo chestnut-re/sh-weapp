@@ -7911,6 +7911,11 @@
   "resolved" "https://registry.npmjs.org/pinkie/-/pinkie-2.0.4.tgz"
   "version" "2.0.4"
 
+"pinyin-pro@^3.4.0":
+  "integrity" "sha512-MNSUCO0dA5CXqhcnLUaZY6S6ONioTituiOdlx46sQih3Y00AOt4VBXA5h1kBXDy1JFEeJ7EE7WdZOk7B74d6uA=="
+  "resolved" "https://registry.npmjs.org/pinyin-pro/-/pinyin-pro-3.4.0.tgz"
+  "version" "3.4.0"
+
 "pirates@^4.0.0":
   "integrity" "sha512-WuNqLTbMI3tmfef2TKxlQmAiLHKtFhlsCZnPIpuv2Ow0RDVO8lfy1Opf4NUzlMXLjPl+Men7AuVdX6TA+s+uGA=="
   "resolved" "https://registry.npmjs.org/pirates/-/pirates-4.0.1.tgz"

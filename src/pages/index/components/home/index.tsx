@@ -1,13 +1,9 @@
-/* eslint-disable import/no-duplicates */
-/* eslint-disable import/first */
-import Taro, { useDidShow, useReady } from '@tarojs/taro'
-import { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
+import Taro, { useDidShow, useReady, usePageScroll } from '@tarojs/taro'
 import { View, Text, Image, Input } from '@tarojs/components'
 import { List, Loading, Swiper } from '@taroify/core'
 import { useStore } from '@/store/context'
 import { observer } from 'mobx-react'
 import { useEffect, useRef, useState } from 'react'
-import './index.less'
 import place from '@/assets/img/home/vdizhi@3x.png'
 import search from '@/assets/img/home/sousuo-2@2x.png'
 import pic from '@/assets/img/common/shg.png'
@@ -16,21 +12,23 @@ import noLike from '@/assets/img/home/no-like.png'
 import liked from '@/assets/img/home/liked.png'
 import { H5 } from '@/constants/h5'
 import { HomeService } from '@/service/HomeService'
+
+import './index.less'
+
 /**
  * 首页
  */
 const HomeScreen = () => {
   const { userStore } = useStore()
-  const [value, setValue] = useState('北京')
   const [hasMore, setHasMore] = useState(true)
   const [list, setList] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
   const refreshingRef = useRef(false)
   const [scrollTop, setScrollTop] = useState(0)
   const [reachTop, setReachTop] = useState(true)
-  const [num, setNum] = useState(0)
   const [bannerList, setBannerList] = useState<any[]>([])
   const [activityList, setActivityList] = useState<any[]>([])
+
   useReady(() => {})
   useDidShow(() => {})
   useEffect(() => {
@@ -40,10 +38,6 @@ const HomeScreen = () => {
     getActivity()
   }, [])
 
-  const toWebViewPage = () => {
-    const url = decodeURIComponent('http://123.56.248.148/protocol/privacy')
-    Taro.navigateTo({ url: `/pages/webview/index?url=${url}` })
-  }
   usePageScroll(({ scrollTop: aScrollTop }) => {
     setScrollTop(aScrollTop)
     setReachTop(aScrollTop === 0)
@@ -73,18 +67,23 @@ const HomeScreen = () => {
     setLoading(false)
     onLoad()
   }
+
   const toSearch = () => {
     Taro.navigateTo({ url: '/pages/search/index' })
   }
+
   const toLocation = () => {
     Taro.navigateTo({ url: '/pages/location/index' })
   }
+
   // const toMyTravel = () => {
   //   Taro.navigateTo({ url: `/pages/webview/index?url=${H5.myTravel}` })
   // }
+
   const anOrder = () => {
     Taro.navigateTo({ url: `/pages/webview/index?url=${H5.goodsDetail}` })
   }
+
   //获取banner
   const getBanner = async () => {
     const result = await HomeService.getBanner()
@@ -92,11 +91,13 @@ const HomeScreen = () => {
       setBannerList(result.data.data)
     }
   }
+
   //getGoods
   const getGoods = async () => {
     const result = await HomeService.getGoods('0')
     console.log(result)
   }
+
   //getActivity
   const getActivity = async () => {
     const result = await HomeService.getActivity()
@@ -104,12 +105,15 @@ const HomeScreen = () => {
       setActivityList(result.data.data)
     }
   }
+
   const toBannerUrl = (url) => {
     Taro.navigateTo({ url: `/pages/webview/index?url=${url}` })
   }
+
   const toActivityUrl = (url) => {
     Taro.navigateTo({ url: `/pages/webview/index?url=${url}` })
   }
+
   return (
     <View className='HomeScreen__root'>
       {bannerList.length > 0 && (
@@ -121,10 +125,6 @@ const HomeScreen = () => {
                 <View>{item.title}</View>
               </Swiper.Item>
             ))}
-            {/* <Swiper.Item className='item'>
-          <Image src='https://s1.ax1x.com/2021/12/09/ohR9jH.jpg'></Image>
-          <View onClick={getBanner}>大连路线站字符</View>
-        </Swiper.Item> */}
             <Swiper.Indicator className='basic-swiped' />
           </Swiper>
           <View className='un-done'></View>
@@ -133,7 +133,7 @@ const HomeScreen = () => {
       {/* <PullRefresh loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}> */}
       <View className='home-header'>
         <View className='now-place' onClick={toLocation}>
-          <Text className='text'>{value}</Text>
+          <Text className='text'>{userStore.city?.name ?? ''}</Text>
           <Image className='place' src={place} />
         </View>
         <View className='search-input' onClick={toSearch}>

@@ -1,17 +1,22 @@
 /* eslint-disable import/first */
 import { View } from '@tarojs/components'
 import { observer } from 'mobx-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import TabBar from '../../components/tabbar'
 import MineScreen from './components/mine'
 import MsgScreen from './components/msg'
 import HomeScreen from './components/home'
 import './index.less'
-import { userStore } from '@/store/context'
+import { useStore } from '@/store/context'
 import Taro from '@tarojs/taro'
 
 const IndexPage = () => {
+  const { userStore } = useStore()
   const [index, setIndex] = useState(0)
+
+  useEffect(() => {
+    userStore.initCity()
+  }, [])
 
   const onTabClick = (newIndex: number) => {
     if ((newIndex == 1 || newIndex == 2) && !userStore.isBindMobile) {

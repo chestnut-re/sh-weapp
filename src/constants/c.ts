@@ -34,3 +34,8 @@ export const PHONE_NUMBER = 'phone_number'
  * 用户信息
  */
 export const USER_INFO = 'user_info'
+
+/**
+ * cityInfo 城市信息
+ */
+export const CITY_INFO = 'city_info'

@@ -1,15 +1,17 @@
-import { ACCESS_TOKEN, REFRESH_TOKEN, SESSION_KEY } from '@/constants/c'
+import { ACCESS_TOKEN, CITY_INFO, REFRESH_TOKEN, SESSION_KEY } from '@/constants/c'
 import { WXService } from '@/service/WXService'
 import { UserService } from '@/service/UserService'
-import { clearStorage, save } from '@/utils/storage'
-import Taro, { showToast } from '@tarojs/taro'
+import { clearStorage, get, save } from '@/utils/storage'
+import Taro from '@tarojs/taro'
 import { makeObservable, observable, action } from 'mobx'
 import { showMToast } from '@/utils/ui'
+import { getSuggestCity } from '@/utils/location'
 
 /**
  * 用户相关数据
  * 登录/注册
  * 用户基本信息
+ * 城市信息维护
  */
 class UserData {
   /**用户信息 */
@@ -22,13 +24,18 @@ class UserData {
   accessToken = null
   /** user refresh token 刷新 token 用*/
   refreshToken = null
+  /**city 城市信息，需要保存到本地 */
+  city = null
 
   constructor() {
     makeObservable(this, {
       userInfo: observable,
+      city: observable,
       init: action,
       login: action,
       loginOut: action,
+      setCityCode: action,
+      initCity: action,
     })
     this.init()
   }
@@ -49,10 +56,8 @@ class UserData {
   /**登录 */
   async login() {
     const wxRes = await Taro.login()
-    console.log(wxRes)
     const openIdRes = await WXService.getOpenId(wxRes.code)
 
-    console.log('res', openIdRes)
     if (openIdRes.data.code == 200) {
       this.accessToken = openIdRes.data.data.accessToken
       this.refreshToken = openIdRes.data.data.refreshToken
@@ -76,7 +81,7 @@ class UserData {
     if (useInfo.data.code == 200) {
       this.userInfo = useInfo.data.data
     } else {
-      showToast(useInfo.data.msg)
+      showMToast(useInfo.data.msg)
     }
   }
 
@@ -97,6 +102,25 @@ class UserData {
   /**true: 表示已经绑定，用这个判断是否已经登录 */
   get isBindMobile() {
     return this._isBindMobile === 1
+  }
+
+  /**初始化城市信息 */
+  async initCity() {
+    const res = await get(CITY_INFO)
+    if (res) {
+      this.setCityCode(JSON.parse(res.data))
+    } else {
+      const suggestCity = await getSuggestCity()
+      this.setCityCode(suggestCity)
+    }
+  }
+
+  /**设置城市信息 */
+  setCityCode(city: any) {
+    if (!city) return
+    this.city = city
+    save(CITY_INFO, JSON.stringify(city))
+    console.log('设置城市', city)
   }
 }
 

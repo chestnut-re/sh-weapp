@@ -24,6 +24,7 @@ specifiers:
   eslint-plugin-react-hooks: ^4.2.0
   mobx: ^6.3.5
   mobx-react: ^7.2.1
+  pinyin-pro: ^3.4.0
   react: ^17.0.0
   react-dom: ^17.0.0
   stylelint: 9.3.0
@@ -40,6 +41,7 @@ dependencies:
   dayjs: 1.10.7
   mobx: 6.3.9
   mobx-react: 7.2.1_c8dbfbd16e4760b60a2fbc68638b8165
+  pinyin-pro: 3.4.0
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
   taro-hooks: 1.5.0_@tarojs+taro@3.3.14+react@17.0.2
@@ -8022,6 +8024,10 @@ packages:
     resolution: {integrity: sha1-clVrgM+g1IqXToDnckjoDtT3+HA=}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /pinyin-pro/3.4.0:
+    resolution: {integrity: sha512-MNSUCO0dA5CXqhcnLUaZY6S6ONioTituiOdlx46sQih3Y00AOt4VBXA5h1kBXDy1JFEeJ7EE7WdZOk7B74d6uA==}
+    dev: false
 
   /pirates/4.0.4:
     resolution: {integrity: sha512-ZIrVPH+A52Dw84R0L3/VS9Op04PuQ2SEoJL6bkshmiTic/HldyW9Tf7oH5mhJZBK7NmDx27vSMrYEXPXclpDKw==}
