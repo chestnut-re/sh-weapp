@@ -19,12 +19,9 @@ import { filterCurDate, getMyDate } from '@/utils/date'
  */
 const MyDataPage = () => {
   const { userStore } = useStore()
-  console.log(userStore)
-
-  const [value, setValue] = useState('')
-  const [openPicker, setOpenPicker] = useState(false)
 
   const [openDate, setOpenDate] = useState(false)
+  const [openCity, setOpenCity] = useState(false)
   const [minDate] = useState(new Date(1970, 0, 1))
   const [maxDate] = useState(new Date(2025, 10, 1))
   const [defaultValue] = useState(new Date(2021, 0, 17))
@@ -50,28 +47,119 @@ const MyDataPage = () => {
       showMToast(userRes.data.msg)
     }
   }
-  //获取城市列表
-  const getAreaList = async () => {
-    const result = await LocationService.getAreaList()
-    console.log(result)
-    // if (result.statusCode === 200) {
-    //   setBannerList(result.data.data)
-    // }
+
+  const [address, setAddress] = useState('请选择地址')
+  //三级联动
+  const [customArray, setCustomArray] = useState<any>(userStore?.cityInfo)
+  const [customIndex, setCustomIndex] = useState([0, 0, 0])
+  let [onlyArray, setOnlyArray] = useState([[], [], []])
+  useEffect(() => {
+    const data = {
+      customArray: customArray,
+      customIndex: customIndex,
+      onlyArray: onlyArray,
+    }
+    for (let i = 0; i < data.customArray.length; i++) {
+      // @ts-ignore
+      data.onlyArray[0].push(customArray[i].name)
+    }
+    for (let j = 0; j < data.customArray[customIndex[0]].areas.length; j++) {
+      // @ts-ignore
+      data.onlyArray[1].push(customArray[customIndex[0]].areas[j].name)
+    }
+    for (let k = 0; k < customArray[customIndex[0]].areas[customIndex[1]].areas.length; k++) {
+      // @ts-ignore
+      data.onlyArray[2].push(customArray[customIndex[0]].areas[customIndex[1]].areas[k].name)
+    }
+    setCustomArray(data.customArray)
+    setCustomIndex(data.customIndex)
+    setOnlyArray(data.onlyArray)
+  })
+  //多列选择
+  const bindCustomPickerColumnChange = (m) => {
+    const newCustomArray = userStore?.cityInfo
+    const newCustomIndex = customIndex
+    const newOnlyArray = onlyArray
+    newCustomIndex[m.detail.column] = m.detail.value
+    console.log(newCustomIndex)
+    const searchColumn = () => {
+      for (let i = 0; i < newCustomArray.length; i++) {
+        let arr1 = []
+        let arr2 = []
+        if (i == newCustomIndex[0]) {
+          for (let j = 0; j < newCustomArray[i].areas.length; j++) {
+            // @ts-ignore
+            arr1.push(newCustomArray[i].areas[j].name)
+            if (j == newCustomIndex[1]) {
+              for (let k = 0; k < newCustomArray[i].areas[j].areas.length; k++) {
+                // @ts-ignore
+                arr2.push(newCustomArray[i].areas[j].areas[k].name)
+              }
+              newOnlyArray[2] = arr2
+              console.log('arr2', arr2)
+            }
+          }
+          newOnlyArray[1] = arr1
+          console.log('arr1', arr1)
+        }
+      }
+    }
+
+    switch (m.detail.column) {
+      case 0:
+        newCustomIndex[1] = 0
+        newCustomIndex[2] = 0
+        searchColumn()
+        break
+      case 1:
+        newCustomIndex[2] = 0
+        searchColumn()
+        break
+    }
+    //这里要清空原来的数据进行数据更新
+    setOnlyArray([[], [], []])
+    setCustomIndex(newCustomIndex)
+    console.log(newCustomIndex)
   }
-  const selector = ['美国', '中国', '巴西', '日本']
-  const [selectorChecked, setSelectorChecked] = useState('美国')
-  const onChange = (e) => {
-    setSelectorChecked(selector[e.detail.value])
+
+  //选择地区
+  const addressOnChange = async (e) => {
+    const indexArr = e.detail.value
+    console.log(
+      customArray[indexArr[0]].name,
+      customArray[indexArr[0]].areas[indexArr[1]].name,
+      customArray[indexArr[0]].areas[indexArr[1]].areas[indexArr[2]].name
+    )
+
+    const addressText =
+      `${customArray[indexArr[0]].name}` +
+      ' ' +
+      `${customArray[indexArr[0]].areas[indexArr[1]].name}` +
+      ' ' +
+      `${customArray[indexArr[0]].areas[indexArr[1]].areas[indexArr[2]].name}`
+    setAddress(addressText)
+    const userRes = await UserService.editUserInfo({ address: addressText })
+    console.log('修改返回参数', userRes)
+    if (userRes.data.code == 200) {
+      showMToast(userRes.data.msg)
+      userStore.getUserInfo()
+      Taro.navigateBack()
+    } else {
+      showMToast(userRes.data.msg)
+    }
   }
   return (
     <View className='MyDataPage__root'>
-      <Popup open={openPicker} rounded placement='bottom' onClose={setOpenPicker}>
-        <View>
-          <Picker mode='selector' range={selector} onChange={onChange}>
-            <View className='picker'>当前选择：{selectorChecked}</View>
-          </Picker>
-        </View>
-      </Popup>
+      {/* <Picker
+        mode='multiSelector'
+        range={onlyArray}
+        onChange={addressOnChange}
+        value={customIndex}
+        onColumnChange={bindCustomPickerColumnChange.bind(this)}
+      >
+        {userStore.userInfo?.address && <View>{userStore.userInfo?.address}</View>}
+        {!userStore.userInfo?.address && <View> {address}</View>}
+      </Picker> */}
       <ActionSheet open={openDate} onSelect={() => setOpenDate(false)} onClose={setOpenDate}>
         <DatetimePicker type='date' min={minDate} max={maxDate} onConfirm={(value) => editBirthday(value)}>
           <DatetimePicker.Toolbar>
@@ -114,10 +202,19 @@ const MyDataPage = () => {
           </View>
         </View>
         <View className='divide' />
-        <View className='item' onClick={getAreaList}>
+        <View className='item' onClick={() => setOpenCity(true)}>
           <View className='item-left'>常住地</View>
           <View className='item-right'>
-            {userStore.userInfo?.address}
+            <Picker
+              mode='multiSelector'
+              range={onlyArray}
+              onChange={addressOnChange}
+              value={customIndex}
+              onColumnChange={bindCustomPickerColumnChange.bind(this)}
+            >
+              {userStore.userInfo?.address && <View>{userStore.userInfo?.address}</View>}
+              {!userStore.userInfo?.address && <View> {address}</View>}
+            </Picker>
             <Image className='img-left' src={jump}></Image>
           </View>
         </View>

@@ -1,6 +1,7 @@
 import { ACCESS_TOKEN, CITY_INFO, REFRESH_TOKEN, SESSION_KEY } from '@/constants/c'
 import { WXService } from '@/service/WXService'
 import { UserService } from '@/service/UserService'
+import { LocationService } from '@/service/LocationService'
 import { clearStorage, get, save } from '@/utils/storage'
 import Taro from '@tarojs/taro'
 import { makeObservable, observable, action } from 'mobx'
@@ -26,6 +27,7 @@ class UserData {
   refreshToken = null
   /**city 城市信息，需要保存到本地 */
   city = null
+  cityInfo = null
 
   constructor() {
     makeObservable(this, {
@@ -69,6 +71,7 @@ class UserData {
       save(ACCESS_TOKEN, this.accessToken!)
       save(REFRESH_TOKEN, this.refreshToken!)
       this.getUserInfo()
+      this.getAreaList()
     } else {
       showMToast(openIdRes.data.msg)
     }
@@ -84,7 +87,16 @@ class UserData {
       showMToast(useInfo.data.msg)
     }
   }
-
+  //获取常住地城市列表
+  async getAreaList() {
+    const cityInfo = await LocationService.getAreaList()
+    console.log('userRes', cityInfo)
+    if (cityInfo.data.code == 200) {
+      this.cityInfo = cityInfo.data.data
+    } else {
+      showMToast(cityInfo.data.msg)
+    }
+  }
   /**退出登录 */
   loginOut() {
     this.accessToken = null
