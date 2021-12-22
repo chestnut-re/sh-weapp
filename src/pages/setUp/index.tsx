@@ -4,7 +4,6 @@ import { useStore } from '@/store/context'
 import { Button, Image, Dialog } from '@taroify/core'
 import { observer } from 'mobx-react'
 import { useState } from 'react'
-import pic from '@/assets/img/common/shg.png'
 import myPhoto from '@/assets/img/mine/myphoto.png'
 import jump from '@/assets/img/yjfk/jump.png'
 

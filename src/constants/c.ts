@@ -9,7 +9,7 @@
 // export const BASE_URL = 'http://192.168.10.188:19001/api' //刘金凯
 // export const BASE_URL = 'http://192.168.10.52:19001' //邢浩
 // export const BASE_URL = 'https://testapi.mountainseas.cn/api' //测试环境
-export const BASE_URL = 'https://devapi.mountainseas.cn'
+export const BASE_URL = 'https://devapi.mountainseas.cn/api' //开发环境
 
 /**
  * H5 url 地址
