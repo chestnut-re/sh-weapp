@@ -4,7 +4,7 @@ import Taro from '@tarojs/taro'
 export const getHeader = () => {
   return {
     Authorization: userStore.accessToken,
-    cId: userStore.city?.citycode ?? ''
+    cId: userStore.city?.adcode ?? ''
   }
 }
 
