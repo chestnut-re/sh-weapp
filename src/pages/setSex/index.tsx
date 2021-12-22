@@ -7,9 +7,9 @@ import { UserService } from '@/service/UserService'
 import { showMToast } from '@/utils/ui'
 import { useEffect, useState } from 'react'
 import { observer } from 'mobx-react'
+import select from '@/assets/img/mine/select.png'
 
 import './index.less'
-import pic from '@/assets/img/common/shg.png'
 /**
  * 设置性别
  */
@@ -56,12 +56,12 @@ const SetSexPage = () => {
       <View className='sex-list'>
         <View className='item' onClick={selectSex1}>
           <View>男</View>
-          <Image className='img' src={pic} style={{ display: showMan }} />
+          <Image className='img' src={select} style={{ display: showMan }} />
         </View>
         <View className='divide' />
         <View className='item' onClick={selectSex2}>
           <View>女</View>
-          <Image className='img' src={pic} style={{ display: showWomen }} />
+          <Image className='img' src={select} style={{ display: showWomen }} />
         </View>
       </View>
 

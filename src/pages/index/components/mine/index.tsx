@@ -32,9 +32,8 @@ import weCat from '@/assets/img/mine/weCat.png'
 import long from '@/assets/img/mine/long.png'
 import link from '@/assets/img/mine/link.png'
 import del from '@/assets/img/mine/del.png'
-import './index.less'
-// eslint-disable-next-line import/first
 import { H5 } from '@/constants/h5'
+import './index.less'
 
 /**
  * 我的页面
@@ -284,7 +283,9 @@ const MineScreen = () => {
         </View>
         <View className='User__Name'>
           <View className='name'>{userStore.userInfo?.nickName}</View>
-          <View className='autograph'>{userStore.userInfo?.pic ? userStore.userInfo?.pic : '编辑个性签名'}</View>
+          <View className='autograph'>
+            {userStore.userInfo?.personalSignature ? userStore.userInfo?.personalSignature : '编辑个性签名'}
+          </View>
         </View>
       </View>
       <View className='dolor' onClick={toMyToken}>

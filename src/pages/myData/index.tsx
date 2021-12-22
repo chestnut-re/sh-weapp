@@ -5,15 +5,13 @@ import { useEffect, useState } from 'react'
 import { View, Picker } from '@tarojs/components'
 import { useStore } from '@/store/context'
 import { Image, Popup, DatetimePicker, ActionSheet } from '@taroify/core'
-import pic from '@/assets/img/common/shg.png'
-import jump from '@/assets/img/yjfk/jump.png'
+import { filterCurDate, getMyDate } from '@/utils/date'
 import { showMToast } from '@/utils/ui'
 import { UserService } from '@/service/UserService'
-import { LocationService } from '@/service/LocationService'
-import { now } from '@/utils/time'
 import { observer } from 'mobx-react'
+import jump from '@/assets/img/yjfk/jump.png'
+import myPhoto from '@/assets/img/mine/myphoto.png'
 import './index.less'
-import { filterCurDate, getMyDate } from '@/utils/date'
 /**
  * 个人信息
  */
@@ -150,16 +148,6 @@ const MyDataPage = () => {
   }
   return (
     <View className='MyDataPage__root'>
-      {/* <Picker
-        mode='multiSelector'
-        range={onlyArray}
-        onChange={addressOnChange}
-        value={customIndex}
-        onColumnChange={bindCustomPickerColumnChange.bind(this)}
-      >
-        {userStore.userInfo?.address && <View>{userStore.userInfo?.address}</View>}
-        {!userStore.userInfo?.address && <View> {address}</View>}
-      </Picker> */}
       <ActionSheet open={openDate} onSelect={() => setOpenDate(false)} onClose={setOpenDate}>
         <DatetimePicker type='date' min={minDate} max={maxDate} onConfirm={(value) => editBirthday(value)}>
           <DatetimePicker.Toolbar>
@@ -173,7 +161,7 @@ const MyDataPage = () => {
         <View className='data-img'>
           <View className='item-left'>头像</View>
           <View className='item-right'>
-            <Image className='img' src={userStore.userInfo?.pic ? userStore.userInfo?.pic : pic}></Image>
+            <Image className='img' src={userStore.userInfo?.pic ? userStore.userInfo?.pic : myPhoto}></Image>
             <Image className='img-left' src={jump}></Image>
           </View>
         </View>

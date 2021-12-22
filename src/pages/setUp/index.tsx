@@ -5,6 +5,7 @@ import { Button, Image, Dialog } from '@taroify/core'
 import { observer } from 'mobx-react'
 import { useState } from 'react'
 import pic from '@/assets/img/common/shg.png'
+import myPhoto from '@/assets/img/mine/myphoto.png'
 import jump from '@/assets/img/yjfk/jump.png'
 
 import './index.less'
@@ -40,11 +41,16 @@ const SetUpPage = () => {
   return (
     <View className='SetUpPage__root'>
       <View className='user' onClick={toMyData}>
-        <Image className='img' src={pic}></Image>
+        <Image className='img' src={userStore.userInfo?.pic ? userStore.userInfo?.pic : myPhoto}></Image>
         <View className='massage'>
-          <View className='name'>丛林迷雾</View>
-          <View className='autograph'>签名： 天空分外晴朗，白云也绽放笑容</View>
-          <View className='address'>常住地： 北京市海淀区</View>
+          <View className='name'>{userStore.userInfo?.nickName ? userStore.userInfo?.nickName : '留个名吧'}</View>
+          <View className='autograph'>
+            签名：{' '}
+            {userStore.userInfo?.personalSignature
+              ? userStore.userInfo?.personalSignature
+              : '天空分外晴朗，白云也绽放笑容'}
+          </View>
+          <View className='address'>常住地： {userStore.userInfo?.address}</View>
         </View>
       </View>
       <View className='password' onClick={toSetPassword}>
