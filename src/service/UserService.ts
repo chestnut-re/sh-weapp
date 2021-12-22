@@ -1,5 +1,6 @@
-import { doGetAction, doPostAction, doPutAction } from '@/utils/request'
+import { doGetAction, doPostAction, doPutAction, getHeader } from '@/utils/request'
 import { transImg } from '@/utils/upload'
+import Taro from '@tarojs/taro'
 import { BASE_URL } from '../constants/c'
 
 /**
@@ -28,9 +29,16 @@ export class UserService {
 
   /// 上传头像
   static postUploadFile(file) {
-    return transImg({
+    return Taro.uploadFile({
       url: `${BASE_URL}/third/oss/uploadFile`,
-      list: file,
+      filePath: file.url,
+      name: 'file',
+      header: getHeader(),
+      formData: {
+        // fileUrl: list.url,
+        fileType: '1',
+        file: file,
+      },
     })
   }
 }
