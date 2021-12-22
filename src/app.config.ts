@@ -1,9 +1,9 @@
 export default {
   pages: [
     'pages/index/index',
+    'pages/setPic/index',
     'pages/myData/index',
     'pages/location/index',
-    'pages/setPic/index',
     'pages/setAutograph/index',
     'pages/setName/index',
     'pages/usualMessage/index',

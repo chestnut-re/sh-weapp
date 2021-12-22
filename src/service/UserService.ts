@@ -1,4 +1,5 @@
 import { doGetAction, doPostAction, doPutAction } from '@/utils/request'
+import { transImg } from '@/utils/upload'
 import { BASE_URL } from '../constants/c'
 
 /**
@@ -22,6 +23,14 @@ export class UserService {
         address: address,
         personalSignature: personalSignature,
       },
+    })
+  }
+
+  /// 上传头像
+  static postUploadFile(file) {
+    return transImg({
+      url: `${BASE_URL}/third/oss/uploadFile`,
+      list: file,
     })
   }
 }

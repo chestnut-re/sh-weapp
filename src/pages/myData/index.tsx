@@ -26,6 +26,9 @@ const MyDataPage = () => {
   const toSetName = () => {
     Taro.navigateTo({ url: '/pages/setName/index' })
   }
+  const toSetPic = () => {
+    Taro.navigateTo({ url: '/pages/setPic/index' })
+  }
   const toSetSex = () => {
     Taro.navigateTo({ url: '/pages/setSex/index' })
   }
@@ -158,7 +161,7 @@ const MyDataPage = () => {
         </DatetimePicker>
       </ActionSheet>
       <View className='data-list'>
-        <View className='data-img'>
+        <View className='data-img' onClick={toSetPic}>
           <View className='item-left'>头像</View>
           <View className='item-right'>
             <Image className='img' src={userStore.userInfo?.pic ? userStore.userInfo?.pic : myPhoto}></Image>
