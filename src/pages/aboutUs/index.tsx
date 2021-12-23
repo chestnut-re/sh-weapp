@@ -4,9 +4,9 @@ import { View, Image } from '@tarojs/components'
 import { useStore } from '@/store/context'
 import { observer } from 'mobx-react'
 import pic from '@/assets/img/common/shg.png'
-import './index.less'
 import { H5 } from '@/constants/h5'
 import jump from '@/assets/img/yjfk/jump.png'
+import './index.less'
 
 const AboutUsPage = () => {
   const { commonStore } = useStore()

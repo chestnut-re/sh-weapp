@@ -18,6 +18,7 @@ class UserData {
   /**用户信息 */
   userInfo = null
   openId = null
+  phoneNumber = null
   /**isBindMobile: 是否已经绑定手机号，0未绑定，1已绑定 */
   _isBindMobile = null
   sessionKey = null
@@ -67,6 +68,7 @@ class UserData {
       this.openId = openIdRes.data.data.userDetails.openId
       this._isBindMobile = openIdRes.data.data.userDetails.isBindMobile
       this.sessionKey = openIdRes.data.data.userDetails.sessionKey
+      this.phoneNumber = openIdRes.data.data.userDetails.phoneNumber
       save(SESSION_KEY, this.sessionKey!)
       save(ACCESS_TOKEN, this.accessToken!)
       save(REFRESH_TOKEN, this.refreshToken!)

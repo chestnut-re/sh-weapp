@@ -2,11 +2,11 @@
 import Taro, { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
 import { View, Image } from '@tarojs/components'
 import { List, PullRefresh } from '@taroify/core'
+import { H5 } from '@/constants/h5'
+import pic from '@/assets/img/common/shg.png'
 import { useRef, useState } from 'react'
 import { observer } from 'mobx-react'
 import './index.less'
-import pic from '@/assets/img/common/shg.png'
-import { H5 } from '@/constants/h5'
 /**
  * 我的浏览
  */

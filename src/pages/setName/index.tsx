@@ -3,12 +3,12 @@ import { View, Input } from '@tarojs/components'
 import { useStore } from '@/store/context'
 import { Button } from '@taroify/core'
 import Taro, { showToast } from '@tarojs/taro'
+import { showMToast } from '@/utils/ui'
 import { UserService } from '@/service/UserService'
 import { observer } from 'mobx-react'
 import { useState } from 'react'
 
 import './index.less'
-import { showMToast } from '@/utils/ui'
 /**
  * 设置昵称
  */

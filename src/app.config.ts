@@ -1,6 +1,9 @@
 export default {
   pages: [
     'pages/index/index',
+    'pages/resetPassword/index',
+    'pages/verification/index',
+    'pages/password/index',
     'pages/setPic/index',
     'pages/myData/index',
     'pages/location/index',
@@ -13,9 +16,7 @@ export default {
     'pages/login/index',
     'pages/myBrowse/index',
     'pages/myOrder/index',
-    'pages/verification/index',
     'pages/setUp/index',
-    'pages/password/index',
     'pages/search/index',
     'pages/aboutUs/index',
     'pages/myLiked/index',

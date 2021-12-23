@@ -1,4 +1,4 @@
-.SetPasswordPage__root {
+.PasswordPage__root {
   box-sizing: border-box;
   height: 100vh;
   background: #f3f4f4;
@@ -15,7 +15,7 @@
       align-items: center;
       height: 90px;
       padding: 22px 0;
-      border-bottom: 2px solid #eee;
+
       View {
         width: 128px;
         font-size: 32px;
@@ -43,8 +43,8 @@
       }
     }
 
-    View:nth-last-child(1) {
-      border-bottom: 0;
+    View:first-child {
+      border-bottom: 2px solid #eee;
     }
   }
   .update {

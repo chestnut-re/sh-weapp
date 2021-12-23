@@ -5,10 +5,10 @@ import { useEffect, useState } from 'react'
 import TabBar from '../../components/tabbar'
 import MineScreen from './components/mine'
 import MsgScreen from './components/msg'
+import Taro from '@tarojs/taro'
+import { useStore } from '@/store/context'
 import HomeScreen from './components/home'
 import './index.less'
-import { useStore } from '@/store/context'
-import Taro from '@tarojs/taro'
 
 const IndexPage = () => {
   const { userStore } = useStore()

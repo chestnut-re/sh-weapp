@@ -43,7 +43,7 @@ const MyDataPage = () => {
     if (userRes.data.code == 200) {
       showMToast(userRes.data.msg)
       userStore.getUserInfo()
-      Taro.navigateBack()
+      setOpenDate(false)
     } else {
       showMToast(userRes.data.msg)
     }
@@ -151,8 +151,15 @@ const MyDataPage = () => {
   }
   return (
     <View className='MyDataPage__root'>
-      <ActionSheet open={openDate} onSelect={() => setOpenDate(false)} onClose={setOpenDate}>
-        <DatetimePicker type='date' min={minDate} max={maxDate} onConfirm={(value) => editBirthday(value)}>
+      <ActionSheet open={openDate} onClose={() => setOpenDate(false)}>
+        <DatetimePicker
+          type='date'
+          min={minDate}
+          max={maxDate}
+          defaultValue={defaultValue}
+          onConfirm={(value) => editBirthday(value)}
+          onCancel={() => setOpenDate(false)}
+        >
           <DatetimePicker.Toolbar>
             <DatetimePicker.Button>取消</DatetimePicker.Button>
             <DatetimePicker.Title>选择日期</DatetimePicker.Title>

@@ -5,9 +5,9 @@ import { List, PullRefresh } from '@taroify/core'
 import { useRef, useState } from 'react'
 
 import { observer } from 'mobx-react'
+import pic from '@/assets/img/traveler/add.png'
 
 import './index.less'
-import pic from '@/assets/img/traveler/add.png'
 /**
  * 出行人信息
  */

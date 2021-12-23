@@ -6,8 +6,6 @@ import { observer } from 'mobx-react'
 import { useEffect, useRef, useState } from 'react'
 import place from '@/assets/img/home/vdizhi@3x.png'
 import search from '@/assets/img/home/sousuo-2@2x.png'
-import pic from '@/assets/img/common/shg.png'
-import black from '@/assets/img/home/black.png'
 import noLike from '@/assets/img/home/no-like.png'
 import liked from '@/assets/img/home/liked.png'
 import { H5 } from '@/constants/h5'
@@ -33,7 +31,7 @@ const HomeScreen = () => {
   useDidShow(() => {})
   useEffect(() => {
     console.log('getBanner')
-
+    getGoods()
     getBanner()
     getActivity()
   }, [])
@@ -48,25 +46,28 @@ const HomeScreen = () => {
     }
   })
   const onLoad = () => {
-    setLoading(true)
-    const newList = refreshingRef.current ? [] : list
-    setTimeout(() => {
-      refreshingRef.current = false
-      for (let i = 0; i < 30; i++) {
-        const text = newList.length + 1
-        newList.push(text < 1 ? '0' + text : String(text))
-      }
-      setList(newList)
-      setLoading(false)
-      setHasMore(newList.length < 21)
-    }, 500)
+    // console.log('加载。。。', list)
+    // setLoading(true)
+    // const newList = refreshingRef.current ? [] : list
+    // console.log('列表', list, newList)
+    // setTimeout(() => {
+    //   refreshingRef.current = false
+    //   for (let i = 0; i < 9; i++) {
+    //     const text = newList.length + 1
+    //     newList.push(text < 1 ? '0' + text : String(text))
+    //     console.log('...', newList)
+    //   }
+    //   setList(newList)
+    //   setLoading(false)
+    //   setHasMore(newList.length < 9)
+    // }, 500)
   }
 
-  function onRefresh() {
-    refreshingRef.current = true
-    setLoading(false)
-    onLoad()
-  }
+  // function onRefresh() {
+  //   refreshingRef.current = true
+  //   setLoading(false)
+  //   onLoad()
+  // }
 
   const toSearch = () => {
     Taro.navigateTo({ url: '/pages/search/index' })
@@ -75,10 +76,6 @@ const HomeScreen = () => {
   const toLocation = () => {
     Taro.navigateTo({ url: '/pages/location/index' })
   }
-
-  // const toMyTravel = () => {
-  //   Taro.navigateTo({ url: `/pages/webview/index?url=${H5.myTravel}` })
-  // }
 
   const anOrder = () => {
     Taro.navigateTo({ url: `/pages/webview/index?url=${H5.goodsDetail}` })
@@ -94,8 +91,10 @@ const HomeScreen = () => {
 
   //getGoods
   const getGoods = async () => {
-    const result = await HomeService.getGoods('0')
-    console.log(result)
+    const result = await HomeService.getGoodsPage()
+    if (result.data.code === '200') {
+      setList(result.data.data.records)
+    }
   }
 
   //getActivity
@@ -147,71 +146,41 @@ const HomeScreen = () => {
             <View className='swiper' onClick={() => toActivityUrl(activityList[0].activityUrl)}>
               <View className='swiper-left'>
                 <Image className='first' src={activityList[0].activityImg} />
-                {/* <View className='select-route'>
-              <View className='season'>当季</View>
-              <View className='route-name'>甄选路线</View>
-            </View>
-            <View className='route-text'>丽江 + 大理 + 香格里拉</View>
-            <View className='route-text'>双飞6日</View> */}
               </View>
               <View className='swiper-right'>
                 <View className='right-top' onClick={() => toActivityUrl(activityList[1].activityUrl)}>
                   <Image className='second' src={activityList[1].activityImg} />
-                  {/* <View className='select-route'>
-                <View className='now'>即刻</View>
-                <View className='route-name'>就走游周边</View>
-              </View>
-              <View className='route-text'>古水北镇2日1晚 赏红叶</View> */}
                 </View>
                 <View className='right-bottom' onClick={() => toActivityUrl(activityList[2].activityUrl)}>
                   <Image className='third' src={activityList[2].activityImg} />
-                  {/* <View className='select-route'>
-                <View className='local'>当地</View>
-                <View className='route-name'>吃喝玩乐</View>
-              </View>
-              <View className='route-text'>古水北镇2日1晚 赏红叶</View> */}
                 </View>
               </View>
             </View>
           )}
         </View>
-        {/* <View className='home-order'>
-          <View className='order-text'>
-            优惠 <Text className='red-text'>「福利」</Text>路线！
-          </View>
-          <View className='order'>立即下单</View>
-        </View> */}
-        {/* <View onClick={getActivity}>获取专题活动列表</View> */}
-        {/* <View onClick={getGoods}>获取商品列表</View> */}
         <View className='product-list'>
+          {/* {list.length > 0 && <View>{list.length}</View>} */}
           <List loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}>
             {list.map((item) => (
-              <View className='item' key={item} onClick={anOrder}>
+              <View className='item' key={item.id} onClick={anOrder}>
                 <View className='card'>
                   <View className='big-img'>
-                    {/* <Image className='big' src={pic} /> */}
-                    <Image
-                      className='big'
-                      src={
-                        Number(item) % 2
-                          ? 'https://s1.ax1x.com/2021/12/09/ohR9jH.jpg'
-                          : 'https://s1.ax1x.com/2021/12/09/ohRPud.jpg'
-                      }
-                    />
+                    <Image className='big' src={item.promotionalImageUrl} />
                     <View className='label'>
-                      {/* <Image className='black' src={black} /> */}
-                      <View className='label-pic'>三亚</View>
+                      <View className='label-pic'>{item.departureCity}</View>
                       <View className='text'>自由行</View>
                     </View>
                   </View>
                   <View className='content'>
-                    <View className='text'>三亚5日跟团游「星4晚连住」</View>
-                    <View className='money'>¥ 2899</View>
+                    <View className='text'>
+                      {item.goodsName} {item.goodsNickName}
+                    </View>
+                    <View className='money'>成人市场标价¥ {item.personMarkPrice}</View>
                     <View className='consume'>
-                      <Text>3456人已付款</Text>
+                      <Text>{item.shamSales}人已付款</Text>
                       <View>
                         <Image className='is-like' src={Number(item) % 2 ? noLike : liked} />
-                        2356
+                        {item.shamLikes}
                       </View>
                     </View>
                   </View>

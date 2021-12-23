@@ -4,8 +4,8 @@ import { View, Image } from '@tarojs/components'
 import { List, PullRefresh } from '@taroify/core'
 import { useRef, useState } from 'react'
 import { observer } from 'mobx-react'
-import './index.less'
 import pic from '@/assets/img/common/shg.png'
+import './index.less'
 /**
  * 我的点赞
  */

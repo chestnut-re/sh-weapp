@@ -5,10 +5,10 @@ import { useStore } from '@/store/context'
 import { Button } from '@taroify/core'
 import { useState } from 'react'
 import { observer } from 'mobx-react'
-
-import './index.less'
 import camera from '@/assets/img/yjfk/croma.png'
 import success from '@/assets/img/yjfk/success.png'
+
+import './index.less'
 /**
  * 意见反馈
  */

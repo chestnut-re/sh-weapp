@@ -8,9 +8,9 @@ import UsalMessageList from './components/usalMessageList'
 import jump from '@/assets/img/yjfk/jump.png'
 import add from '@/assets/img/traveler/add.png'
 import per from '@/assets/img/traveler/per.png'
-import './index.less'
 import { UserService } from '@/service/UserService'
 import { useStore } from '@/store/context'
+import './index.less'
 /**
  * 常用信息
  */

@@ -27,7 +27,7 @@ const SetUpPage = () => {
   const toMyData = () => {
     Taro.navigateTo({ url: '/pages/myData/index' })
   }
-  const toSetPassword = () => {
+  const toPassword = () => {
     Taro.navigateTo({ url: '/pages/password/index' })
   }
   const toFeedBack = () => {
@@ -52,7 +52,7 @@ const SetUpPage = () => {
           <View className='address'>常住地： {userStore.userInfo?.address}</View>
         </View>
       </View>
-      <View className='password' onClick={toSetPassword}>
+      {/* <View className='password' onClick={toPassword}>
         <View className='password-left'>登陆密码</View>
         <View className='password-right'>
           去设置
@@ -60,7 +60,7 @@ const SetUpPage = () => {
             <Image className='jump' src={jump}></Image>
           </View>
         </View>
-      </View>
+      </View> */}
       <View className='content-list'>
         <View className='content' onClick={toFeedBack}>
           <View className='content-left'>意见反馈</View>

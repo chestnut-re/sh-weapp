@@ -4,9 +4,9 @@ import { View, Input, Text, Image } from '@tarojs/components'
 import { Button } from '@taroify/core'
 
 import { observer } from 'mobx-react'
+import del from '@/assets/img/password/del.png'
 
 import './index.less'
-import del from '@/assets/img/password/del.png'
 /**
  * 修改密码
  */

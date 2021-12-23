@@ -373,9 +373,10 @@ const MineScreen = () => {
           </View>
         </View>
         <View className='order-type'>
-          <View onClick={toMyOrder}>
+          <View className='red-body' onClick={toMyOrder}>
             <Image src={wpey} />
             <View>待付款</View>
+            <View className='red-num'>2</View>
           </View>
           <View className='sec' onClick={toMyOrder}>
             <Image src={peying} />

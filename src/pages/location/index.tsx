@@ -56,7 +56,7 @@ const LocationPage = () => {
       const viewCityList = {}
       let lastPingyin = ''
       for (let i of result.data.data) {
-        let newPingying = getFirstPingYin(i.name)
+        let newPingying = i.shortSpell.substr(0, 1)
         if (!firstPingying) {
           firstPingying = newPingying
         }

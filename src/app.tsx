@@ -14,7 +14,7 @@ const loginStateCheck = function (chain) {
 
   return chain.proceed(requestParams).then((res) => {
     if (res.data.code === '010011') {
-      console.log('accessToken 失效，退出登录并回到首页');
+      console.log('accessToken 失效，退出登录并回到首页')
       userStore.loginOut()
     }
     return res
