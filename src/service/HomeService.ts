@@ -22,11 +22,13 @@ export class HomeService {
   }
 
   ///搜索商品列表
-  static searchGoodsPage({ keyword }: any) {
+  static searchGoodsPage({ keyword, current }: any) {
     return doGetAction({
       url: `${BASE_URL}/operation/goods/page`,
       data: {
         keyword: keyword,
+        size: 10,
+        current,
       },
     })
   }
