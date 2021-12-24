@@ -1,7 +1,7 @@
 /* eslint-disable import/first */
 import Taro, { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
 import { View, Text, Image, Input } from '@tarojs/components'
-import { List, Loading, Sticky } from '@taroify/core'
+import { List, Loading, PullRefresh, Sticky } from '@taroify/core'
 import { observer } from 'mobx-react'
 import { useEffect, useRef, useState } from 'react'
 import { HomeService } from '@/service/HomeService'
@@ -76,70 +76,72 @@ const SearchPage = () => {
   }
   return (
     <View className='SearchPage__root'>
-      {/* <PullRefresh loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}> */}
       <View className='home-header'>
         <View className='search-input'>
           <Image className='search' src={search} onClick={searchGoods} />
-          <Input
-            className='input'
-            type='text'
-            onInput={setV}
-            value={value}
-            placeholder='请输入'
-            onConfirm={searchGoods}
-          />
+          <Input className='input' type='text' onInput={setV} value={value} placeholder='' onConfirm={searchGoods} />
           <Image className='del' src={del} onClick={clearAble} />
         </View>
       </View>
-      {showList && (
-        <View className='all-in'>
-          {list.length < 1 && (
-            <View className='home-body'>
-              <Image className='lose' src={lose} />
-              <View className='route'>没有搜索到”{title}“相关的结果</View>
-            </View>
-          )}
+      <PullRefresh
+        loading={refreshingRef.current}
+        reachTop={reachTop}
+        onRefresh={() => {
+          // refreshingRef.current = true
+          setLoading(true)
+          setTimeout(() => {
+            setLoading(false)
+          }, 2000)
+        }}
+      >
+        {showList && (
+          <View className='all-in'>
+            {list.length < 1 && (
+              <View className='home-body'>
+                <Image className='lose' src={lose} />
+                <View className='route'>没有搜索到”{title}“相关的结果</View>
+              </View>
+            )}
 
-          <View className='product-list'>
-            <List loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}>
-              {list.map((item) => (
-                <View className='item' key={item.id} onClick={anOrder}>
-                  <View className='card'>
-                    <View className='big-img'>
-                      <Image className='big' src={item.promotionalImageUrl} />
-                      <View className='label'>
-                        <View className='label-pic'>{item.departureCity}</View>
-                        <View className='text'>自由行</View>
+            <View className='product-list'>
+              <List loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}>
+                {list.map((item) => (
+                  <View className='item' key={item.id} onClick={anOrder}>
+                    <View className='card'>
+                      <View className='big-img'>
+                        <Image className='big' src={item.promotionalImageUrl} />
+                        <View className='label'>
+                          <View className='label-pic'>{item.departureCity}</View>
+                          <View className='text'>自由行</View>
+                        </View>
                       </View>
-                    </View>
-                    <View className='content'>
-                      <View className='text'>
-                        {item.goodsName} {item.goodsNickName}
-                      </View>
-                      <View className='money'>成人市场标价¥ {item.personMarkPrice}</View>
-                      <View className='consume'>
-                        <Text>{item.shamSales}人已付款</Text>
-                        <View>
-                          <Image className='is-like' src={Number(item) % 2 ? noLike : liked} />
-                          {item.shamLikes}
+                      <View className='content'>
+                        <View className='text'>
+                          {item.goodsName} {item.goodsNickName}
+                        </View>
+                        <View className='money'>成人市场标价¥ {item.personMarkPrice}</View>
+                        <View className='consume'>
+                          <Text>{item.shamSales}人已付款</Text>
+                          <View>
+                            <Image className='is-like' src={Number(item) % 2 ? noLike : liked} />
+                            {item.shamLikes}
+                          </View>
                         </View>
                       </View>
                     </View>
                   </View>
-                </View>
-              ))}
-              {!refreshingRef.current && (
-                <List.Placeholder>
-                  {loading && <Loading>加载中...</Loading>}
-                  {!hasMore && '没有更多了'}
-                </List.Placeholder>
-              )}
-            </List>
+                ))}
+                {!refreshingRef.current && (
+                  <List.Placeholder>
+                    {loading && <Loading>加载中...</Loading>}
+                    {!hasMore && '没有更多了'}
+                  </List.Placeholder>
+                )}
+              </List>
+            </View>
           </View>
-        </View>
-      )}
-
-      {/* </PullRefresh> */}
+        )}
+      </PullRefresh>
     </View>
   )
 }

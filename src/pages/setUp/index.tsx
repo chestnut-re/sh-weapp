@@ -28,7 +28,7 @@ const SetUpPage = () => {
     Taro.navigateTo({ url: '/pages/myData/index' })
   }
   const toPassword = () => {
-    Taro.navigateTo({ url: '/pages/password/index' })
+    Taro.navigateTo({ url: '/pages/resetPassword/index' })
   }
   const toFeedBack = () => {
     Taro.navigateTo({ url: '/pages/feedBack/index' })
@@ -40,15 +40,10 @@ const SetUpPage = () => {
   return (
     <View className='SetUpPage__root'>
       <View className='user' onClick={toMyData}>
-        <Image className='img' src={userStore.userInfo?.pic ? userStore.userInfo?.pic : myPhoto}></Image>
+        <Image className='img' src={userStore.userInfo?.pic}></Image>
         <View className='massage'>
-          <View className='name'>{userStore.userInfo?.nickName ? userStore.userInfo?.nickName : '留个名吧'}</View>
-          <View className='autograph'>
-            签名：{' '}
-            {userStore.userInfo?.personalSignature
-              ? userStore.userInfo?.personalSignature
-              : '天空分外晴朗，白云也绽放笑容'}
-          </View>
+          <View className='name'>{userStore.userInfo?.nickName}</View>
+          <View className='autograph'>签名： {userStore.userInfo?.personalSignature}</View>
           <View className='address'>常住地： {userStore.userInfo?.address}</View>
         </View>
       </View>
@@ -62,7 +57,7 @@ const SetUpPage = () => {
         </View>
       </View> */}
       <View className='content-list'>
-        <View className='content' onClick={toFeedBack}>
+        {/* <View className='content' onClick={toFeedBack}>
           <View className='content-left'>意见反馈</View>
           <View className='content-right'>
             来告诉我们你的想法吧
@@ -81,7 +76,7 @@ const SetUpPage = () => {
             </View>
           </View>
         </View>
-        <View className='divide' />
+        <View className='divide' /> */}
         <View className='content' onClick={toAboutUs}>
           <View className='content-left'>关于我们</View>
           <View className='content-right'>

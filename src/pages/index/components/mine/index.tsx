@@ -40,14 +40,13 @@ import './index.less'
  */
 const MineScreen = () => {
   const { userStore } = useStore()
-  console.log('???', userStore.userInfo?.nickName)
   const [hasMore, setHasMore] = useState(true)
   const [list, setList] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
   const [scrollTop, setScrollTop] = useState(0)
   const [reachTop, setReachTop] = useState(true)
   const [open, setOpen] = useState(false)
-  const [cityName, setCityName] = useState('山海云途')
+  const [cityName, setCityName] = useState('奔赴山海')
   const [isShowCanvas, setIsShowCanvas] = useState(false)
   const [userInfo, setUserInfo] = useState({})
   const toFist = () => {
@@ -279,13 +278,11 @@ const MineScreen = () => {
       </View>
       <View className='user' onClick={toMyData}>
         <View className='User__Img'>
-          <Image className='img' src={userStore.userInfo?.pic ? userStore.userInfo?.pic : myPhoto} />
+          <Image className='img' src={userStore.userInfo?.pic} />
         </View>
         <View className='User__Name'>
           <View className='name'>{userStore.userInfo?.nickName}</View>
-          <View className='autograph'>
-            {userStore.userInfo?.personalSignature ? userStore.userInfo?.personalSignature : '编辑个性签名'}
-          </View>
+          <View className='autograph'>{userStore.userInfo?.personalSignature}</View>
         </View>
       </View>
       <View className='dolor' onClick={toMyToken}>
@@ -332,7 +329,7 @@ const MineScreen = () => {
           <Image className='img' src={join} />
           <View className='item-text'>邀请好友</View>
         </View>
-        <View className='item'>
+        {/* <View className='item'>
           <Image className='img' src={renzheng} />
           <View className='item-text'>学生认证</View>
         </View>
@@ -347,7 +344,7 @@ const MineScreen = () => {
         <View className='item' onClick={() => setOpen(true)}>
           <Image className='img' src={map} />
           <View className='item-text'>分享</View>
-        </View>
+        </View> */}
       </View>
       <View className='travel' onClick={toMyTravel}>
         <View className='travel-title'>
@@ -388,7 +385,7 @@ const MineScreen = () => {
           </View>
         </View>
       </View>
-      <View className='play-game' onClick={toReferenceRouter}>
+      {/* <View className='play-game' onClick={toReferenceRouter}>
         <View className='trip'>
           <View className='header'>
             <View className='happy'>乐享游玩中</View>
@@ -508,7 +505,7 @@ const MineScreen = () => {
           </Button>
         </View>
         <View className='btn'>取消</View>
-      </Popup>
+      </Popup> */}
     </View>
   )
 }

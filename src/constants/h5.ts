@@ -14,13 +14,13 @@ export class H5 {
   /// 我的行程
   static myTravel = `${h5Domain}/my-travel`
 
-  /// 我的代币
+  /// 我的乐豆
   static myToken = `${h5Domain}/my-token`
 
   /// 商品详情
   static goodsDetail = `${h5Domain}/goods-detail`
 
- /// 团小店
+  /// 团小店
   static groupShop = `${h5Domain}/group-shop`
 
   /// 订单详情页

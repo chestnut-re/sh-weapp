@@ -2,14 +2,13 @@
 import { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
 import { View, Text, Image } from '@tarojs/components'
 import { Tabs, List, Loading, PullRefresh } from '@taroify/core'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { observer } from 'mobx-react'
-import UsalMessageList from './components/usalMessageList'
+import { TravelerService } from '@/service/TravelerService'
+import { useStore } from '@/store/context'
+import { showMToast } from '@/utils/ui'
 import jump from '@/assets/img/yjfk/jump.png'
 import add from '@/assets/img/traveler/add.png'
-import per from '@/assets/img/traveler/per.png'
-import { UserService } from '@/service/UserService'
-import { useStore } from '@/store/context'
 import './index.less'
 /**
  * 常用信息
@@ -22,6 +21,9 @@ const UsualMessagePage = () => {
   const refreshingRef = useRef(false)
   const [scrollTop, setScrollTop] = useState(0)
   const [reachTop, setReachTop] = useState(true)
+  useEffect(() => {
+    travelerList()
+  }, [])
   usePageScroll(({ scrollTop: aScrollTop }) => {
     setScrollTop(aScrollTop)
     setReachTop(aScrollTop === 0)
@@ -46,10 +48,15 @@ const UsualMessagePage = () => {
     setLoading(false)
     onLoad()
   }
-  const getUserInfo = () => {
-    console.log(userStore)
-    const result = UserService.getUserInfo()
+  const travelerList = async () => {
+    const result = await TravelerService.getTravelerList()
     console.log(result)
+    if (result.data.code === '200') {
+      showMToast(result.data.msg)
+      // setList(result.data.data.records)
+    } else {
+      showMToast(result.data.msg)
+    }
   }
   return (
     <View className='UsualMessagePage__root'>
@@ -62,7 +69,7 @@ const UsualMessagePage = () => {
         </Tabs.TabPane>
       </Tabs> */}
       <View className='add-mode'>
-        <View className='add' onClick={getUserInfo}>
+        <View className='add' onClick={travelerList}>
           <Image className='img' src={add} />
           <Text className='add-text'>添加 出行人</Text>
         </View>

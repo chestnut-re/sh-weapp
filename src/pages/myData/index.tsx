@@ -144,7 +144,6 @@ const MyDataPage = () => {
     if (userRes.data.code == 200) {
       showMToast(userRes.data.msg)
       userStore.getUserInfo()
-      Taro.navigateBack()
     } else {
       showMToast(userRes.data.msg)
     }
@@ -171,7 +170,7 @@ const MyDataPage = () => {
         <View className='data-img' onClick={toSetPic}>
           <View className='item-left'>头像</View>
           <View className='item-right'>
-            <Image className='img' src={userStore.userInfo?.pic ? userStore.userInfo?.pic : myPhoto}></Image>
+            <Image className='img' src={userStore.userInfo?.pic}></Image>
             <Image className='img-left' src={jump}></Image>
           </View>
         </View>

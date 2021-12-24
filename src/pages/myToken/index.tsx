@@ -7,7 +7,7 @@ import { observer } from 'mobx-react'
 import token from '@/assets/img/token/22token.png'
 import './index.less'
 /**
- * 我的代币
+ * 我的乐豆
  */
 const MyTokenPage = () => {
   const { commonStore } = useStore()
