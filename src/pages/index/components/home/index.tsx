@@ -6,8 +6,7 @@ import { observer } from 'mobx-react'
 import { useEffect, useRef, useState } from 'react'
 import place from '@/assets/img/home/vdizhi@3x.png'
 import search from '@/assets/img/home/sousuo-2@2x.png'
-import noLike from '@/assets/img/home/no-like.png'
-import liked from '@/assets/img/home/liked.png'
+import GoodsItem from '@/components/GoodsItem'
 import { H5 } from '@/constants/h5'
 import { HomeService } from '@/service/HomeService'
 
@@ -152,30 +151,7 @@ const HomeScreen = () => {
           <View className='product-list'>
             <List loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}>
               {list.map((item) => (
-                <View className='item' key={item.id} onClick={anOrder}>
-                  <View className='card'>
-                    <View className='big-img'>
-                      <Image className='big' src={item.promotionalImageUrl} />
-                      <View className='label'>
-                        <View className='label-pic'>{item.departureCity}</View>
-                        <View className='text'>{item.goodsNickName}</View>
-                      </View>
-                    </View>
-                    <View className='content'>
-                      <View className='text'>
-                        {item.goodsName} {item.goodsNickName}
-                      </View>
-                      <View className='money'>成人市场标价¥ {item.personMarkPrice}</View>
-                      <View className='consume'>
-                        <Text>{item.shamSales}人已付款</Text>
-                        <View>
-                          <Image className='is-like' src={Number(item) % 2 ? noLike : liked} />
-                          {item.shamLikes}
-                        </View>
-                      </View>
-                    </View>
-                  </View>
-                </View>
+                <GoodsItem key={item.id} onItemClick={anOrder} item={item} />
               ))}
               {!refreshingRef.current && (
                 <List.Placeholder>
