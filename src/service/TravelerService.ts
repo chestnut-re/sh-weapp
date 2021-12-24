@@ -1,4 +1,4 @@
-import { doGetAction, doPostAction, doPutAction, getHeader } from '@/utils/request'
+import { doGetAction, doDeleteAction, doPostAction, doPutAction, getHeader } from '@/utils/request'
 import { BASE_URL } from '../constants/c'
 
 /**
@@ -12,4 +12,7 @@ export class TravelerService {
   }
 
   ///删除出行人
+  static delTraveler() {
+    return doDeleteAction({ url: `${BASE_URL}/users/customer/travelerInfo/delete`, data: {} })
+  }
 }

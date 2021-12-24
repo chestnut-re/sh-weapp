@@ -1,5 +1,6 @@
 export default {
   pages: [
+    'pages/usualMessage/index',
     'pages/index/index',
     'pages/resetPassword/index',
     'pages/verification/index',
@@ -9,7 +10,6 @@ export default {
     'pages/location/index',
     'pages/setAutograph/index',
     'pages/setName/index',
-    'pages/usualMessage/index',
     'pages/setPassword/index',
     'pages/pedestrian/index',
     'pages/myToken/index',

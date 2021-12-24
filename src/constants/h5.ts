@@ -28,4 +28,7 @@ export class H5 {
 
   /// H5 测试页面
   static testPage = `${h5Domain}/test/page`
+
+  /// H5 添加出行人
+  static personalDetails = `${h5Domain}/personal-details`
 }

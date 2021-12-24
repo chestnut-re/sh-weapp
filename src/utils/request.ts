@@ -4,7 +4,7 @@ import Taro from '@tarojs/taro'
 export const getHeader = () => {
   return {
     Authorization: userStore.accessToken,
-    cId: userStore.city?.adcode ?? ''
+    cId: userStore.city?.adcode ?? '',
   }
 }
 
@@ -47,6 +47,21 @@ export const doGetAction = ({ url, data }) => {
 export const doPutAction = ({ url, data }) => {
   return Taro.request({
     method: 'PUT',
+    url: url,
+    header: getHeader(),
+    data: data,
+  })
+}
+
+/**
+ * delete 请求
+ * @param path 路径
+ * @param data data
+ * @returns
+ */
+export const doDeleteAction = ({ url, data }) => {
+  return Taro.request({
+    method: 'DELETE',
     url: url,
     header: getHeader(),
     data: data,
