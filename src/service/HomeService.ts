@@ -11,12 +11,16 @@ export class HomeService {
   }
 
   ///商品列表
-  static getGoodsPage() {
+  static getGoodsPage(current) {
     return doGetAction({
       url: `${BASE_URL}/operation/goods/page`,
-      data: {},
+      data: {
+        current,
+        size: 10,
+      },
     })
   }
+
   ///搜索商品列表
   static searchGoodsPage({ keyword }: any) {
     return doGetAction({

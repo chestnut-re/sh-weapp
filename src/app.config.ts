@@ -23,7 +23,6 @@ export default {
     'pages/traveler/index',
     'pages/feedBack/index',
     'pages/setSex/index',
-    'pages/demo/index',
     'pages/followStore/index',
     'pages/webview/index',
   ],

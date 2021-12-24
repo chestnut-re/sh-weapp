@@ -1,4 +1,4 @@
-import Taro, { useDidShow, useReady, usePageScroll } from '@tarojs/taro'
+import Taro, { usePageScroll } from '@tarojs/taro'
 import { View, Text, Image, Input } from '@tarojs/components'
 import { List, Loading, Swiper, PullRefresh } from '@taroify/core'
 import { useStore } from '@/store/context'
@@ -18,20 +18,17 @@ import './index.less'
  */
 const HomeScreen = () => {
   const { userStore } = useStore()
+  const pageRef = useRef<any>({ current: 1, loading: false })
   const [hasMore, setHasMore] = useState(true)
   const [list, setList] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
-  const refreshingRef = useRef(false)
   const [scrollTop, setScrollTop] = useState(0)
   const [reachTop, setReachTop] = useState(true)
+  const refreshingRef = useRef(false)
   const [bannerList, setBannerList] = useState<any[]>([])
   const [activityList, setActivityList] = useState<any[]>([])
 
-  useReady(() => {})
-  useDidShow(() => {})
   useEffect(() => {
-    console.log('getBanner')
-    getGoods()
     getBanner()
     getActivity()
   }, [])
@@ -45,32 +42,29 @@ const HomeScreen = () => {
       document.getElementsByClassName('home-header')[0]['style'].backgroundColor = 'null'
     }
   })
-  const onLoad = () => {
-    console.log('方法执行')
+
+  const onLoad = async () => {
+    if (pageRef.current.loading) return
+    pageRef.current.loading = true
     setLoading(true)
-    const newList = refreshingRef.current ? [] : list
-    setTimeout(() => {
-      console.log('定时器执行')
+    let newList = pageRef.current.current === 1 ? [] : list
+    HomeService.getGoodsPage(pageRef.current.current).then((result) => {
       refreshingRef.current = false
-      getGoods()
-      // for (let i = 0; i < 9; i++) {
-      //   const text = newList.length + 1
-      //   newList.push(text < 1 ? '0' + text : String(text))
-      //   console.log('...', newList)
-      // }
-      // setList(newList)
-      setLoading(false)
-      setHasMore(newList.length < 9)
-    }, 1000)
+      if (result.data.code == '200') {
+        setList(newList.concat(result.data.data.records))
+        setLoading(false)
+        setHasMore(result.data.data.records.length === 10)
+        pageRef.current.current++
+      }
+      pageRef.current.loading = false
+    })
   }
 
-  function onRefresh() {
+  const onRefresh = () => {
+    pageRef.current.current = 1
     refreshingRef.current = true
-    setTimeout(() => {
-      getGoods()
-      refreshingRef.current = false
-    }, 1500)
-    setLoading(false)
+    setLoading(true)
+    onLoad()
   }
 
   const toSearch = () => {
@@ -90,15 +84,6 @@ const HomeScreen = () => {
     const result = await HomeService.getBanner()
     if (result.statusCode === 200) {
       setBannerList(result.data.data)
-    }
-  }
-
-  //getGoods
-  const getGoods = async () => {
-    setList([])
-    const result = await HomeService.getGoodsPage()
-    if (result.data.code === '200') {
-      setList(result.data.data.records)
     }
   }
 
@@ -164,7 +149,6 @@ const HomeScreen = () => {
           )}
         </View> */}
           <View className='product-list'>
-            {/* {list.length > 0 && <View>{list.length}</View>} */}
             <List loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}>
               {list.map((item) => (
                 <View className='item' key={item.id} onClick={anOrder}>
@@ -173,7 +157,7 @@ const HomeScreen = () => {
                       <Image className='big' src={item.promotionalImageUrl} />
                       <View className='label'>
                         <View className='label-pic'>{item.departureCity}</View>
-                        <View className='text'>自由行</View>
+                        <View className='text'>{item.goodsNickName}</View>
                       </View>
                     </View>
                     <View className='content'>
