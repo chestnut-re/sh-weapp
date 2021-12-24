@@ -31,4 +31,6 @@ export class H5 {
 
   /// H5 添加出行人
   static personalDetails = `${h5Domain}/personal-details`
+  /// H5 出行人详情
+  static personalDetail = `${h5Domain}/personal-details?id=xxxx`
 }

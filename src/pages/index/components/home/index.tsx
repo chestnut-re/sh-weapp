@@ -25,10 +25,11 @@ const HomeScreen = () => {
   const [scrollTop, setScrollTop] = useState(0)
   const [reachTop, setReachTop] = useState(true)
   const refreshingRef = useRef(false)
-  const [bannerList, setBannerList] = useState<any[]>([])
+  const [bannerList, setBannerList] = useState<any>([])
   const [activityList, setActivityList] = useState<any[]>([])
 
   useEffect(() => {
+    console.log(bannerList.length)
     getBanner()
     getActivity()
   }, [])
@@ -106,8 +107,8 @@ const HomeScreen = () => {
   return (
     <View className='HomeScreen__root'>
       <PullRefresh loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
-        {bannerList.length > 0 && (
-          <View>
+        <View>
+          {bannerList.length > 0 && (
             <Swiper className='top-s' autoplay={3000}>
               {bannerList.map((item) => (
                 <Swiper.Item className='item' key={item.id} onClick={() => toBannerUrl(item.bannerUrl)}>
@@ -117,9 +118,9 @@ const HomeScreen = () => {
               ))}
               <Swiper.Indicator className='basic-swiped' />
             </Swiper>
-            <View className='un-done'></View>
-          </View>
-        )}
+          )}
+          <View className='un-done'></View>
+        </View>
         <View className='home-header'>
           <View className='now-place' onClick={toLocation}>
             <Text className='text'>{userStore.city?.name ?? ''}</Text>

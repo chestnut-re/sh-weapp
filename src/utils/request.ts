@@ -59,11 +59,10 @@ export const doPutAction = ({ url, data }) => {
  * @param data data
  * @returns
  */
-export const doDeleteAction = ({ url, data }) => {
+export const doDeleteAction = ({ url }) => {
   return Taro.request({
     method: 'DELETE',
     url: url,
     header: getHeader(),
-    data: data,
   })
 }

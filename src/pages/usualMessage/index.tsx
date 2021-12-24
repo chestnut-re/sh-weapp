@@ -62,8 +62,19 @@ const UsualMessagePage = () => {
   const toAddTravel = () => {
     Taro.navigateTo({ url: `/pages/webview/index?url=${H5.personalDetails}` })
   }
-  const cutItem = (e) => {
+  const toItemDetail = () => {
+    Taro.navigateTo({ url: `/pages/webview/index?url=${H5.personalDetail}` })
+  }
+  const cutItem = async (e) => {
     console.log(e)
+    const result = await TravelerService.delTraveler(e)
+    if (result.data.code === '200') {
+      showMToast(result.data.msg)
+      travelerList()
+    } else {
+      showMToast(result.data.msg)
+    }
+    console.log(result)
   }
   return (
     <View className='UsualMessagePage__root'>
@@ -86,7 +97,7 @@ const UsualMessagePage = () => {
       {list.map((item) => (
         <View className='item' key={item.travelerId}>
           <View className='card'>
-            <View className='left-all'>
+            <View className='left-all' onClick={toItemDetail}>
               <View className='left-top'>
                 <View className='user-name'>
                   <View className='state'>{item.travelerName}</View>
@@ -120,8 +131,10 @@ const UsualMessagePage = () => {
                   : '未填写证件'}
               </View>
             </View>
-            <View onClick={() => cutItem(item.travelerId)}>删除</View>
-            <Image className='jump' src={jump} />
+            <View className='del-btn' onClick={() => cutItem(item.travelerId)}>
+              删除
+            </View>
+            <Image className='jump' src={jump} onClick={toItemDetail} />
           </View>
         </View>
       ))}

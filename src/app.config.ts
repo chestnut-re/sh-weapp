@@ -1,7 +1,7 @@
 export default {
   pages: [
-    'pages/usualMessage/index',
     'pages/index/index',
+    'pages/usualMessage/index',
     'pages/resetPassword/index',
     'pages/verification/index',
     'pages/password/index',

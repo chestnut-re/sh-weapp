@@ -12,7 +12,9 @@ export class TravelerService {
   }
 
   ///删除出行人
-  static delTraveler() {
-    return doDeleteAction({ url: `${BASE_URL}/users/customer/travelerInfo/delete`, data: {} })
+  static delTraveler(id) {
+    return doDeleteAction({
+      url: `${BASE_URL}/users/customer/travelerInfo/delete/${id}`,
+    })
   }
 }
