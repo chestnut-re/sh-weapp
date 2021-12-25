@@ -124,7 +124,9 @@ const HomeScreen = () => {
         <View className='home-header'>
           <View className='now-place' onClick={toLocation}>
             {/* .substr(0, 4) + '...' */}
-            <Text className='text'>{userStore.city?.name ?? ''}</Text>
+            <Text className='text'>
+              {userStore.city?.name.length > 4 ? userStore.city?.name.substr(0, 4) + '...' : userStore.city?.name ?? ''}
+            </Text>
             <Image className='place' src={place} />
           </View>
           <View className='search-input' onClick={toSearch}>
