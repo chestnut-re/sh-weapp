@@ -1,7 +1,7 @@
 /* eslint-disable import/first */
 import Taro, { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
 import { View, Text, Image } from '@tarojs/components'
-import { Tabs, List, Loading, PullRefresh } from '@taroify/core'
+import { Tabs, List, Loading, PullRefresh, SwipeCell, Button } from '@taroify/core'
 import { H5 } from '@/constants/h5'
 import { useEffect, useRef, useState } from 'react'
 import { observer } from 'mobx-react'
@@ -96,46 +96,50 @@ const UsualMessagePage = () => {
       {/* <List loading={loading} hasMore={hasMore} onLoad={onLoad}> */}
       {list.map((item) => (
         <View className='item' key={item.travelerId}>
-          <View className='card'>
-            <View className='left-all' onClick={toItemDetail}>
-              <View className='left-top'>
-                <View className='user-name'>
-                  <View className='state'>{item.travelerName}</View>
-                  {item.userTravelerRelation === 0 ? (
-                    <View className='myself'>本人</View>
-                  ) : (
-                    <View className='order-p'>
-                      {item.userTravelerRelation == 1
-                        ? '夫妻'
-                        : item.userTravelerRelation == 2
-                        ? '父母'
-                        : item.userTravelerRelation == 3
-                        ? '子女'
-                        : item.userTravelerRelation == 4
-                        ? '亲戚'
-                        : item.userTravelerRelation == 5
-                        ? '朋友'
-                        : item.userTravelerRelation == 6
-                        ? '兄弟'
-                        : item.userTravelerRelation == 7
-                        ? '姐妹'
-                        : ''}
-                    </View>
-                  )}
+          <SwipeCell className='custom-swipe-cell'>
+            <View className='card'>
+              <View className='left-all' onClick={toItemDetail}>
+                <View className='left-top'>
+                  <View className='user-name'>
+                    <View className='state'>{item.travelerName}</View>
+                    {item.userTravelerRelation === 0 ? (
+                      <View className='myself'>本人</View>
+                    ) : (
+                      <View className='order-p'>
+                        {item.userTravelerRelation == 1
+                          ? '夫妻'
+                          : item.userTravelerRelation == 2
+                          ? '父母'
+                          : item.userTravelerRelation == 3
+                          ? '子女'
+                          : item.userTravelerRelation == 4
+                          ? '亲戚'
+                          : item.userTravelerRelation == 5
+                          ? '朋友'
+                          : item.userTravelerRelation == 6
+                          ? '兄弟'
+                          : item.userTravelerRelation == 7
+                          ? '姐妹'
+                          : ''}
+                      </View>
+                    )}
+                  </View>
+                  <View className='tel'>{item.phoneNumber}</View>
                 </View>
-                <View className='tel'>{item.phoneNumber}</View>
+                <View className='left-id'>
+                  {item.travelerCertificate.length > 0 && item.travelerCertificate[0].certificateType == 1
+                    ? '身份证 ' + item.travelerCertificate[0].certificateNo
+                    : '未填写证件'}
+                </View>
               </View>
-              <View className='left-id'>
-                {item.travelerCertificate.length > 0 && item.travelerCertificate[0].certificateType == 1
-                  ? '身份证 ' + item.travelerCertificate[0].certificateNo
-                  : '未填写证件'}
-              </View>
+              <Image className='jump' src={jump} onClick={toItemDetail} />
             </View>
-            <View className='del-btn' onClick={() => cutItem(item.travelerId)}>
-              删除
-            </View>
-            <Image className='jump' src={jump} onClick={toItemDetail} />
-          </View>
+            <SwipeCell.Actions side='right'>
+              <Button variant='contained' shape='square' color='danger' onClick={() => cutItem(item.travelerId)}>
+                删除
+              </Button>
+            </SwipeCell.Actions>
+          </SwipeCell>
         </View>
       ))}
       {/* {!refreshingRef.current && (

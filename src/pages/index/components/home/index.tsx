@@ -28,7 +28,6 @@ const HomeScreen = () => {
   const [activityList, setActivityList] = useState<any[]>([])
 
   useEffect(() => {
-    console.log(bannerList.length)
     getBanner()
     getActivity()
   }, [])
@@ -44,6 +43,8 @@ const HomeScreen = () => {
   })
 
   const onLoad = async () => {
+    console.log(pageRef.current.loading)
+    console.log(pageRef.current.current)
     if (pageRef.current.loading) return
     pageRef.current.loading = true
     setLoading(true)
@@ -122,6 +123,7 @@ const HomeScreen = () => {
         </View>
         <View className='home-header'>
           <View className='now-place' onClick={toLocation}>
+            {/* .substr(0, 4) + '...' */}
             <Text className='text'>{userStore.city?.name ?? ''}</Text>
             <Image className='place' src={place} />
           </View>
