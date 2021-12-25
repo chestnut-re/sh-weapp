@@ -4,17 +4,18 @@ import { WebView } from '@tarojs/components'
 import { useStore } from '@/store/context'
 import { observer } from 'mobx-react'
 import './index.less'
+import { dealWebViewURL } from '@/utils/webviewUtils'
 
 /**
  * 网页
  */
 const WebViewPage = () => {
-  const { commonStore } = useStore()
   const [initUrl, setInitUrl] = useState('')
-  console.log(commonStore)
+
   useEffect(() => {
-    setInitUrl(decodeURIComponent(Taro.getCurrentInstance()?.router?.params?.url ?? ''))
-    // setInitUrl('http://123.56.248.148/protocol/service')
+    const url = decodeURIComponent(Taro.getCurrentInstance()?.router?.params?.url ?? '')
+    console.log(dealWebViewURL(url));
+    setInitUrl(dealWebViewURL(url))
   }, [])
 
   const handleMessage = (event: any) => {
