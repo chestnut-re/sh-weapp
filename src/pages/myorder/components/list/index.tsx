@@ -9,7 +9,7 @@ import './index.less'
 /**
  * 我的订单
  */
-const OrderListPage = () => {
+const OrderListPage = (props) => {
   const [hasMore, setHasMore] = useState(true)
   const [list, setList] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
@@ -45,45 +45,63 @@ const OrderListPage = () => {
     onLoad()
   }
   return (
-    <View>
-      <PullRefresh className='list' loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
-        <List loading={loading} hasMore={hasMore} onLoad={onLoad}>
-          {list.map((item) => (
-            <View className='item' key={item} onClick={toOrderDetail}>
-              <View className='card'>
-                <View className='state'>待确认1</View>
-                <View className='content'>
-                  <Image className='img' src={pic} />
-                  <View className='name'>
-                    三亚5日自由行(5钻)·直减300「 高 星4晚连住...
-                    <View className='small-name'>
-                      <View>2021/10/22出发</View>
-                      <View>成人X2 儿童X2</View>
-                    </View>
-                  </View>
-                </View>
-                <View className='price'>
-                  <View className='discount'>已优惠¥200</View>
+    <View className='all'>
+      {/* <PullRefresh className='list' loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}> */}
+      {/* <List loading={loading} hasMore={hasMore} onLoad={onLoad}> */}
+      {props.por.map((item) => (
+        <View className='item' key={item.id} onClick={toOrderDetail}>
+          <View className='card'>
+            <View className='state'>
+              {item.state == 1
+                ? '代付款'
+                : item.state == 2
+                ? '已失效'
+                : item.state == 3
+                ? '代确认'
+                : item.state == 4
+                ? '已完成'
+                : item.state == 5
+                ? '退款中'
+                : item.state == 6
+                ? '退款成功'
+                : '退款失败'}
+            </View>
+            <View className='content'>
+              <Image className='img' src={pic} />
+              <View className='name'>
+                {item.goodsName}
+                <View className='small-name'>
                   <View>
-                    共计<Text className='money'>¥5798</Text>
+                    {item.travelStartDate}出发 -- {item.travelEndDate}返程
                   </View>
-                </View>
-                <View className='message'>
-                  <View className='message-one'>咨询</View>
-                  <View className='message-one'>分享给TA</View>
-                  <View className='message-two'>填写出行人信息</View>
+                  <View>
+                    成人X{item.adultNum} 儿童X{item.childNum}
+                  </View>
                 </View>
               </View>
             </View>
-          ))}
-          {!refreshingRef.current && (
-            <List.Placeholder>
-              {loading && <Loading>加载中...</Loading>}
-              {!hasMore && '没有更多了'}
-            </List.Placeholder>
-          )}
-        </List>
-      </PullRefresh>
+            <View className='price'>
+              <View className='discount'>已优惠¥{item.discountAmount}</View>
+              <View>
+                共计<Text className='money'>¥{item.activityTotalAmount}</Text>
+              </View>
+            </View>
+            <View className='message'>
+              <View className='message-one'>咨询</View>
+              <View className='message-one'>分享给TA</View>
+              <View className='message-two'>填写出行人信息</View>
+            </View>
+          </View>
+        </View>
+      ))}
+      {!refreshingRef.current && (
+        <List.Placeholder>
+          {loading && <Loading>加载中...</Loading>}
+          {!hasMore && '没有更多了'}
+        </List.Placeholder>
+      )}
+      {/* </List> */}
+      {/* </PullRefresh> */}
     </View>
   )
 }
