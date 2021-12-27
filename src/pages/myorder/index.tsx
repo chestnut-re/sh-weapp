@@ -39,14 +39,17 @@ const MyOrderPage = () => {
         <Tabs.TabPane title='待付款'>
           <OrderList por={orders} state={1} />
         </Tabs.TabPane>
-        <Tabs.TabPane title='已失效'>
+        {/* <Tabs.TabPane title='已失效'>
           <OrderList por={orders} state={2} />
-        </Tabs.TabPane>
-        <Tabs.TabPane title='待确认'>
+        </Tabs.TabPane> */}
+        <Tabs.TabPane title='待核销'>
           <OrderList por={orders} state={3} />
         </Tabs.TabPane>
         <Tabs.TabPane title='已完成'>
           <OrderList por={orders} state={4} />
+        </Tabs.TabPane>
+        <Tabs.TabPane title='退款'>
+          <OrderList por={orders} state={5} />
         </Tabs.TabPane>
       </Tabs>
     </View>
