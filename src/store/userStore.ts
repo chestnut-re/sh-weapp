@@ -80,21 +80,14 @@ class UserData {
     }
   }
 
-  async resetToken(loginVO) {
-    if (loginVO?.accessToken) {
-      await save(ACCESS_TOKEN, loginVO?.accessToken)
-      await save(REFRESH_TOKEN, loginVO?.refreshToken)
-    }
-  }
-
   //获取用户信息
   async getUserInfo() {
-    if (this.isBindMobile) {
-      const useInfo = await UserService.getUserInfo()
-      console.log('userRes', useInfo)
-      if (useInfo.data.code == 200) {
-        this.userInfo = useInfo.data.data
-      }
+    const useInfo = await UserService.getUserInfo()
+    console.log('userRes', useInfo)
+    if (useInfo.data.code == 200) {
+      this.userInfo = useInfo.data.data
+    } else {
+      showMToast(useInfo.data.msg)
     }
   }
   //获取常住地城市列表

@@ -7,6 +7,6 @@ import { BASE_URL } from '../constants/c'
 
 export class ShopService {
   static shopList(data) {
-    return doPostAction({ url: `${BASE_URL}/operation/shop/page`, data: data })
+    return doGetAction({ url: `${BASE_URL}/operation/shop/page` })
   }
 }
