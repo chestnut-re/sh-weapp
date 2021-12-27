@@ -1,34 +1,27 @@
 /* eslint-disable import/first */
 import Taro, { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
-import { View, Image } from '@tarojs/components'
+import { View } from '@tarojs/components'
+
 import { List, PullRefresh } from '@taroify/core'
 import { H5 } from '@/constants/h5'
-import pic from '@/assets/img/common/shg.png'
 import { useEffect, useRef, useState } from 'react'
 import { observer } from 'mobx-react'
 import { ShopService } from '@/service/ShopService'
+import Img from '@/components/Img'
 import './index.less'
 /**
  * 我的浏览
  */
 const MyBrowsePage = () => {
+  const pageRef = useRef<any>({ current: 1 })
+
   const [hasMore, setHasMore] = useState(true)
   const [list, setList] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
   const refreshingRef = useRef(false)
   const [scrollTop, setScrollTop] = useState(0)
   const [reachTop, setReachTop] = useState(true)
-  const [follow, setFollow] = useState(false)
-  useEffect(() => {
-    const params = {
-      pages: 1,
-      size: 10,
-      countId: ''
-    }
-    ShopService.shopList(params).then(res => {
-      console.log('resresresresres11212', res.data)
-    })
-  }, [])
+
   const toAbulkshop = () => {
     Taro.navigateTo({ url: `/pages/webview/index?url=${H5.groupShop}` })
   }
@@ -36,67 +29,105 @@ const MyBrowsePage = () => {
     setScrollTop(aScrollTop)
     setReachTop(aScrollTop === 0)
   })
-  const onLoad = () => {
+  useEffect(() => {
 
+  }, [])
+
+  const onLoad = () => {
     setLoading(true)
     const newList = refreshingRef.current ? [] : list
-    setTimeout(() => {
+    ShopService.shopList(pageRef.current.current).then(res => {
       refreshingRef.current = false
-      for (let i = 0; i < 1; i++) {
-        const text = newList.length + 1
-        newList.push(text < 1 ? '0' + text : String(text))
-      }
-      setList(newList)
       setLoading(false)
-      setHasMore(newList.length < 10)
-    }, 500)
+      const { data } = res
+      if (data) {
+        data.data.records.map(item => {
+          newList.push(item)
+        })
+        setList(newList)
+        setLoading(false)
+        setHasMore(data.data.records.length >= 5)
+        pageRef.current.current++
+      }
+    })
   }
 
   function onRefresh() {
     refreshingRef.current = true
-    setLoading(false)
+    pageRef.current.current = 1
     onLoad()
   }
-  const isFollow = (i) => {
-    console.log(i)
-    setFollow(!follow)
+  const isFollow = (item) => {
+    console.log('item.iditem.iditem.id', item.id)
+    const params = {
+      attentionState: 1,
+      shopId: `${item.id}`,
+    }
+    console.log('paramsparams', params)
+    ShopService.attention(params).then(res => {
+      console.log(res)
+      const newList = [...list]
+      newList.map(items => {
+        if (item.id == items['id']) {
+          items['attentionState'] = 1
+        }
+      })
+      setList(newList)
+    })
   }
   return (
     <View className='MyBrowsePage__root'>
       <View className='browse-list'>
+
         <PullRefresh className='list' loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
-          <List loading={loading} hasMore={hasMore} onLoad={onLoad}>
+
+          <List offset={30} loading={loading} hasMore={hasMore} onLoad={onLoad}>
             {list.map((item) => (
-              <View className='item' key={item}>
+              <View className='item' key={`${item['id']}`}>
                 <View className='card'>
                   <View className='btn-box'>
                     <View
-                      className={follow ? 'actuve-btn' : 'btn'}
+                      className={item['attentionState'] == '1' ? 'actuve-btn' : 'btn'}
                       onClick={() => {
                         isFollow(item)
                       }}
                     >
-                      {follow ? '已关注' : '关注'}
+                      {item['attentionState'] == '1' ? '已关注' : '关注'}
                     </View>
                   </View>
                   <View className='top-all' onClick={toAbulkshop}>
-                    <Image className='header' src={pic} />
+                    <Img
+                      url={item['shopHeadUrl']}
+                      className='header'
+                    />
                     <View className='text'>
-                      <View className='store-name'>五星团长 张三</View>
-                      <View className='store-text'>天空分外晴朗,白云也绽露笑容天空分外...</View>
+                      <View className='store-name'>{item['shopName']}</View>
+                      <View className='store-text'>{item['shopDesc']}</View>
                     </View>
                   </View>
                   <View className='img-list'>
-                    <Image src={pic} />
-                    <Image src={pic} />
-                    <Image src={pic} />
-                    <Image src={pic} />
+                    {item['promotionalImageUrlList'].length > 0 && item['promotionalImageUrlList'].map((items, index) => (
+                      <Img
+                        key={`index${index}`}
+                        url={items['shopHeadUrl']}
+                        className='header'
+                      />
+
+                    ))}
                   </View>
                 </View>
               </View>
             ))}
+            {!refreshingRef.current && (
+              <List.Placeholder>
+                {loading && '加载中...'}
+                {!hasMore && "没有更多了"}
+              </List.Placeholder>
+            )}
           </List>
+
         </PullRefresh>
+
       </View>
     </View>
   )

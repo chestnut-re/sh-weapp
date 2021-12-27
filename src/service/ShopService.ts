@@ -1,4 +1,4 @@
-import { doGetAction, doPostAction } from '@/utils/request'
+import { doGetAction, doPostAction, doPutAction } from '@/utils/request'
 import { BASE_URL } from '../constants/c'
 
 /**
@@ -6,7 +6,17 @@ import { BASE_URL } from '../constants/c'
  */
 
 export class ShopService {
-  static shopList(data) {
-    return doGetAction({ url: `${BASE_URL}/operation/shop/page` })
+  static shopList(current) {
+    return doGetAction({
+      url: `${BASE_URL}/operation/shop/page`,
+      data: {
+        current,
+        size: 5,
+      },
+    })
+  }
+
+  static attention(data) {
+    return doPostAction({ url: `${BASE_URL}/operation/shop/attention`, data })
   }
 }
