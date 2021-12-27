@@ -8,6 +8,8 @@ import { Button, Toast } from '@taroify/core'
 import { observer } from 'mobx-react'
 import pic from '@/assets/img/common/shg.png'
 import './index.less'
+import { save } from '@/utils/storage'
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/constants/c'
 
 /**
  * 登录页
@@ -30,6 +32,9 @@ const LoginPage = () => {
       if (result.data.code == 200) {
         // 成功
         Taro.reLaunch({ url: '/pages/index/index' })
+        // if(result.data.data.loginVO?.accessToken){
+        //   userStore.resetToken(result.data.data.loginVO)
+        // }
         userStore.init()
       } else {
         showToast({ title: result.data.msg ?? '登录失败', icon: 'none', duration: 2000 })
@@ -40,15 +45,30 @@ const LoginPage = () => {
     }
   }
 
+  const login = async () => {
+    await userStore.init()
+    Taro.reLaunch({ url: '/pages/index/index' })
+  }
+
+  console.log('userStore.isBindMobile', userStore.isBindMobile);
+  
+
   return (
     <View className='LoginPage__root'>
       <View className='logo'>
         <Image className='img' src={pic} />
       </View>
       <View className='btn-box'>
-        <Button className='btn' lang='zh_CN' openType='getPhoneNumber' onGetPhoneNumber={onGetPhoneNumberEventDetail}>
-          授权手机号并登录
-        </Button>
+        {!userStore.isBindMobile && (
+          <Button className='btn' lang='zh_CN' openType='getPhoneNumber' onGetPhoneNumber={onGetPhoneNumberEventDetail}>
+            授权手机号并登录
+          </Button>
+        )}
+        {userStore.isBindMobile && (
+          <Button className='btn' onClick={login}>
+            登录
+          </Button>
+        )}
       </View>
       <Toast className='toast' open={open} onClose={setOpen} type='fail'>
         需要通过授权才能继续，请重新点击并授权！

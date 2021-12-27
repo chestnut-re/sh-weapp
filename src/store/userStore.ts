@@ -34,6 +34,7 @@ class UserData {
     makeObservable(this, {
       userInfo: observable,
       city: observable,
+      _isBindMobile: observable,
       init: action,
       login: action,
       loginOut: action,
@@ -79,14 +80,21 @@ class UserData {
     }
   }
 
+  async resetToken(loginVO) {
+    if (loginVO?.accessToken) {
+      await save(ACCESS_TOKEN, loginVO?.accessToken)
+      await save(REFRESH_TOKEN, loginVO?.refreshToken)
+    }
+  }
+
   //获取用户信息
   async getUserInfo() {
-    const useInfo = await UserService.getUserInfo()
-    console.log('userRes', useInfo)
-    if (useInfo.data.code == 200) {
-      this.userInfo = useInfo.data.data
-    } else {
-      showMToast(useInfo.data.msg)
+    if (this.isBindMobile) {
+      const useInfo = await UserService.getUserInfo()
+      console.log('userRes', useInfo)
+      if (useInfo.data.code == 200) {
+        this.userInfo = useInfo.data.data
+      }
     }
   }
   //获取常住地城市列表

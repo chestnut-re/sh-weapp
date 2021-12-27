@@ -2,10 +2,16 @@ import { userStore } from '@/store/context'
 import Taro from '@tarojs/taro'
 
 export const getHeader = () => {
-  return {
-    Authorization: userStore.accessToken,
-    cId: userStore.city?.adcode ?? '',
+  const ret:any = {}
+  if(userStore.accessToken){
+    ret.Authorization = userStore.accessToken
   }
+
+  if(userStore.city?.adcode){
+    ret.cId = userStore.city?.adcode ?? ''
+  }
+
+  return ret;
 }
 
 /**
