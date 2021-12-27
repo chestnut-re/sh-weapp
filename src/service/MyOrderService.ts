@@ -8,6 +8,19 @@ import { BASE_URL } from '../constants/c'
 export class MyOrderService {
   /// 获取出行人列表
   static orderQuery() {
-    return doGetAction({ url: `${BASE_URL}/orders/query`, data: {} })
+    return doGetAction({
+      url: `${BASE_URL}/orders/query`,
+      data: {},
+    })
+  }
+  /// 下拉刷新
+  static orderQueryUp(current) {
+    return doGetAction({
+      url: `${BASE_URL}/orders/query`,
+      data: {
+        current,
+        size: 10,
+      },
+    })
   }
 }

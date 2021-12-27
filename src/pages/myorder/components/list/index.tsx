@@ -6,12 +6,14 @@ import { observer } from 'mobx-react'
 import pic from '@/assets/img/common/shg.png'
 import { H5 } from '@/constants/h5'
 import './index.less'
+import { MyOrderService } from '@/service/MyOrderService'
 /**
  * 我的订单
  */
 const OrderListPage = (props) => {
   const [hasMore, setHasMore] = useState(true)
-  const [list, setList] = useState<string[]>([])
+  const pageRef = useRef<any>({ current: 1, loading: false })
+  const [list, setList] = useState<any[]>(props.por)
   const [loading, setLoading] = useState(false)
   const refreshingRef = useRef(false)
   const [scrollTop, setScrollTop] = useState(0)
@@ -24,31 +26,36 @@ const OrderListPage = (props) => {
   const toOrderDetail = () => {
     Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(H5.orderDetail)}` })
   }
-  const onLoad = () => {
+  const onLoad = async () => {
+    console.log(pageRef.current.loading)
+    console.log(pageRef.current.current)
+    if (pageRef.current.loading) return
+    pageRef.current.loading = true
     setLoading(true)
-    const newList = refreshingRef.current ? [] : list
-    setTimeout(() => {
+    let newList = pageRef.current.current === 1 ? [] : list
+    MyOrderService.orderQueryUp(pageRef.current.current).then((result) => {
       refreshingRef.current = false
-      for (let i = 0; i < 10; i++) {
-        const text = newList.length + 1
-        newList.push(text < 10 ? '0' + text : String(text))
+      if (result.data.code == '200') {
+        setList(newList.concat(result.data.data.records))
+        setLoading(false)
+        setHasMore(result.data.data.records.length === 10)
+        pageRef.current.current++
       }
-      setList(newList)
-      setLoading(false)
-      setHasMore(newList.length < 40)
-    }, 1000)
+      pageRef.current.loading = false
+    })
   }
 
   function onRefresh() {
+    pageRef.current.current = 1
     refreshingRef.current = true
-    setLoading(false)
+    setLoading(true)
     onLoad()
   }
   return (
     <View className='all'>
-      {/* <PullRefresh className='list' loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}> */}
-      {/* <List loading={loading} hasMore={hasMore} onLoad={onLoad}> */}
-      {props.por.map((item) =>
+      {/* <PullRefresh loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}> */}
+      {/* <List loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}> */}
+      {list.map((item) =>
         props.state == 0 || item.state == props.state ? (
           <View className='item' key={item.id} onClick={toOrderDetail}>
             <View className='card'>
@@ -96,12 +103,12 @@ const OrderListPage = (props) => {
           </View>
         ) : null
       )}
-      {/* {!refreshingRef.current && (
+      {!refreshingRef.current && (
         <List.Placeholder>
           {loading && <Loading>加载中...</Loading>}
           {!hasMore && '没有更多了'}
         </List.Placeholder>
-      )} */}
+      )}
       {/* </List> */}
       {/* </PullRefresh> */}
     </View>
