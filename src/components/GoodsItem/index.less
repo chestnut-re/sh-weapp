@@ -30,6 +30,9 @@
         }
         .text {
           margin: 5px 11px 7px 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
       }
     }
@@ -44,7 +47,13 @@
         font-size: 28px;
         line-height: 32px;
         font-weight: bold;
-        padding-bottom: 26px;
+        margin-bottom: 26px;
+        padding-top: 15px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
       }
       .money {
         font-size: 28px;

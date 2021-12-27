@@ -6,6 +6,7 @@ import { H5 } from '@/constants/h5'
 import pic from '@/assets/img/common/shg.png'
 import { useRef, useState } from 'react'
 import { observer } from 'mobx-react'
+import { ShopService } from '@/service/ShopService'
 import './index.less'
 /**
  * 我的浏览
@@ -27,6 +28,12 @@ const MyBrowsePage = () => {
     setReachTop(aScrollTop === 0)
   })
   const onLoad = () => {
+    const params = {
+
+    }
+    ShopService.shopList(params).then(res => {
+      console.log('resresresresres', res)
+    })
     setLoading(true)
     const newList = refreshingRef.current ? [] : list
     setTimeout(() => {
