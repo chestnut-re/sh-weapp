@@ -26,6 +26,7 @@ export const doPostAction = ({ url, data }) => {
     url: url,
     header: getHeader(),
     data: data,
+    dataType: 'test',
   })
 }
 
@@ -41,6 +42,7 @@ export const doGetAction = ({ url, data }) => {
     url: url,
     header: getHeader(),
     data: data,
+    dataType: 'test',
   })
 }
 
@@ -56,6 +58,7 @@ export const doPutAction = ({ url, data }) => {
     url: url,
     header: getHeader(),
     data: data,
+    dataType: 'test',
   })
 }
 
@@ -70,5 +73,6 @@ export const doDeleteAction = ({ url }) => {
     method: 'DELETE',
     url: url,
     header: getHeader(),
+    dataType: 'test',
   })
 }

@@ -29,14 +29,12 @@ const GoodsItem: React.FC<Props> = ({ item, onItemClick }) => {
           </View>
         </View>
         <View className='content'>
-          <View className='text'>
-            {item.goodsName}
-          </View>
+          <View className='text'>{item.goodsName}</View>
           <View className='money'>¥ {item.personMarkPrice}</View>
           <View className='consume'>
             <Text>{item.shamSales}人已付款</Text>
             <View>
-              <Image className='is-like' src={Number(item) % 2 ? noLike : liked} />
+              <Image className='is-like' src={liked} />
               {item.shamLikes}
             </View>
           </View>
