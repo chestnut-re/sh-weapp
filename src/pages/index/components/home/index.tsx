@@ -160,7 +160,7 @@ const HomeScreen = () => {
               {!refreshingRef.current && (
                 <List.Placeholder>
                   {loading && <Loading>加载中...</Loading>}
-                  {!hasMore && '没有更多了'}
+                  {!hasMore && <View className='noMore'>没有更多了</View>}
                 </List.Placeholder>
               )}
             </List>

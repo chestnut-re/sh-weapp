@@ -30,9 +30,9 @@ const GoodsItem: React.FC<Props> = ({ item, onItemClick }) => {
         </View>
         <View className='content'>
           <View className='text'>
-            {item.goodsName} {item.goodsNickName}
+            {item.goodsName}
           </View>
-          <View className='money'>成人市场标价¥ {item.personMarkPrice}</View>
+          <View className='money'>¥ {item.personMarkPrice}</View>
           <View className='consume'>
             <Text>{item.shamSales}人已付款</Text>
             <View>
