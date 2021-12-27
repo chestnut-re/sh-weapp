@@ -53,64 +53,64 @@ const OrderListPage = (props) => {
   }
   return (
     <View className='all'>
-      {/* <PullRefresh loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}> */}
-      {/* <List loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}> */}
-      {list.map((item) =>
-        props.state == 0 || item.state == props.state ? (
-          <View className='item' key={item.id} onClick={toOrderDetail}>
-            <View className='card'>
-              <View className='state'>
-                {item.state == 1
-                  ? '代付款'
-                  : item.state == 2
-                  ? '已失效'
-                  : item.state == 3
-                  ? '代确认'
-                  : item.state == 4
-                  ? '已完成'
-                  : item.state == 5
-                  ? '退款中'
-                  : item.state == 6
-                  ? '退款成功'
-                  : '退款失败'}
-              </View>
-              <View className='content'>
-                <Image className='img' src={pic} />
-                <View className='name'>
-                  {item.goodsName}
-                  <View className='small-name'>
-                    <View>
-                      {item.travelStartDate}出发 -- {item.travelEndDate}返程
+      <PullRefresh loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
+        <List loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}>
+          {list.map((item) =>
+            props.state == 0 || item.state == props.state ? (
+              <View className='item' key={item.id} onClick={toOrderDetail}>
+                <View className='card'>
+                  <View className='state'>
+                    {item.state == 1
+                      ? '代付款'
+                      : item.state == 2
+                      ? '已失效'
+                      : item.state == 3
+                      ? '代确认'
+                      : item.state == 4
+                      ? '已完成'
+                      : item.state == 5
+                      ? '退款中'
+                      : item.state == 6
+                      ? '退款成功'
+                      : '退款失败'}
+                  </View>
+                  <View className='content'>
+                    <Image className='img' src={pic} />
+                    <View className='name'>
+                      {item.goodsName}
+                      <View className='small-name'>
+                        <View>
+                          {item.travelStartDate}出发 -- {item.travelEndDate}返程
+                        </View>
+                        <View>
+                          成人X{item.adultNum} 儿童X{item.childNum}
+                        </View>
+                      </View>
                     </View>
+                  </View>
+                  <View className='price'>
+                    <View className='discount'>已优惠¥{item.discountAmount}</View>
                     <View>
-                      成人X{item.adultNum} 儿童X{item.childNum}
+                      共计<Text className='money'>¥{item.activityTotalAmount}</Text>
                     </View>
+                  </View>
+                  <View className='message'>
+                    <View className='message-one'>咨询</View>
+                    <View className='message-one'>分享给TA</View>
+                    <View className='message-two'>填写出行人信息</View>
                   </View>
                 </View>
               </View>
-              <View className='price'>
-                <View className='discount'>已优惠¥{item.discountAmount}</View>
-                <View>
-                  共计<Text className='money'>¥{item.activityTotalAmount}</Text>
-                </View>
-              </View>
-              <View className='message'>
-                <View className='message-one'>咨询</View>
-                <View className='message-one'>分享给TA</View>
-                <View className='message-two'>填写出行人信息</View>
-              </View>
-            </View>
-          </View>
-        ) : null
-      )}
-      {!refreshingRef.current && (
-        <List.Placeholder>
-          {loading && <Loading>加载中...</Loading>}
-          {!hasMore && '没有更多了'}
-        </List.Placeholder>
-      )}
-      {/* </List> */}
-      {/* </PullRefresh> */}
+            ) : null
+          )}
+          {!refreshingRef.current && (
+            <List.Placeholder>
+              {loading && <Loading>加载中...</Loading>}
+              {!hasMore && '没有更多了'}
+            </List.Placeholder>
+          )}
+        </List>
+      </PullRefresh>
     </View>
   )
 }
