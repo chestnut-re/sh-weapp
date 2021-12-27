@@ -29,7 +29,8 @@ class UserData {
   /**city 城市信息，需要保存到本地 */
   city = null
   cityInfo = null
-
+  /** totalAmount 代币信息*/
+  totalAmount = null
   constructor() {
     makeObservable(this, {
       userInfo: observable,
@@ -75,6 +76,7 @@ class UserData {
       save(REFRESH_TOKEN, this.refreshToken!)
       this.getUserInfo()
       this.getAreaList()
+      this.getWallet()
     } else {
       showMToast(openIdRes.data.msg)
     }
@@ -105,6 +107,16 @@ class UserData {
       this.cityInfo = cityInfo.data.data
     } else {
       showMToast(cityInfo.data.msg)
+    }
+  }
+  //获取我的代币
+  async getWallet() {
+    const wallet = await UserService.getUserWallet()
+    if (wallet.data.code == 200) {
+      this.totalAmount = wallet.data.data
+      console.log('wallet', this.totalAmount)
+    } else {
+      showMToast(wallet.data.msg)
     }
   }
   /**退出登录 */

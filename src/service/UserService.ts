@@ -11,7 +11,10 @@ export class UserService {
   static getUserInfo() {
     return doGetAction({ url: `${BASE_URL}/users/customer/userInfo/get`, data: {} })
   }
-
+  /// 获取用户代币
+  static getUserWallet() {
+    return doGetAction({ url: `${BASE_URL}/wallet/c/myWallet`, data: {} })
+  }
   ///修改用户信息
   static editUserInfo({ pic, nickName, sex, birthday, address, personalSignature }: any) {
     return doPutAction({

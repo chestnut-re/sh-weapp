@@ -40,6 +40,7 @@ import './index.less'
  */
 const MineScreen = () => {
   const { userStore } = useStore()
+  console.log(userStore.totalAmount?.totalAmount)
   const [hasMore, setHasMore] = useState(true)
   const [list, setList] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
@@ -290,7 +291,7 @@ const MineScreen = () => {
         <Image className='img-1' src={tishi} />
         {/* </View> */}
         <View className='token'>
-          <Text className='Token__Num'>280088</Text>
+          <Text className='Token__Num'>{userStore.totalAmount?.totalAmount}</Text>
           {/* <View className='Token__Img'> */}
           <Image className='img' src={db} />
           {/* </View> */}
