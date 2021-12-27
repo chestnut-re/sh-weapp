@@ -22,8 +22,9 @@ const MyBrowsePage = () => {
   const [scrollTop, setScrollTop] = useState(0)
   const [reachTop, setReachTop] = useState(true)
 
-  const toAbulkshop = () => {
-    Taro.navigateTo({ url: `/pages/webview/index?url=${H5.groupShop}` })
+  const toAbulkshop = (item) => {
+
+    Taro.navigateTo({ url: `/pages/webview/index?id=${item['id']}&url=${H5.groupShop}` })
   }
   usePageScroll(({ scrollTop: aScrollTop }) => {
     setScrollTop(aScrollTop)
@@ -58,18 +59,16 @@ const MyBrowsePage = () => {
     onLoad()
   }
   const isFollow = (item) => {
-    console.log('item.iditem.iditem.id', item.id)
     const params = {
-      attentionState: 1,
+      attentionState: item.attentionState == 1 ? 0 : 1,
       shopId: `${item.id}`,
     }
-    console.log('paramsparams', params)
     ShopService.attention(params).then(res => {
       console.log(res)
       const newList = [...list]
       newList.map(items => {
         if (item.id == items['id']) {
-          items['attentionState'] = 1
+          items['attentionState'] = item.attentionState == 1 ? '0' : '1'
         }
       })
       setList(newList)
@@ -95,7 +94,7 @@ const MyBrowsePage = () => {
                       {item['attentionState'] == '1' ? '已关注' : '关注'}
                     </View>
                   </View>
-                  <View className='top-all' onClick={toAbulkshop}>
+                  <View className='top-all' onClick={() => toAbulkshop(item)}>
                     <Img
                       url={item['shopHeadUrl']}
                       className='header'
@@ -107,12 +106,13 @@ const MyBrowsePage = () => {
                   </View>
                   <View className='img-list'>
                     {item['promotionalImageUrlList'].length > 0 && item['promotionalImageUrlList'].map((items, index) => (
-                      <Img
-                        key={`index${index}`}
-                        url={items['shopHeadUrl']}
-                        className='header'
-                      />
-
+                      index < 4 && (
+                        <Img
+                          key={`index${index}`}
+                          url={items}
+                          className='Image'
+                        />
+                      )
                     ))}
                   </View>
                 </View>

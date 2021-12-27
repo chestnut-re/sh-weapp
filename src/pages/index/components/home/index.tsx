@@ -30,6 +30,7 @@ const HomeScreen = () => {
   useEffect(() => {
     getBanner()
     getActivity()
+    onLoad()
   }, [])
 
   usePageScroll(({ scrollTop: aScrollTop }) => {
@@ -154,21 +155,23 @@ const HomeScreen = () => {
           )}
         </View> */}
           <View className='product-list'>
-            <List loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}>
-              {list.map((item) => (
-                <GoodsItem key={item.id} onItemClick={anOrder} item={item} />
-              ))}
-              {!refreshingRef.current && (
-                <List.Placeholder>
-                  {loading && <Loading>加载中...</Loading>}
-                  {!hasMore && <View className='noMore'>没有更多了</View>}
-                </List.Placeholder>
-              )}
-            </List>
+            {list.length > 0 && (
+              <List loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}>
+                {list.map((item) => (
+                  <GoodsItem key={item.id} onItemClick={anOrder} item={item} />
+                ))}
+                {!refreshingRef.current && (
+                  <List.Placeholder>
+                    {loading && <Loading>加载中...</Loading>}
+                    {!hasMore && <View className='noMore'>没有更多了</View>}
+                  </List.Placeholder>
+                )}
+              </List>
+            )}
           </View>
         </View>
-      </PullRefresh>
-    </View>
+      </PullRefresh >
+    </View >
   )
 }
 
