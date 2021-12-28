@@ -34,6 +34,8 @@ import link from '@/assets/img/mine/link.png'
 import del from '@/assets/img/mine/del.png'
 import { H5 } from '@/constants/h5'
 import './index.less'
+import { getUrlParams } from '@/utils/webviewUtils'
+import { showMToast } from '@/utils/ui'
 
 /**
  * 我的页面
@@ -269,6 +271,17 @@ const MineScreen = () => {
           onClick={() => {
             Taro.scanCode({}).then((res) => {
               console.log(res)
+              try {
+                const params = getUrlParams(res.result)
+                const d = JSON.parse(decodeURIComponent(params['data']))
+                if (d.type === 'web') {
+                  Taro.navigateTo({ url: `/pages/webview/index?url=${d['path']}` })
+                } else {
+                  showMToast('解析错误')
+                }
+              } catch (e) {
+                console.log(e);
+              }
             })
           }}
         >
