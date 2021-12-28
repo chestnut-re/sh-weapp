@@ -63,7 +63,8 @@ const UsualMessagePage = () => {
     Taro.navigateTo({ url: `/pages/webview/index?url=${H5.personalDetails}` })
   }
   const toItemDetail = (e) => {
-    Taro.navigateTo({ url: `/pages/webview/index?url=${H5.personalDetail}` + e })
+    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(H5.personalDetail)}` + e })
+    // url: `/pages/webview/index?url=${encodeURIComponent(H5.personalDetail)}`
   }
   const cutItem = async (e) => {
     console.log(e)
