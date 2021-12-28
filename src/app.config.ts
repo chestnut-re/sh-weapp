@@ -25,6 +25,7 @@ export default {
     'pages/setSex/index',
     'pages/followStore/index',
     'pages/webview/index',
+    'pages/pay/index',
   ],
   window: {
     backgroundTextStyle: 'light',

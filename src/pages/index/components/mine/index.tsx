@@ -57,6 +57,7 @@ const MineScreen = () => {
     Taro.navigateTo({ url: '/pages/myOrder/index' })
   }
   const toMyToken = () => {
+    // Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent('http://192.168.10.75:4000/test/page')}` })
     Taro.navigateTo({ url: `/pages/webview/index?url=${H5.myToken}` })
   }
   const toSetUp = () => {
