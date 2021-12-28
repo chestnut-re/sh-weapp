@@ -62,8 +62,8 @@ const UsualMessagePage = () => {
   const toAddTravel = () => {
     Taro.navigateTo({ url: `/pages/webview/index?url=${H5.personalDetails}` })
   }
-  const toItemDetail = () => {
-    Taro.navigateTo({ url: `/pages/webview/index?url=${H5.personalDetail}` })
+  const toItemDetail = (e) => {
+    Taro.navigateTo({ url: `/pages/webview/index?url=${H5.personalDetail}` + e })
   }
   const cutItem = async (e) => {
     console.log(e)
@@ -97,8 +97,8 @@ const UsualMessagePage = () => {
       {list.map((item) => (
         <View className='item' key={item.travelerId}>
           <SwipeCell className='custom-swipe-cell'>
-            <View className='card'>
-              <View className='left-all' onClick={toItemDetail}>
+            <View className='card' onClick={() => toItemDetail(item.travelerId)}>
+              <View className='left-all'>
                 <View className='left-top'>
                   <View className='user-name'>
                     <View className='state'>{item.travelerName}</View>
@@ -132,7 +132,7 @@ const UsualMessagePage = () => {
                     : '未填写证件'}
                 </View>
               </View>
-              <Image className='jump' src={jump} onClick={toItemDetail} />
+              <Image className='jump' src={jump} />
             </View>
             <SwipeCell.Actions side='right'>
               <Button variant='contained' shape='square' color='danger' onClick={() => cutItem(item.travelerId)}>
