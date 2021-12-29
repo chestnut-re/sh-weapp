@@ -11,7 +11,7 @@ export class ShopService {
       url: `${BASE_URL}/operation/shop/page`,
       data: {
         current,
-        size: 5,
+        size: 10,
       },
     })
   }

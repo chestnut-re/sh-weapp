@@ -21,7 +21,7 @@ export class H5 {
   static goodsDetail = `${h5Domain}/goods-detail`
 
   /// 团小店
-  static groupShop = `${h5Domain}/group-shop`
+  static groupShop = `${h5Domain}/group-shop?id=`
 
   /// 订单详情页
   static orderDetail = `${h5Domain}/order-detail?type=1`

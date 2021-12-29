@@ -1,6 +1,6 @@
 /* eslint-disable import/first */
 import Taro, { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
-import { View } from '@tarojs/components'
+import { View, ScrollView } from '@tarojs/components'
 
 import { List, PullRefresh } from '@taroify/core'
 import { H5 } from '@/constants/h5'
@@ -23,14 +23,15 @@ const MyBrowsePage = () => {
   const [reachTop, setReachTop] = useState(true)
 
   const toAbulkshop = (item) => {
-    Taro.navigateTo({ url: `/pages/webview/index?&url=${H5.groupShop}?id=${item['id']}` })
+    console.log('item', item)
+    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(H5.groupShop)}` + item['id'] })
   }
   usePageScroll(({ scrollTop: aScrollTop }) => {
     setScrollTop(aScrollTop)
     setReachTop(aScrollTop === 0)
   })
   useEffect(() => {
-
+    onLoad()
   }, [])
 
   const onLoad = () => {
@@ -46,7 +47,7 @@ const MyBrowsePage = () => {
         })
         setList(newList)
         setLoading(false)
-        setHasMore(data.data.records.length >= 5)
+        setHasMore(data.data.records.length >= 10)
         pageRef.current.current++
       }
     })
@@ -73,59 +74,62 @@ const MyBrowsePage = () => {
       setList(newList)
     })
   }
+  console.log('recordsrecords', list)
   return (
     <View className='MyBrowsePage__root'>
       <View className='browse-list'>
-
         <PullRefresh className='list' loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
-
-          <List offset={30} loading={loading} hasMore={hasMore} onLoad={onLoad}>
-            {list.map((item) => (
-              <View className='item' key={`${item['id']}`}>
-                <View className='card'>
-                  <View className='btn-box'>
-                    <View
-                      className={item['attentionState'] == '1' ? 'actuve-btn' : 'btn'}
-                      onClick={() => {
-                        isFollow(item)
-                      }}
-                    >
-                      {item['attentionState'] == '1' ? '已关注' : '关注'}
+          {list && list.length > 0 && (
+            <List loading={loading} hasMore={hasMore} onLoad={onLoad}>
+              {list.map((item) => (
+                <View className='item' key={`${item['id']}`}>
+                  <View className='card'>
+                    <View className='btn-box'>
+                      <View
+                        className={item['attentionState'] == '1' ? 'actuve-btn' : 'btn'}
+                        onClick={() => {
+                          isFollow(item)
+                        }}
+                      >
+                        {item['attentionState'] == '1' ? '已关注' : '关注'}
+                      </View>
                     </View>
-                  </View>
-                  <View className='top-all' onClick={() => toAbulkshop(item)}>
-                    <Img
-                      url={item['shopHeadUrl']}
-                      className='header'
-                    />
-                    <View className='text'>
-                      <View className='store-name'>{item['shopName']}</View>
-                      <View className='store-text'>{item['shopDesc']}</View>
+                    <View className='top-all' onClick={() => toAbulkshop(item)}>
+                      <Img
+                        url={item['shopHeadUrl']}
+                        className='header'
+                      />
+                      <View className='text'>
+                        <View className='store-name'>{item['shopName']}</View>
+                        <View className='store-text'>{item['shopDesc']}</View>
+                      </View>
                     </View>
-                  </View>
-                  <View className='img-list'>
-                    {item['promotionalImageUrlList'].length > 0 && item['promotionalImageUrlList'].map((items, index) => (
-                      index < 4 && (
-                        <Img
-                          key={`index${index}`}
-                          url={items}
-                          className='Image'
-                        />
-                      )
-                    ))}
+                    <View className='img-list'>
+                      {item['shopGoods'] && item['shopGoods'].length > 0 && item['shopGoods'].map((items, index) => (
+                        index < 4 && (
+                          <Img
+                            key={`index${index}`}
+                            url={items['promotionalImageUrl']}
+                            className='Image'
+                          />
+                        )
+                      ))}
+                    </View>
                   </View>
                 </View>
-              </View>
-            ))}
-            {!refreshingRef.current && (
-              <List.Placeholder>
-                {loading && '加载中...'}
-                {!hasMore && "没有更多了"}
-              </List.Placeholder>
-            )}
-          </List>
+              ))}
 
+              {!refreshingRef.current && (
+                <List.Placeholder>
+                  {loading && '加载中...'}
+                  {!hasMore && "没有更多了"}
+                </List.Placeholder>
+              )}
+            </List>
+          )}
         </PullRefresh>
+
+
 
       </View>
     </View>
