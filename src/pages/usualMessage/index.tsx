@@ -51,9 +51,7 @@ const UsualMessagePage = () => {
   }
   const travelerList = async () => {
     const result = await TravelerService.getTravelerList()
-    console.log(result)
     if (result.data.code === '200') {
-      showMToast(result.data.msg)
       setList(result.data.data)
     } else {
       showMToast(result.data.msg)

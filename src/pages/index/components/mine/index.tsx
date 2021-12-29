@@ -44,9 +44,8 @@ import './index.less'
  */
 const MineScreen = () => {
   const { userStore } = useStore()
-  console.log(userStore.totalAmount?.totalAmount)
   const [hasMore, setHasMore] = useState(true)
-  const [totalAmount, setTotalAmount] = useState<any>()
+  const [list, setList] = useState<any>([])
   const [loading, setLoading] = useState(false)
   const [scrollTop, setScrollTop] = useState(0)
   const [reachTop, setReachTop] = useState(true)
@@ -54,13 +53,7 @@ const MineScreen = () => {
   const [cityName, setCityName] = useState('奔赴山海')
   const [isShowCanvas, setIsShowCanvas] = useState(false)
   const [userInfo, setUserInfo] = useState({})
-  useEffect(() => {
-    console.log('生效了')
-    setTotalAmount(userStore.totalAmount?.totalAmount)
-  }, [])
-  useDidShow(() => {
-    console.log('componentDidShow')
-  })
+  useEffect(() => {}, [])
   const toFist = () => {
     // Taro.navigateBack()
   }
@@ -102,7 +95,6 @@ const MineScreen = () => {
   })
 
   useShareAppMessage((res) => {
-    console.log('打印', res)
     if (res.from === 'button') {
       // 来自页面内转发按钮
       console.log(res.target)
@@ -315,7 +307,7 @@ const MineScreen = () => {
         <Image className='img-1' src={tishi} />
         {/* </View> */}
         <View className='token'>
-          <Text className='Token__Num'>{userStore.totalAmount?.totalAmount}</Text>
+          <View className='Token__Num'>{userStore?.totalAmount}</View>
           {/* <View className='Token__Img'> */}
           <Image className='img' src={db} />
           {/* </View> */}

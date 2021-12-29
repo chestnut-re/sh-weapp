@@ -33,6 +33,7 @@ class UserData {
   totalAmount = null
   constructor() {
     makeObservable(this, {
+      totalAmount: observable,
       userInfo: observable,
       city: observable,
       _isBindMobile: observable,
@@ -95,7 +96,6 @@ class UserData {
   //获取常住地城市列表
   async getAreaList() {
     const cityInfo = await LocationService.getAreaList()
-    console.log('userRes', cityInfo)
     if (cityInfo.data.code == 200) {
       this.cityInfo = cityInfo.data.data
     } else {
@@ -106,8 +106,7 @@ class UserData {
   async getWallet() {
     const wallet = await UserService.getUserWallet()
     if (wallet.data.code == 200) {
-      this.totalAmount = wallet.data.data
-      console.log('wallet', this.totalAmount)
+      this.totalAmount = wallet.data.data.totalAmount
     } else {
       showMToast(wallet.data.msg)
     }
@@ -137,7 +136,7 @@ class UserData {
     try {
       res = await get(CITY_INFO)
     } catch (error) {
-      console.log(error)
+      console.log('error', error)
     }
     if (res && !force) {
       this.setCityCode(JSON.parse(res.data))
