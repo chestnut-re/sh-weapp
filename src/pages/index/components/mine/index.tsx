@@ -1,13 +1,17 @@
-import Taro, { usePageScroll, useShareAppMessage } from '@tarojs/taro'
+import Taro, { useDidShow, usePageScroll, useShareAppMessage } from '@tarojs/taro'
 import { useStore } from '@/store/context'
 import { Button, View, Text, Image, Canvas } from '@tarojs/components'
 import { Steps, List, Popup } from '@taroify/core'
 import { observer } from 'mobx-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { getUrlParams } from '@/utils/webviewUtils'
+import { showMToast } from '@/utils/ui'
 import pic from '@/assets/img/common/shg.png'
 import lingdang from '@/assets/img/mine/lingdang.png'
 import saoyisao from '@/assets/img/mine/saoyisao.png'
+import saoyisao1 from '@/assets/img/mine/saoyisao1.png'
 import shezhi from '@/assets/img/mine/shezhi.png'
+import shezhi1 from '@/assets/img/mine/shezhi1.png'
 import myPhoto from '@/assets/img/mine/myphoto.png'
 import jump from '@/assets/img/yjfk/jump.png'
 import tishi from '@/assets/img/mine/tishi.png'
@@ -34,8 +38,6 @@ import link from '@/assets/img/mine/link.png'
 import del from '@/assets/img/mine/del.png'
 import { H5 } from '@/constants/h5'
 import './index.less'
-import { getUrlParams } from '@/utils/webviewUtils'
-import { showMToast } from '@/utils/ui'
 
 /**
  * 我的页面
@@ -44,7 +46,7 @@ const MineScreen = () => {
   const { userStore } = useStore()
   console.log(userStore.totalAmount?.totalAmount)
   const [hasMore, setHasMore] = useState(true)
-  const [list, setList] = useState<string[]>([])
+  const [totalAmount, setTotalAmount] = useState<any>()
   const [loading, setLoading] = useState(false)
   const [scrollTop, setScrollTop] = useState(0)
   const [reachTop, setReachTop] = useState(true)
@@ -52,15 +54,23 @@ const MineScreen = () => {
   const [cityName, setCityName] = useState('奔赴山海')
   const [isShowCanvas, setIsShowCanvas] = useState(false)
   const [userInfo, setUserInfo] = useState({})
+  useEffect(() => {
+    console.log('生效了')
+    setTotalAmount(userStore.totalAmount?.totalAmount)
+  }, [])
+  useDidShow(() => {
+    console.log('componentDidShow')
+  })
   const toFist = () => {
-    Taro.navigateBack()
+    // Taro.navigateBack()
   }
   const toMyOrder = () => {
     Taro.navigateTo({ url: '/pages/myOrder/index' })
   }
   const toMyToken = () => {
+    showMToast('正在开发中')
     // Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent('http://192.168.10.75:4000/test/page')}` })
-    Taro.navigateTo({ url: `/pages/webview/index?url=${H5.myToken}` })
+    // Taro.navigateTo({ url: `/pages/webview/index?url=${H5.myToken}` })
   }
   const toSetUp = () => {
     Taro.navigateTo({ url: '/pages/setUp/index' })
@@ -92,7 +102,7 @@ const MineScreen = () => {
   })
 
   useShareAppMessage((res) => {
-    console.log(res)
+    console.log('打印', res)
     if (res.from === 'button') {
       // 来自页面内转发按钮
       console.log(res.target)
@@ -280,15 +290,15 @@ const MineScreen = () => {
                   showMToast('解析错误')
                 }
               } catch (e) {
-                console.log(e);
+                console.log(e)
               }
             })
           }}
         >
-          <Image className='img2' src={saoyisao} />
+          <Image className='img2' src={saoyisao1} />
         </View>
         <View className='btn' onClick={toSetUp}>
-          <Image className='img3' src={shezhi} />
+          <Image className='img3' src={shezhi1} />
         </View>
       </View>
       <View className='user' onClick={toMyData}>
@@ -340,10 +350,10 @@ const MineScreen = () => {
           <Image className='img' src={store} />
           <View className='item-text'>关注小店</View>
         </View>
-        <View className='item'>
+        {/* <View className='item'>
           <Image className='img' src={join} />
           <View className='item-text'>邀请好友</View>
-        </View>
+        </View> */}
         {/* <View className='item'>
           <Image className='img' src={renzheng} />
           <View className='item-text'>学生认证</View>
@@ -361,7 +371,7 @@ const MineScreen = () => {
           <View className='item-text'>分享</View>
         </View> */}
       </View>
-      <View className='travel' onClick={toMyTravel}>
+      {/* <View className='travel' onClick={toMyTravel}>
         <View className='travel-title'>
           <View className='my'>我的行程</View>
           <View className='all'>
@@ -375,7 +385,7 @@ const MineScreen = () => {
             <View className='two'>本次行程已开始，祝您旅途愉快</View>
           </View>
         </View>
-      </View>
+      </View> */}
       <View className='my-order'>
         <View className='order-tab'>
           <View className='tab'>我的订单</View>
@@ -388,11 +398,11 @@ const MineScreen = () => {
           <View className='red-body' onClick={toMyOrder}>
             <Image src={wpey} />
             <View>待付款</View>
-            <View className='red-num'>2</View>
+            {/* <View className='red-num'>2</View> */}
           </View>
           <View className='sec' onClick={toMyOrder}>
             <Image src={peying} />
-            <View>进行中</View>
+            <View>代核销</View>
           </View>
           <View onClick={toMyOrder}>
             <Image src={overpey} />

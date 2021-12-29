@@ -6,7 +6,7 @@ import { BASE_URL } from '../constants/c'
  */
 
 export class MyOrderService {
-  /// 获取出行人列表
+  /// 获取订单列表
   static orderQuery() {
     return doGetAction({
       url: `${BASE_URL}/orders/query`,
