@@ -18,7 +18,7 @@ export class H5 {
   static myToken = `${h5Domain}/my-token`
 
   /// 商品详情
-  static goodsDetail = `${h5Domain}/goods-detail`
+  static goodsDetail = `${h5Domain}/goods-detail?id=`
 
   /// 团小店
   static groupShop = `${h5Domain}/group-shop?id=`

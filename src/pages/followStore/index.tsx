@@ -23,8 +23,13 @@ const MyBrowsePage = () => {
   const [reachTop, setReachTop] = useState(true)
 
   const toAbulkshop = (item) => {
-    console.log('item', item)
-    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(H5.groupShop)}` + item['id'] })
+    console.log('itemitemitem', item.id)
+    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(H5.groupShop)}${item['id']}` })
+  }
+
+  const anOrder = (item) => {
+    console.log('itemitemitem', item.id)
+    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(H5.goodsDetail)}${item['id']}` })
   }
   usePageScroll(({ scrollTop: aScrollTop }) => {
     setScrollTop(aScrollTop)
@@ -74,7 +79,6 @@ const MyBrowsePage = () => {
       setList(newList)
     })
   }
-  console.log('recordsrecords', list)
   return (
     <View className='MyBrowsePage__root'>
       <View className='browse-list'>
@@ -107,11 +111,14 @@ const MyBrowsePage = () => {
                     <View className='img-list'>
                       {item['shopGoods'] && item['shopGoods'].length > 0 && item['shopGoods'].map((items, index) => (
                         index < 4 && (
+
                           <Img
                             key={`index${index}`}
+                            onClick={() => { anOrder(items) }}
                             url={items['promotionalImageUrl']}
                             className='Image'
                           />
+
                         )
                       ))}
                     </View>
@@ -128,9 +135,6 @@ const MyBrowsePage = () => {
             </List>
           )}
         </PullRefresh>
-
-
-
       </View>
     </View>
   )
