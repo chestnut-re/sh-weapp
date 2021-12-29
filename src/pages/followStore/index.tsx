@@ -23,8 +23,7 @@ const MyBrowsePage = () => {
   const [reachTop, setReachTop] = useState(true)
 
   const toAbulkshop = (item) => {
-
-    Taro.navigateTo({ url: `/pages/webview/index?id=${item['id']}&url=${H5.groupShop}` })
+    Taro.navigateTo({ url: `/pages/webview/index?&url=${H5.groupShop}?id=${item['id']}` })
   }
   usePageScroll(({ scrollTop: aScrollTop }) => {
     setScrollTop(aScrollTop)
