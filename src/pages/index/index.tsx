@@ -9,6 +9,7 @@ import Taro from '@tarojs/taro'
 import { useStore } from '@/store/context'
 import HomeScreen from './components/home'
 import './index.less'
+import { showMToast } from '@/utils/ui'
 
 const IndexPage = () => {
   const { userStore } = useStore()
@@ -17,8 +18,10 @@ const IndexPage = () => {
   useEffect(() => {
     userStore.initCity()
 
-    console.log('index q', Taro.getCurrentInstance()?.router?.params?.q);
-    
+    // console.log('index q', Taro.getCurrentInstance()?.router?.params?.q)
+    // if (Taro.getCurrentInstance()?.router?.params?.q) {
+    //   showMToast(Taro.getCurrentInstance()?.router?.params?.q)
+    // }
   }, [])
 
   const onTabClick = (newIndex: number) => {

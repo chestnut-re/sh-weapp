@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { H5 } from '@/constants/h5'
 import { showMToast } from '@/utils/ui'
 import { View, Image, Text } from '@tarojs/components'
 import wecat from '@/assets/img/home/wecat.png'
@@ -15,6 +16,8 @@ const Pay: React.FC = () => {
 
   useEffect(() => {
     const rawAmount = Taro.getCurrentInstance()?.router?.params?.amount ?? 0
+    const orderId = Taro.getCurrentInstance()?.router?.params?.orderId
+    pageRef.current.orderId = orderId
     setAmount(Number(rawAmount))
     const data = decodeURIComponent(Taro.getCurrentInstance()?.router?.params?.data ?? '')
     pageRef.current.data = data
@@ -24,25 +27,28 @@ const Pay: React.FC = () => {
     // "packageValue": "prepay_id=wx28135308974484ca192bfae00957830000",
     // "signType": "MD5",
     // "paySign": "7F3E006ABC22C2C6D711E2672BA44A3F"
-
     _pay()
   }, [])
 
   const _pay = () => {
-    const d = JSON.parse(pageRef.current.data)
+    const { packageValue, ...d } = JSON.parse(pageRef.current.data)
+    console.log(d)
     Taro.requestPayment({
+      package: packageValue,
       ...d,
     }).then((res) => {
-      showMToast(res.errMsg)
+      console.log(res.errMsg);
+      if (res.errMsg !== 'requestPayment:ok') {
+        showMToast('支付失败')
+      } else {
+        Taro.redirectTo({
+          url: `/pages/webview/index?url=${encodeURIComponent(`${H5.payResult}?orderId=${pageRef.current.orderId}`)}`,
+        })
+      }
     })
   }
 
   return (
-    // <View>
-    //   支付页面
-    //   <View>金额：{amount}</View>
-    //   {/* <View onClick={_pay}>支付按钮</View> */}
-    // </View>
     <View className='payPage__root'>
       <View className='head'>正在跳转</View>
       <View className='native'>

@@ -61,10 +61,8 @@ class UserData {
 
   /**登录 */
   async login() {
-    showLoading()
     const wxRes = await Taro.login()
     const openIdRes = await WXService.getOpenId(wxRes.code)
-    hideLoading()
 
     if (openIdRes.data.code == 200) {
       this.accessToken = openIdRes.data.data.accessToken
