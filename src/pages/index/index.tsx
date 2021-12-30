@@ -9,19 +9,23 @@ import Taro from '@tarojs/taro'
 import { useStore } from '@/store/context'
 import HomeScreen from './components/home'
 import './index.less'
-import { showMToast } from '@/utils/ui'
+import { getUrlParams } from '@/utils/webviewUtils'
 
 const IndexPage = () => {
-  const { userStore } = useStore()
+  const { userStore, commonStore } = useStore()
   const [index, setIndex] = useState(0)
 
   useEffect(() => {
     userStore.initCity()
 
-    // console.log('index q', Taro.getCurrentInstance()?.router?.params?.q)
-    // if (Taro.getCurrentInstance()?.router?.params?.q) {
-    //   showMToast(Taro.getCurrentInstance()?.router?.params?.q)
-    // }
+    console.log('index q', decodeURIComponent(Taro.getCurrentInstance()?.router?.params?.q ?? ''))
+    if (Taro.getCurrentInstance()?.router?.params?.q) {
+      const q = decodeURIComponent(Taro.getCurrentInstance()?.router?.params?.q ?? '')
+      const bizId = getUrlParams(q)['bizId']
+      const jumpTo = getUrlParams(q)['jumpTo']
+      commonStore.bizId = bizId
+      Taro.navigateTo({ url: decodeURIComponent(jumpTo) })
+    }
   }, [])
 
   const onTabClick = (newIndex: number) => {
