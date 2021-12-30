@@ -54,7 +54,6 @@ const HomeScreen = () => {
     let newList = pageRef.current.current === 1 ? [] : list
     HomeService.getGoodsPage(pageRef.current.current).then((result) => {
       refreshingRef.current = false
-      console.log('result.data.data.records', result.data.data.records)
       if (result.data.code == '200') {
         setList(newList.concat(result.data.data.records))
         setLoading(false)
