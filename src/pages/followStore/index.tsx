@@ -23,13 +23,11 @@ const MyBrowsePage = () => {
   const [reachTop, setReachTop] = useState(true)
 
   const toAbulkshop = (item) => {
-    console.log('itemitemitem', item.id)
-    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(H5.groupShop)}${item['id']}` })
+    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(`${H5.groupShop}?id=${item['id']}`)}` })
   }
 
   const anOrder = (item) => {
-    console.log('itemitemitem', item.id)
-    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(H5.goodsDetail)}${item['id']}` })
+    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(`${H5.goodsDetail}?id=${item['id']}`)}` })
   }
   usePageScroll(({ scrollTop: aScrollTop }) => {
     setScrollTop(aScrollTop)
