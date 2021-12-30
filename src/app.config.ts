@@ -1,5 +1,6 @@
 export default {
   pages: [
+    'pages/pay/index',
     'pages/index/index',
     'pages/usualMessage/index',
     'pages/resetPassword/index',
@@ -25,7 +26,6 @@ export default {
     'pages/setSex/index',
     'pages/followStore/index',
     'pages/webview/index',
-    'pages/pay/index',
   ],
   window: {
     backgroundTextStyle: 'light',

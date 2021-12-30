@@ -39,9 +39,9 @@ const HomeScreen = () => {
     setScrollTop(aScrollTop)
     setReachTop(aScrollTop === 0)
     if (aScrollTop > 160) {
-      document.getElementsByClassName('home-header')[0]['style'].backgroundColor = 'rgba(100,208,200)'
+      document.getElementsByClassName('home-header')[0]['style'].backgroundColor = 'rgb(153, 153, 153)'
     } else {
-      document.getElementsByClassName('home-header')[0]['style'].backgroundColor = 'null'
+      document.getElementsByClassName('home-header')[0]['style'].backgroundColor = 'rgb(153, 153, 153,.5)'
     }
   })
 
@@ -117,7 +117,7 @@ const HomeScreen = () => {
   return (
     <View className='HomeScreen__root'>
       <PullRefresh loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
-        <View>
+        <View className='banner'>
           {bannerList.length > 0 && (
             <Swiper className='top-s' autoplay={3000}>
               {bannerList.map((item) => (

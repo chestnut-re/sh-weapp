@@ -1,8 +1,11 @@
-import { showMToast } from '@/utils/ui'
-import { View } from '@tarojs/components'
-import Taro from '@tarojs/taro'
 import { useEffect, useRef, useState } from 'react'
+import { showMToast } from '@/utils/ui'
+import { View, Image, Text } from '@tarojs/components'
+import wecat from '@/assets/img/home/wecat.png'
+import shyt from '@/assets/img/home/shyt.png'
+import Taro from '@tarojs/taro'
 
+import './index.less'
 /**
  * 支付页面
  */
@@ -35,10 +38,26 @@ const Pay: React.FC = () => {
   }
 
   return (
-    <View>
-      支付页面
-      <View>金额：{amount}</View>
-      {/* <View onClick={_pay}>支付按钮</View> */}
+    // <View>
+    //   支付页面
+    //   <View>金额：{amount}</View>
+    //   {/* <View onClick={_pay}>支付按钮</View> */}
+    // </View>
+    <View className='payPage__root'>
+      <View className='head'>正在跳转</View>
+      <View className='native'>
+        <View className='border'>
+          <Image className='place' src={shyt}></Image>
+        </View>
+        <View className='auto'>
+          <Text></Text>
+          <Text></Text>
+          <Text></Text>
+        </View>
+        <View className='border'>
+          <Image className='place' src={wecat}></Image>
+        </View>
+      </View>
     </View>
   )
 }
