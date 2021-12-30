@@ -23,8 +23,8 @@ const OrderListPage = (props) => {
     setScrollTop(aScrollTop)
     setReachTop(aScrollTop === 0)
   })
-  const toOrderDetail = () => {
-    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(H5.orderDetail)}` })
+  const toOrderDetail = (e) => {
+    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(`${H5.orderDetail}?type=${e}`)}` })
   }
   const onLoad = async () => {
     console.log(pageRef.current.loading)
@@ -57,7 +57,7 @@ const OrderListPage = (props) => {
         <List loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}>
           {list.map((item) =>
             props.state == 0 || item.state == props.state ? (
-              <View className='item' key={item.id} onClick={toOrderDetail}>
+              <View className='item' key={item.id} onClick={() => toOrderDetail(props.state)}>
                 <View className='card'>
                   <View className='state'>
                     {item.state == 1
