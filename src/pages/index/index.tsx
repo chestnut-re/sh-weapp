@@ -25,11 +25,19 @@ const IndexPage = () => {
       const jumpTo = getUrlParams(q)['jumpTo']
       commonStore.bizId = bizId
       commonStore.jumpTo = jumpTo
-      commonStore.setAfterLoginCallback(() => {
-        // 判断是否登录，没有登录先去登录
+
+      // 判断是否登录，没有登录先去登录
+      if (userStore.isBindMobile) {
+        // 已经登录
         Taro.navigateTo({ url: decodeURIComponent(jumpTo) })
-        commonStore.removeAfterLoginCallback()
-      })
+      } else {
+        // 未登录
+        commonStore.setAfterLoginCallback(() => {
+          Taro.redirectTo({ url: decodeURIComponent(jumpTo) }) // 替换登录页面
+          commonStore.removeAfterLoginCallback()
+        })
+        Taro.navigateTo({ url: '/pages/login/index' })
+      }
     }
   }, [])
 

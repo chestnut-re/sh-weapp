@@ -42,6 +42,7 @@ const LoginPage = () => {
 
         if (commonStore.afterLoginCallback) {
           commonStore.afterLoginCallback()
+          commonStore.removeAfterLoginCallback()
         } else {
           // 成功
           Taro.reLaunch({ url: '/pages/index/index' })
