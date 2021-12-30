@@ -279,7 +279,7 @@ const MineScreen = () => {
                 if (d.type === 'web') {
                   Taro.navigateTo({ url: `/pages/webview/index?url=${d['path']}` })
                 } else {
-                  showMToast('解析错误')
+                  showMToast('请扫描店铺二维码')
                 }
               } catch (e) {
                 console.log(e)

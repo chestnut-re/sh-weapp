@@ -1,7 +1,7 @@
 import Taro, { usePageScroll } from '@tarojs/taro'
 import { View, Text, Image, Input } from '@tarojs/components'
 import { List, Loading, Swiper, PullRefresh } from '@taroify/core'
-import { useStore } from '@/store/context'
+import { commonStore, useStore } from '@/store/context'
 import { useEffect, useRef, useState } from 'react'
 import place from '@/assets/img/home/vdizhi@3x.png'
 import search from '@/assets/img/home/sousuo-2@2x.png'
@@ -150,11 +150,15 @@ const HomeScreen = () => {
                 console.log(res)
                 try {
                   const params = getUrlParams(res.result)
+                  // shtravel://app?data=%7B%22path%22%3A%22https%3A%2F…466343298036797440%22%2C%22type%22%3A%22web%22%7D
                   const d = JSON.parse(decodeURIComponent(params['data']))
                   if (d.type === 'web') {
+                    commonStore.bizId = getUrlParams(d['path'])['bizId']
+                    console.log(commonStore.bizId);
+                    
                     Taro.navigateTo({ url: `/pages/webview/index?url=${d['path']}` })
                   } else {
-                    showMToast('解析错误')
+                    showMToast('请扫描店铺二维码')
                   }
                 } catch (e) {
                   console.log(e)

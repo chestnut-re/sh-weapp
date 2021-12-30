@@ -3,13 +3,14 @@ import Taro, { hideLoading, showLoading, showToast } from '@tarojs/taro'
 import { useEffect, useState } from 'react'
 import { View, Image } from '@tarojs/components'
 import { WXService } from '@/service/WXService'
-import { useStore } from '@/store/context'
+import { commonStore, useStore } from '@/store/context'
 import { Button, Toast } from '@taroify/core'
 import { observer } from 'mobx-react'
 import pic from '@/assets/img/common/shg.png'
 import './index.less'
 import { save } from '@/utils/storage'
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/constants/c'
+import { UserService } from '@/service/UserService'
 
 /**
  * 登录页
@@ -23,6 +24,7 @@ const LoginPage = () => {
       hideLoading()
     })
   }, [])
+
   const onGetPhoneNumberEventDetail = async (res) => {
     if (res.detail.errMsg == 'getPhoneNumber:ok') {
       showLoading()
@@ -35,6 +37,14 @@ const LoginPage = () => {
         // if(result.data.data.loginVO?.accessToken){
         //   userStore.resetToken(result.data.data.loginVO)
         // }
+        console.log('start bind', commonStore.bizId)
+        if (commonStore.bizId) {
+          UserService.bindBizUser(commonStore.bizId).then((bindRes) => {
+            commonStore.bizId = null
+            console.log(`bind result: ${JSON.stringify(bindRes)}`)
+          })
+        }
+
         userStore.init()
       } else {
         showToast({ title: result.data.msg ?? '登录失败', icon: 'none', duration: 2000 })
@@ -50,8 +60,7 @@ const LoginPage = () => {
     Taro.reLaunch({ url: '/pages/index/index' })
   }
 
-  console.log('userStore.isBindMobile', userStore.isBindMobile);
-  
+  console.log('userStore.isBindMobile', userStore.isBindMobile)
 
   return (
     <View className='LoginPage__root'>

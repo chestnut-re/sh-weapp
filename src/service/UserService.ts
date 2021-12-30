@@ -1,5 +1,4 @@
 import { doGetAction, doPostAction, doPutAction, getHeader } from '@/utils/request'
-import { transImg } from '@/utils/upload'
 import Taro from '@tarojs/taro'
 import { BASE_URL } from '../constants/c'
 
@@ -43,5 +42,12 @@ export class UserService {
         file: file,
       },
     })
+  }
+
+  /**
+   * 绑定业务员
+   */
+  static bindBizUser(userId) {
+    return doPostAction({ url: `${BASE_URL}/users/customer/salesmanRelation/bind/${userId}`, data: {} })
   }
 }
