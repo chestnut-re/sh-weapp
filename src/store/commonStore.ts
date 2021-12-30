@@ -3,21 +3,14 @@ import { makeObservable, observable, action } from 'mobx'
 class CommonData {
   counter = 0
 
+  bizId = ''
+
   constructor() {
     makeObservable(this, {
       counter: observable,
-      increment: action,
-      decrement: action,
+      bizId: observable,
       incrementAsync: action,
     })
-  }
-
-  increment() {
-    this.counter++
-  }
-
-  decrement() {
-    this.counter--
   }
 
   incrementAsync() {
