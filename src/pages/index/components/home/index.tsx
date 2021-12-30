@@ -142,7 +142,7 @@ const HomeScreen = () => {
             <Image className='search' src={search} />
             <Input type='text' placeholder='' disabled />
           </View>
-          <View
+          {/* <View
             className='saoyisao'
             onClick={() => {
               Taro.scanCode({}).then((res) => {
@@ -166,7 +166,7 @@ const HomeScreen = () => {
             }}
           >
             <Image className='sao' src={sao} />
-          </View>
+          </View> */}
         </View>
         <View className='go-done'>
           {/* <View className='home-body'>
