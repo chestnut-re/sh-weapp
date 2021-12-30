@@ -45,9 +45,6 @@ const LoginPage = () => {
         } else {
           // 成功
           Taro.reLaunch({ url: '/pages/index/index' })
-          // if(result.data.data.loginVO?.accessToken){
-          //   userStore.resetToken(result.data.data.loginVO)
-          // }
         }
 
         userStore.init()
