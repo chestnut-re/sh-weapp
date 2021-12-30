@@ -10,7 +10,6 @@ const MsgScreen = () => {
   return (
     <View className='MsgScreen__root'>
       <View>消息界面</View>
-      <View>。。。</View>
     </View>
   )
 }
