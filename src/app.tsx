@@ -14,9 +14,14 @@ const loginStateCheck = function (chain) {
   const requestParams = chain.requestParams
 
   return chain.proceed(requestParams).then((res) => {
-    console.log('resxxxxx', res)
-
-    if (res.data.code === '010011') {
+    // console.log('resxxxxx', res)
+    if (
+      res.data.code === '010011' ||
+      res.data.code === '010010' ||
+      res.data.code === '010012' ||
+      res.data.code === '010014' ||
+      res.data.code === '000003'
+    ) {
       console.log('accessToken 失效，退出登录并回到首页')
       userStore.loginOut()
     }
@@ -31,7 +36,7 @@ const jsonParse = function (chain) {
   const requestParams = chain.requestParams
 
   return chain.proceed(requestParams).then((res) => {
-    console.log('resJSON', res)
+    // console.log('resJSON', res)
     try {
       res.data = JSONbigString.parse(res.data)
     } catch (error) {}
@@ -41,7 +46,6 @@ const jsonParse = function (chain) {
 
 Taro.addInterceptor(loginStateCheck)
 Taro.addInterceptor(jsonParse)
-
 
 const App = ({ children }) => {
   return <Provider>{children}</Provider>

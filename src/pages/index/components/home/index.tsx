@@ -2,7 +2,6 @@ import Taro, { usePageScroll } from '@tarojs/taro'
 import { View, Text, Image, Input } from '@tarojs/components'
 import { List, Loading, Swiper, PullRefresh } from '@taroify/core'
 import { useStore } from '@/store/context'
-import { observer } from 'mobx-react'
 import { useEffect, useRef, useState } from 'react'
 import place from '@/assets/img/home/vdizhi@3x.png'
 import search from '@/assets/img/home/sousuo-2@2x.png'
@@ -13,6 +12,7 @@ import sao from '@/assets/img/home/sao.png'
 import './index.less'
 import { getUrlParams } from '@/utils/webviewUtils'
 import { showMToast } from '@/utils/ui'
+import { observer } from 'mobx-react'
 
 /**
  * 首页
@@ -81,6 +81,12 @@ const HomeScreen = () => {
   }
 
   const anOrder = (e) => {
+    if (!userStore.isBindMobile) {
+      console.log(userStore.isBindMobile)
+      // 未登录
+      Taro.navigateTo({ url: '/pages/login/index' })
+      return
+    }
     const l = `${H5.goodsDetail}?id=${e.id}&goodsPriceId=${e.goodsPriceId}`
     Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(l)}` })
   }
@@ -93,7 +99,6 @@ const HomeScreen = () => {
     }
   }
 
-  //getActivity
   const getActivity = async () => {
     const result = await HomeService.getActivity()
     if (result.statusCode === 200) {

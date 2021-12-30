@@ -15,6 +15,7 @@ const IndexPage = () => {
   const [index, setIndex] = useState(0)
 
   useEffect(() => {
+    console.log('index q', Taro.getCurrentInstance()?.router?.params?.q);
     userStore.initCity()
   }, [])
 

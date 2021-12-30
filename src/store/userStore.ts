@@ -5,7 +5,7 @@ import { LocationService } from '@/service/LocationService'
 import { clearStorage, get, save } from '@/utils/storage'
 import Taro from '@tarojs/taro'
 import { makeObservable, observable, action } from 'mobx'
-import { showMToast } from '@/utils/ui'
+import { hideLoading, showLoading, showMToast } from '@/utils/ui'
 import { getSuggestCity } from '@/utils/location'
 
 /**
@@ -61,8 +61,10 @@ class UserData {
 
   /**登录 */
   async login() {
+    showLoading()
     const wxRes = await Taro.login()
     const openIdRes = await WXService.getOpenId(wxRes.code)
+    hideLoading()
 
     if (openIdRes.data.code == 200) {
       this.accessToken = openIdRes.data.data.accessToken

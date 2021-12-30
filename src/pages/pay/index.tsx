@@ -21,6 +21,8 @@ const Pay: React.FC = () => {
     // "packageValue": "prepay_id=wx28135308974484ca192bfae00957830000",
     // "signType": "MD5",
     // "paySign": "7F3E006ABC22C2C6D711E2672BA44A3F"
+
+    _pay()
   }, [])
 
   const _pay = () => {
@@ -36,7 +38,7 @@ const Pay: React.FC = () => {
     <View>
       支付页面
       <View>金额：{amount}</View>
-      <View onClick={_pay}>支付按钮</View>
+      {/* <View onClick={_pay}>支付按钮</View> */}
     </View>
   )
 }
