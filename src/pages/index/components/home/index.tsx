@@ -9,8 +9,10 @@ import search from '@/assets/img/home/sousuo-2@2x.png'
 import GoodsItem from '@/components/GoodsItem'
 import { H5 } from '@/constants/h5'
 import { HomeService } from '@/service/HomeService'
-
+import sao from '@/assets/img/home/sao.png'
 import './index.less'
+import { getUrlParams } from '@/utils/webviewUtils'
+import { showMToast } from '@/utils/ui'
 
 /**
  * 首页
@@ -135,6 +137,27 @@ const HomeScreen = () => {
           <View className='search-input' onClick={toSearch}>
             <Image className='search' src={search} />
             <Input type='text' placeholder='' disabled />
+          </View>
+          <View
+            className='saoyisao'
+            onClick={() => {
+              Taro.scanCode({}).then((res) => {
+                console.log(res)
+                try {
+                  const params = getUrlParams(res.result)
+                  const d = JSON.parse(decodeURIComponent(params['data']))
+                  if (d.type === 'web') {
+                    Taro.navigateTo({ url: `/pages/webview/index?url=${d['path']}` })
+                  } else {
+                    showMToast('解析错误')
+                  }
+                } catch (e) {
+                  console.log(e)
+                }
+              })
+            }}
+          >
+            <Image className='sao' src={sao} />
           </View>
         </View>
         <View className='go-done'>
