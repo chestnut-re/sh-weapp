@@ -106,11 +106,12 @@ const HomeScreen = () => {
   }
 
   const toBannerUrl = (url) => {
-    Taro.navigateTo({ url: `/pages/webview/index?url=${url}` })
+    console.log()
+    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(url)}` })
   }
 
   const toActivityUrl = (url) => {
-    Taro.navigateTo({ url: `/pages/webview/index?url=${url}` })
+    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(url)}` })
   }
 
   return (
@@ -153,8 +154,8 @@ const HomeScreen = () => {
                   const d = JSON.parse(decodeURIComponent(params['data']))
                   if (d.type === 'web') {
                     commonStore.bizId = getUrlParams(d['path'])['bizId']
-                    console.log(commonStore.bizId);
-                    
+                    console.log(commonStore.bizId)
+
                     Taro.navigateTo({ url: `/pages/webview/index?url=${d['path']}` })
                   } else {
                     showMToast('请扫描店铺二维码')

@@ -24,14 +24,13 @@ export class H5 {
   static groupShop = `${h5Domain}/group-shop`
 
   /// 订单详情页
-  static orderDetail = `${h5Domain}/order-detail?type=1`
+  static orderDetail = `${h5Domain}/order-detail`
 
   /// H5 测试页面
   static testPage = `${h5Domain}/test/page`
 
   /**支付详情页 */
   static payResult = `${h5Domain}/pay-success`
-
 
   /// H5 添加出行人
   static personalDetails = `${h5Domain}/personal-details`
