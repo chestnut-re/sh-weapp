@@ -92,6 +92,12 @@ const HomeScreen = () => {
 
   //获取banner
   const getBanner = async () => {
+    if (!userStore.isBindMobile) {
+      console.log(userStore.isBindMobile)
+      // 未登录
+      Taro.navigateTo({ url: '/pages/login/index' })
+      return
+    }
     const result = await HomeService.getBanner()
     if (result.statusCode === 200) {
       setBannerList(result.data.data)
