@@ -78,8 +78,9 @@ const HomeScreen = () => {
     Taro.navigateTo({ url: '/pages/location/index' })
   }
 
-  const anOrder = () => {
-    Taro.navigateTo({ url: `/pages/webview/index?url=${H5.goodsDetail}` })
+  const anOrder = (e) => {
+    const l = `${H5.goodsDetail}?id=${e.id}&goodsPriceId=${e.goodsPriceId}`
+    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(l)}` })
   }
 
   //获取banner
@@ -158,7 +159,13 @@ const HomeScreen = () => {
             {list.length > 0 && (
               <List loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}>
                 {list.map((item) => (
-                  <GoodsItem key={item.id} onItemClick={anOrder} item={item} />
+                  <GoodsItem
+                    key={item.id}
+                    onItemClick={() => {
+                      anOrder(item)
+                    }}
+                    item={item}
+                  />
                 ))}
                 {!refreshingRef.current && (
                   <List.Placeholder>
@@ -170,8 +177,8 @@ const HomeScreen = () => {
             )}
           </View>
         </View>
-      </PullRefresh >
-    </View >
+      </PullRefresh>
+    </View>
   )
 }
 
