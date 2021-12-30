@@ -24,7 +24,12 @@ const IndexPage = () => {
       const bizId = getUrlParams(q)['bizId']
       const jumpTo = getUrlParams(q)['jumpTo']
       commonStore.bizId = bizId
-      Taro.navigateTo({ url: decodeURIComponent(jumpTo) })
+      commonStore.jumpTo = jumpTo
+      commonStore.setAfterLoginCallback(() => {
+        // 判断是否登录，没有登录先去登录
+        Taro.navigateTo({ url: decodeURIComponent(jumpTo) })
+        commonStore.removeAfterLoginCallback()
+      })
     }
   }, [])
 

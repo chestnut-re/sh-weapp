@@ -16,6 +16,7 @@ export const BASE_URL = 'https://testapi.mountainseas.cn/api' //测试环境
  */
 // export const h5Domain = 'http://192.168.10.126:4000'
 export const h5Domain = 'https://travel.mountainseas.cn'
+// export const h5Domain = 'https://devtravel.mountainseas.cn'
 
 /**SESSION_KEY */
 export const SESSION_KEY = 'SESSION_KEY'

@@ -2,8 +2,8 @@ import { makeObservable, observable, action } from 'mobx'
 
 class CommonData {
   counter = 0
-
-  bizId = ''
+  bizId = '' // 业务员绑定
+  afterLoginCallback = null // 登录回调
 
   constructor() {
     makeObservable(this, {
@@ -17,6 +17,14 @@ class CommonData {
     setTimeout(() => {
       this.counter++
     }, 1000)
+  }
+
+  setAfterLoginCallback(callback) {
+    this.afterLoginCallback = callback
+  }
+
+  removeAfterLoginCallback() {
+    this.afterLoginCallback = null
   }
 }
 

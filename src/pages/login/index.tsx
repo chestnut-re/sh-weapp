@@ -32,17 +32,22 @@ const LoginPage = () => {
       hideLoading()
       console.log(result.data.code)
       if (result.data.code == 200) {
-        // 成功
-        Taro.reLaunch({ url: '/pages/index/index' })
-        // if(result.data.data.loginVO?.accessToken){
-        //   userStore.resetToken(result.data.data.loginVO)
-        // }
         console.log('start bind', commonStore.bizId)
         if (commonStore.bizId) {
           UserService.bindBizUser(commonStore.bizId).then((bindRes) => {
             commonStore.bizId = null
             console.log(`bind result: ${JSON.stringify(bindRes)}`)
           })
+        }
+
+        if (commonStore.afterLoginCallback) {
+          commonStore.afterLoginCallback()
+        } else {
+          // 成功
+          Taro.reLaunch({ url: '/pages/index/index' })
+          // if(result.data.data.loginVO?.accessToken){
+          //   userStore.resetToken(result.data.data.loginVO)
+          // }
         }
 
         userStore.init()
