@@ -116,7 +116,7 @@ const OrderListPage = (props) => {
                     <View className='message'>
                       <View className='message-one'>咨询</View>
                       <View className='message-one'>再次购买</View>
-                      <View className='message-two'>填写出行人信息</View>
+                      {/* <View className='message-two'>填写出行人信息</View> */}
                     </View>
                   ) : item.state == 4 ? (
                     <View className='message'>
