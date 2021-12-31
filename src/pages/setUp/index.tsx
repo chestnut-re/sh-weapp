@@ -16,6 +16,8 @@ const SetUpPage = () => {
   const { userStore } = useStore()
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState('20.32Mb')
+  const picture =
+    'https://shanhai-shoping.oss-cn-beijing.aliyuncs.com/img/user/pic/8e2df8c373c74a3793e91702145b5192.png'
 
   /**退出登录并回到首页 */
   const _logout = () => {
@@ -40,7 +42,7 @@ const SetUpPage = () => {
   return (
     <View className='SetUpPage__root'>
       <View className='user' onClick={toMyData}>
-        <Image className='img' src={userStore.userInfo?.pic}></Image>
+        <Image className='img' src={userStore.userInfo?.pic ?? picture}></Image>
         <View className='massage'>
           <View className='name'>{userStore.userInfo?.nickName}</View>
           <View className='autograph'>签名： {userStore.userInfo?.personalSignature}</View>

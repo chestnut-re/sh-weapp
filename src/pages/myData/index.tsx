@@ -23,6 +23,9 @@ const MyDataPage = () => {
   const [minDate] = useState(new Date(1970, 0, 1))
   const [maxDate] = useState(new Date(2025, 10, 1))
   const [defaultValue] = useState(new Date(2021, 0, 17))
+  const picture =
+    'https://shanhai-shoping.oss-cn-beijing.aliyuncs.com/img/user/pic/8e2df8c373c74a3793e91702145b5192.png'
+
   const toSetName = () => {
     Taro.navigateTo({ url: '/pages/setName/index' })
   }
@@ -170,7 +173,7 @@ const MyDataPage = () => {
         <View className='data-img' onClick={toSetPic}>
           <View className='item-left'>头像</View>
           <View className='item-right'>
-            <Image className='img' src={userStore.userInfo?.pic}></Image>
+            <Image className='img' src={userStore.userInfo?.pic ?? picture}></Image>
             <Image className='img-left' src={jump}></Image>
           </View>
         </View>

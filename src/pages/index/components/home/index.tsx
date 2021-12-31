@@ -39,7 +39,7 @@ const HomeScreen = () => {
     setScrollTop(aScrollTop)
     setReachTop(aScrollTop === 0)
     if (aScrollTop > 160) {
-      document.getElementsByClassName('home-header')[0]['style'].backgroundColor = 'rgb(153, 153, 153)'
+      document.getElementsByClassName('home-header')[0]['style'].backgroundColor = 'rgb(77, 207, 197)'
     } else {
       document.getElementsByClassName('home-header')[0]['style'].backgroundColor = 'rgb(153, 153, 153,.5)'
     }

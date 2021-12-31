@@ -53,6 +53,8 @@ const MineScreen = () => {
   const [cityName, setCityName] = useState('奔赴山海')
   const [isShowCanvas, setIsShowCanvas] = useState(false)
   const [userInfo, setUserInfo] = useState({})
+  const picture =
+    'https://shanhai-shoping.oss-cn-beijing.aliyuncs.com/img/user/pic/8e2df8c373c74a3793e91702145b5192.png'
   useEffect(() => {}, [])
   const toFist = () => {
     // Taro.navigateBack()
@@ -295,7 +297,7 @@ const MineScreen = () => {
       </View>
       <View className='user' onClick={toMyData}>
         <View className='User__Img'>
-          <Image className='img' src={userStore.userInfo?.pic} />
+          <Image className='img' src={userStore.userInfo?.pic ?? picture} />
         </View>
         <View className='User__Name'>
           <View className='name'>{userStore.userInfo?.nickName}</View>
