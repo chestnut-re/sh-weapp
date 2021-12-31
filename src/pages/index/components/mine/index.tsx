@@ -54,7 +54,7 @@ const MineScreen = () => {
   const [isShowCanvas, setIsShowCanvas] = useState(false)
   const [userInfo, setUserInfo] = useState({})
   const picture =
-    'https://shanhai-shoping.oss-cn-beijing.aliyuncs.com/img/user/pic/8e2df8c373c74a3793e91702145b5192.png'
+    'https://shanhai-shoping.oss-cn-beijing.aliyuncs.com/img/user/pic/cd2d77f5983f44c5b6e20c313e12d26e.jpg'
   useEffect(() => {}, [])
   const toFist = () => {
     // Taro.navigateBack()

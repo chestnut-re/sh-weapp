@@ -58,17 +58,17 @@ const OrderListPage = (props) => {
       <PullRefresh loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
         <List loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}>
           {list.map((item) =>
-            props.state == 0 || props.state.indexOf(item.state) > -1 ? (
+            props.state == 0 || item.state == props.state ? (
               <View className='item' key={item.id}>
                 <View className='card'>
                   <View onClick={() => toOrderDetail(item.state, item.id)}>
                     <View className='state'>
                       {item.state == 1
-                        ? '代付款'
+                        ? '待付款'
                         : item.state == 2
                         ? '已失效'
                         : item.state == 3
-                        ? '代确认'
+                        ? '待确认'
                         : item.state == 4
                         ? '已完成'
                         : item.state == 5
@@ -94,27 +94,31 @@ const OrderListPage = (props) => {
                     <View className='price'>
                       <View className='discount'>已优惠¥{item.discountAmount}</View>
                       <View>
-                        共计<Text className='money'>¥{item.activityTotalAmount}</Text>
+                        共计<Text className='money'>¥{item.payAmount}</Text>
                       </View>
                     </View>
                   </View>
-                  {item.this.state == 1 ? (
+                  {item.state == 1 ? (
                     <View className='message'>
                       <View className='message-one'>咨询</View>
-                      <View className='message-two'>去付款</View>
+                      <View className='message-two' onClick={() => toOrderDetail(item.state, item.id)}>
+                        去付款
+                      </View>
                     </View>
-                  ) : item.this.state == 2 ? (
+                  ) : item.state == 2 ? (
                     <View className='message'>
                       <View className='message-one'>咨询</View>
-                      <View className='message-two'>去付款</View>
+                      <View className='message-two' onClick={() => toOrderDetail(item.state, item.id)}>
+                        去付款
+                      </View>
                     </View>
-                  ) : item.this.state == 3 ? (
+                  ) : item.state == 3 ? (
                     <View className='message'>
                       <View className='message-one'>咨询</View>
                       <View className='message-one'>再次购买</View>
                       <View className='message-two'>填写出行人信息</View>
                     </View>
-                  ) : item.this.state == 4 ? (
+                  ) : item.state == 4 ? (
                     <View className='message'>
                       <View className='message-one'>再次购买</View>
                       <View className='message-one'>分享给TA</View>

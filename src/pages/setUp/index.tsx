@@ -17,7 +17,7 @@ const SetUpPage = () => {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState('20.32Mb')
   const picture =
-    'https://shanhai-shoping.oss-cn-beijing.aliyuncs.com/img/user/pic/8e2df8c373c74a3793e91702145b5192.png'
+    'https://shanhai-shoping.oss-cn-beijing.aliyuncs.com/img/user/pic/cd2d77f5983f44c5b6e20c313e12d26e.jpg'
 
   /**退出登录并回到首页 */
   const _logout = () => {

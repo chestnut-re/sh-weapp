@@ -6,7 +6,7 @@ import { WXService } from '@/service/WXService'
 import { commonStore, useStore } from '@/store/context'
 import { Button, Toast } from '@taroify/core'
 import { observer } from 'mobx-react'
-import pic from '@/assets/img/common/shg.png'
+import pic from '@/assets/img/common/login2.png'
 import './index.less'
 import { save } from '@/utils/storage'
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/constants/c'
@@ -70,10 +70,14 @@ const LoginPage = () => {
       <View className='logo'>
         <Image className='img' src={pic} />
       </View>
+      <View className='login'>
+        <View className='text-one'>登陆后开启旅程</View>
+        <View className='text-two'>世界那样美好 待你游历细品</View>
+      </View>
       <View className='btn-box'>
         {!userStore.isBindMobile && (
           <Button className='btn' lang='zh_CN' openType='getPhoneNumber' onGetPhoneNumber={onGetPhoneNumberEventDetail}>
-            授权手机号并登录
+            授权登录
           </Button>
         )}
         {userStore.isBindMobile && (

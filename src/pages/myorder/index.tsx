@@ -34,22 +34,22 @@ const MyOrderPage = () => {
     <View className='MyOrderPage__root'>
       <Tabs className='orderTabs' value={value} onChange={setValue} sticky>
         <Tabs.TabPane title='全部'>
-          <OrderList por={orders} state={[0]} />
+          <OrderList por={orders} state={0} />
         </Tabs.TabPane>
         <Tabs.TabPane title='待付款'>
-          <OrderList por={orders} state={[1]} />
+          <OrderList por={orders} state={1} />
         </Tabs.TabPane>
         {/* <Tabs.TabPane title='已失效'>
           <OrderList por={orders} state={2} />
         </Tabs.TabPane> */}
         <Tabs.TabPane title='待核销'>
-          <OrderList por={orders} state={[3]} />
+          <OrderList por={orders} state={3} />
         </Tabs.TabPane>
         <Tabs.TabPane title='已完成'>
-          <OrderList por={orders} state={[4]} />
+          <OrderList por={orders} state={4} />
         </Tabs.TabPane>
         <Tabs.TabPane title='退款/售后'>
-          <OrderList por={orders} state={[2, 5, 6, 7]} />
+          <OrderList por={orders} state={5} />
         </Tabs.TabPane>
       </Tabs>
     </View>
