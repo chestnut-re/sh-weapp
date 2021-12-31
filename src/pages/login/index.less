@@ -1,6 +1,9 @@
 .LoginPage__root {
-  padding: 120px 40px 40px 40px;
   height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
+  padding-top: 296px;
+  box-sizing: border-box;
   .bg{
     position: fixed;
     top: 0;
@@ -9,11 +12,12 @@
     height: 372px;
     background: url('../../assets/img/login/bg2.png');
     background-size: 100% 100%;
+    z-index: -1;
   }
   .logo {
     display: flex;
     justify-content: center;
-    margin: 296px auto 64px;
+    margin: 0 auto 64px;
     .img {
       width: 160px;
       height: 160px;
