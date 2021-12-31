@@ -58,10 +58,10 @@ const OrderListPage = (props) => {
       <PullRefresh loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
         <List loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}>
           {list.map((item) =>
-            props.state == 0 || item.state == props.state ? (
-              <View className='item' key={item.id} onClick={() => toOrderDetail(item.state, item.id)}>
+            props.state == 0 || props.state.indexOf(item.state) > -1 ? (
+              <View className='item' key={item.id}>
                 <View className='card'>
-                  <View>
+                  <View onClick={() => toOrderDetail(item.state, item.id)}>
                     <View className='state'>
                       {item.state == 1
                         ? '代付款'
@@ -98,12 +98,34 @@ const OrderListPage = (props) => {
                       </View>
                     </View>
                   </View>
-
-                  <View className='message'>
-                    <View className='message-one'>咨询</View>
-                    <View className='message-one'>分享给TA</View>
-                    <View className='message-two'>填写出行人信息</View>
-                  </View>
+                  {item.this.state == 1 ? (
+                    <View className='message'>
+                      <View className='message-one'>咨询</View>
+                      <View className='message-two'>去付款</View>
+                    </View>
+                  ) : item.this.state == 2 ? (
+                    <View className='message'>
+                      <View className='message-one'>咨询</View>
+                      <View className='message-two'>去付款</View>
+                    </View>
+                  ) : item.this.state == 3 ? (
+                    <View className='message'>
+                      <View className='message-one'>咨询</View>
+                      <View className='message-one'>再次购买</View>
+                      <View className='message-two'>填写出行人信息</View>
+                    </View>
+                  ) : item.this.state == 4 ? (
+                    <View className='message'>
+                      <View className='message-one'>再次购买</View>
+                      <View className='message-one'>分享给TA</View>
+                    </View>
+                  ) : (
+                    <View className='message'>
+                      <View className='message-one'>咨询</View>
+                      <View className='message-one'>分享给TA</View>
+                      <View className='message-two'>填写出行人信息</View>
+                    </View>
+                  )}
                 </View>
               </View>
             ) : null
