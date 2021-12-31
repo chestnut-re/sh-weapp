@@ -127,7 +127,7 @@ const HomeScreen = () => {
             <Swiper className='top-s' autoplay={3000}>
               {bannerList.map((item) => (
                 <Swiper.Item className='item' key={item.id} onClick={() => toBannerUrl(item.bannerUrl)}>
-                  <Image src={item.bannerImg}></Image>
+                  <Image src={item.bannerImg} mode='aspectFill'></Image>
                   <View>{item.title}</View>
                 </Swiper.Item>
               ))}
