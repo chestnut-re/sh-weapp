@@ -18,7 +18,7 @@ const OrderListPage = (props) => {
   const refreshingRef = useRef(false)
   const [scrollTop, setScrollTop] = useState(0)
   const [reachTop, setReachTop] = useState(true)
-
+  const RMB_CON = 100
   usePageScroll(({ scrollTop: aScrollTop }) => {
     setScrollTop(aScrollTop)
     setReachTop(aScrollTop === 0)
@@ -68,7 +68,7 @@ const OrderListPage = (props) => {
                         : item.state == 2
                         ? '已失效'
                         : item.state == 3
-                        ? '待确认'
+                        ? '待核销'
                         : item.state == 4
                         ? '已完成'
                         : item.state == 5
@@ -92,9 +92,9 @@ const OrderListPage = (props) => {
                       </View>
                     </View>
                     <View className='price'>
-                      <View className='discount'>已优惠¥{item.discountAmount}</View>
+                      <View className='discount'>已优惠¥{item.discountAmount / RMB_CON}</View>
                       <View>
-                        共计<Text className='money'>¥{item.payAmount}</Text>
+                        共计<Text className='money'>¥{item.payAmount / RMB_CON}</Text>
                       </View>
                     </View>
                   </View>
