@@ -36,7 +36,6 @@ const IndexPage = () => {
           Taro.redirectTo({ url: decodeURIComponent(jumpTo) }) // 替换登录页面
           commonStore.removeAfterLoginCallback()
         })
-        console.log('******');
         Taro.navigateTo({ url: '/pages/login/index' })
       }
     }
@@ -45,8 +44,6 @@ const IndexPage = () => {
   const onTabClick = (newIndex: number) => {
     if ((newIndex == 1 || newIndex == 2) && !userStore.isBindMobile) {
       console.log(userStore.isBindMobile)
-      console.log('******');
-      
       // 未登录
       Taro.navigateTo({ url: '/pages/login/index' })
       return

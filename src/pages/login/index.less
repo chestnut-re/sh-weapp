@@ -1,14 +1,22 @@
 .LoginPage__root {
   padding: 120px 40px 40px 40px;
-  background: url('../../assets/img/token/back.png');
+  height: 100vh;
+  .bg{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 372px;
+    background: url('../../assets/img/login/bg2.png');
+    background-size: 100% 100%;
+  }
   .logo {
-    width: 226px;
-    height: 232px;
-    margin: 154px auto 40px;
-    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    margin: 296px auto 64px;
     .img {
-      width: 226px;
-      height: 232px;
+      width: 160px;
+      height: 160px;
       border-radius: 20px;
     }
   }
@@ -21,6 +29,7 @@
       line-height: 74px;
     }
     .text-two {
+      margin-top: 12px;
       font-size: 32px;
       font-weight: 400;
       color: #666666;
@@ -28,7 +37,7 @@
     }
   }
   .btn-box {
-    padding: 0 100px;
+    padding: 136px 100px 0;
     .btn {
       padding: 26px 0px;
       display: flow-root;

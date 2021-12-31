@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import Taro, { hideLoading, showLoading, showToast } from '@tarojs/taro'
 import { useEffect, useState } from 'react'
 import { View, Image } from '@tarojs/components'
@@ -7,10 +6,8 @@ import { commonStore, useStore } from '@/store/context'
 import { Button, Toast } from '@taroify/core'
 import { observer } from 'mobx-react'
 import pic from '@/assets/img/common/login2.png'
-import './index.less'
-import { save } from '@/utils/storage'
-import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/constants/c'
 import { UserService } from '@/service/UserService'
+import './index.less'
 
 /**
  * 登录页
@@ -67,6 +64,7 @@ const LoginPage = () => {
 
   return (
     <View className='LoginPage__root'>
+      <View className='bg'></View>
       <View className='logo'>
         <Image className='img' src={pic} />
       </View>
@@ -85,6 +83,9 @@ const LoginPage = () => {
             登录
           </Button>
         )}
+      </View>
+      <View className='protocol'>
+        <View className='check'></View>
       </View>
       <Toast className='toast' open={open} onClose={setOpen} type='fail'>
         需要通过授权才能继续，请重新点击并授权！
