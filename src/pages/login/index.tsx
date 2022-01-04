@@ -1,11 +1,16 @@
 import Taro, { hideLoading, showLoading, showToast } from '@tarojs/taro'
 import { useEffect, useState } from 'react'
-import { View, Image } from '@tarojs/components'
+import { View, Image, Text } from '@tarojs/components'
 import { WXService } from '@/service/WXService'
 import { commonStore, useStore } from '@/store/context'
 import { Button, Toast } from '@taroify/core'
 import { observer } from 'mobx-react'
 import pic from '@/assets/img/common/login2.png'
+import checked from '@/assets/img/login/checked.png'
+import uncheck from '@/assets/img/login/uncheck.png'
+import { H5 } from '@/constants/h5'
+
+
 import { UserService } from '@/service/UserService'
 import './index.less'
 
@@ -15,6 +20,10 @@ import './index.less'
 const LoginPage = () => {
   const { userStore } = useStore()
   const [open, setOpen] = useState(false)
+  const [openProtocol, setOpenProtocol] = useState(false)
+
+  const [selectProtocol, setSelectProtocol] = useState(false)
+
   useEffect(() => {
     showLoading()
     userStore.loginIfNeed().then(() => {
@@ -56,11 +65,18 @@ const LoginPage = () => {
   }
 
   const login = async () => {
-    await userStore.init()
-    Taro.reLaunch({ url: '/pages/index/index' })
+    if (selectProtocol) {
+      await userStore.init()
+      Taro.reLaunch({ url: '/pages/index/index' })
+    } else {
+      setOpenProtocol(true)
+    }
   }
 
-  console.log('userStore.isBindMobile', userStore.isBindMobile)
+  const onLinkProtocol = (e, type) => {
+    e.stopPropagation();
+    Taro.navigateTo({ url: `/pages/webview/index?url=${H5[type]}` })
+  }
 
   return (
     <View className='LoginPage__root'>
@@ -84,11 +100,36 @@ const LoginPage = () => {
           </Button>
         )}
       </View>
-      <View className='protocol'>
-        <View className='check'></View>
+      <View
+        onClick={() => {
+          setSelectProtocol(!selectProtocol)
+        }}
+        className='protocol'
+      >
+        <View className='check'>
+          {
+            selectProtocol ? (
+              <Image className='img' src={checked} />
+            ) : (
+              <Image className='img' src={uncheck} />
+            )
+          }
+        </View>
+        <View className='protocolName'>
+          <View className='txt'>
+            登录表示你已同意
+            <View onClick={(e) => { onLinkProtocol(e, 'service') }} className='txt highlight'>用户协议、</View>
+            <View onClick={(e) => { onLinkProtocol(e, 'privacy') }} className='txt highlight'>隐私政策</View>
+            &ensp;及&ensp;
+            <View onClick={(e) => { onLinkProtocol(e, 'service') }} className='txt highlight'>***统一认证服务条款</View>
+          </View>
+        </View>
       </View>
       <Toast className='toast' open={open} onClose={setOpen} type='fail'>
         需要通过授权才能继续，请重新点击并授权！
+      </Toast>
+      <Toast className='toast' open={openProtocol} onClose={setOpenProtocol} type='fail'>
+        请同意用户协议
       </Toast>
     </View>
   )
