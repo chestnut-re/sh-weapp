@@ -12,6 +12,7 @@ const AboutUsPage = () => {
   const { commonStore } = useStore()
   console.log(commonStore)
   const toPrivacy = () => {
+    console.log('隐私协议')
     Taro.navigateTo({ url: `/pages/webview/index?url=${H5.privacy}` })
   }
   const toService = () => {
@@ -23,15 +24,15 @@ const AboutUsPage = () => {
         <Image className='img' src={pic} />
       </View>
       {/* <View className='num'>山海云途 V 1.0.1</View> */}
-      <View className='list' onClick={toService}>
-        <View className='item'>
+      <View className='list'>
+        <View className='item' onClick={toService}>
           <View className='left'>服务协议</View>
           <View className='right'>
             <Image className='jump' src={jump} />
           </View>
         </View>
-        <View className='divide' onClick={toPrivacy} />
-        <View className='item'>
+        <View className='divide' />
+        <View className='item' onClick={toPrivacy}>
           <View className='left'>隐私协议</View>
           <View className='right'>
             <Image className='jump' src={jump} />

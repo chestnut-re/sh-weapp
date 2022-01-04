@@ -11,6 +11,7 @@ import lose from '@/assets/img/yjfk/lose.png'
 import del from '@/assets/img/password/del.png'
 import { showMToast } from '@/utils/ui'
 import GoodsItem from '@/components/GoodsItem'
+import { useStore } from '@/store/context'
 
 import './index.less'
 
@@ -18,6 +19,7 @@ import './index.less'
  * 搜索
  */
 const SearchPage = () => {
+  const { userStore } = useStore()
   const pageRef = useRef<any>({ current: 1 })
   const [hasMore, setHasMore] = useState(true)
   const [list, setList] = useState<any[]>([])
@@ -63,8 +65,15 @@ const SearchPage = () => {
     setValue('')
   }
 
-  const anOrder = () => {
-    Taro.navigateTo({ url: `/pages/webview/index?url=${H5.goodsDetail}` })
+  const anOrder = (e) => {
+    if (!userStore.isBindMobile) {
+      console.log(userStore.isBindMobile)
+      // 未登录
+      Taro.navigateTo({ url: '/pages/login/index' })
+      return
+    }
+    const l = `${H5.goodsDetail}?id=${e.id}&goodsPriceId=${e.goodsPriceId}`
+    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(l)}` })
   }
 
   return (
@@ -105,7 +114,13 @@ const SearchPage = () => {
           <View className='product-list'>
             <List loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}>
               {list.map((item) => (
-                <GoodsItem key={item.id} onItemClick={anOrder} item={item} />
+                <GoodsItem
+                  key={item.id}
+                  onItemClick={() => {
+                    anOrder(item)
+                  }}
+                  item={item}
+                />
               ))}
             </List>
           </View>

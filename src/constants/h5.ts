@@ -6,7 +6,7 @@ export class H5 {
   static privacy = `${h5Domain}/protocol/privacy`
 
   /// 服务协议
-  static service = `${h5Domain}/protocol/service`
+  static service = `${h5Domain}/protocol/platform-service`
 
   /// 参考行程
   static referenceRouter = `${h5Domain}/travel/route`
