@@ -1,6 +1,6 @@
 /* eslint-disable import/first */
 import Taro, { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
-import { View, ScrollView } from '@tarojs/components'
+import { View, ScrollView, Text, Image } from '@tarojs/components'
 
 import { List, PullRefresh } from '@taroify/core'
 import { H5 } from '@/constants/h5'
@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react'
 import { observer } from 'mobx-react'
 import { ShopService } from '@/service/ShopService'
 import Img from '@/components/Img'
+import defaultsIcon from '@/assets/img/common/default.png'
 import './index.less'
 /**
  * 我的浏览
@@ -81,7 +82,7 @@ const MyBrowsePage = () => {
     <View className='MyBrowsePage__root'>
       <View className='browse-list'>
         <PullRefresh className='list' loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
-          {list && list.length > 0 && (
+          {list && list.length > 0 ? (
             <List loading={loading} hasMore={hasMore} onLoad={onLoad}>
               {list.map((item) => (
                 <View className='item' key={`${item['id']}`}>
@@ -98,6 +99,7 @@ const MyBrowsePage = () => {
                     </View>
                     <View className='top-all' onClick={() => toAbulkshop(item)}>
                       <Img
+                        onClick={() => { }}
                         url={item['shopHeadUrl']}
                         className='header'
                       />
@@ -131,9 +133,15 @@ const MyBrowsePage = () => {
                 </List.Placeholder>
               )}
             </List>
+          ) : (
+            <View className='noDataView'>
+              <Image className='img' src={defaultsIcon} />
+              <Text className='text'>亲，您还没有关注店铺哦~</Text>
+            </View>
           )}
         </PullRefresh>
       </View>
+
     </View>
   )
 }
