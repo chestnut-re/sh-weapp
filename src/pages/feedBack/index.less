@@ -14,23 +14,44 @@
       font-size: 28px;
       color: #ccc;
     }
-    .upload {
-      background: #f3f4f4;
-      border-radius: 12px;
-      width: 150px;
-      height: 148px;
+    .uploadView {
+      margin-top: 40px;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      .img {
-        width: 52px;
-        height: 43px;
-        margin-bottom: 13px;
+      flex-direction: row;
+      .upload {
+        position: relative;
+        background: #f3f4f4;
+        border-radius: 12px;
+        width: 182px;
+        height: 182px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-right: 38px;
+        .closeView {
+          position: absolute;
+          top: -16px;
+          right: -16px;
+          width: 42px;
+          height: 42px;
+          .closeIcon {
+            width: 42px;
+            height: 42px;
+          }
+        }
+        .img {
+          width: 52px;
+          height: 43px;
+          margin-bottom: 13px;
+        }
+        .img-text {
+          font-size: 24px;
+          color: #666;
+        }
       }
-      .img-text {
-        font-size: 24px;
-        color: #666;
+      .upload:last-child {
+        margin-right: 0;
       }
     }
   }

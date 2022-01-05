@@ -101,6 +101,7 @@ const HomeScreen = () => {
   const getActivity = async () => {
     const result = await HomeService.getActivity()
     if (result.statusCode === 200) {
+      console.log(result.data.data)
       setActivityList(result.data.data)
     }
   }
@@ -175,23 +176,23 @@ const HomeScreen = () => {
           </View> */}
         </View>
         <View className='go-done'>
-          {/* <View className='home-body'>
-          {activityList.length > 0 && (
-            <View className='swiper' onClick={() => toActivityUrl(activityList[0].activityUrl)}>
-              <View className='swiper-left'>
-                <Image className='first' src={activityList[0].activityImg} />
-              </View>
-              <View className='swiper-right'>
-                <View className='right-top' onClick={() => toActivityUrl(activityList[1].activityUrl)}>
-                  <Image className='second' src={activityList[1].activityImg} />
+          <View className='home-body'>
+            {activityList && activityList.length > 0 && (
+              <View className='swiper' onClick={() => toActivityUrl(activityList[0].activityUrl)}>
+                <View className='swiper-left'>
+                  <Image className='first' src={activityList[0].activityImg} />
                 </View>
-                <View className='right-bottom' onClick={() => toActivityUrl(activityList[2].activityUrl)}>
-                  <Image className='third' src={activityList[2].activityImg} />
+                <View className='swiper-right'>
+                  <View className='right-top' onClick={() => toActivityUrl(activityList[1].activityUrl)}>
+                    <Image className='second' src={activityList[1].activityImg} />
+                  </View>
+                  <View className='right-bottom' onClick={() => toActivityUrl(activityList[2].activityUrl)}>
+                    <Image className='third' src={activityList[2].activityImg} />
+                  </View>
                 </View>
               </View>
-            </View>
-          )}
-        </View> */}
+            )}
+          </View>
           <View className='product-list'>
             {list.length > 0 && (
               <List loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}>

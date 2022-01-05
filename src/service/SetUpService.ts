@@ -34,4 +34,11 @@ export class SetUpService {
       },
     })
   }
+  ///意见反馈
+  static feedback(data) {
+    return doPostAction({
+      url: `${BASE_URL}/multi/feedback/save`,
+      data: data,
+    })
+  }
 }

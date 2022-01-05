@@ -59,7 +59,7 @@ const SetUpPage = () => {
         </View>
       </View> */}
       <View className='content-list'>
-        {/* <View className='content' onClick={toFeedBack}>
+        <View className='content' onClick={toFeedBack}>
           <View className='content-left'>意见反馈</View>
           <View className='content-right'>
             来告诉我们你的想法吧
@@ -78,7 +78,7 @@ const SetUpPage = () => {
             </View>
           </View>
         </View>
-        <View className='divide' /> */}
+        <View className='divide' />
         <View className='content' onClick={toAboutUs}>
           <View className='content-left'>关于我们</View>
           <View className='content-right'>
