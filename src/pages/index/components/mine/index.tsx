@@ -37,6 +37,9 @@ import long from '@/assets/img/mine/long.png'
 import link from '@/assets/img/mine/link.png'
 import del from '@/assets/img/mine/del.png'
 import { H5 } from '@/constants/h5'
+
+import ShareView from '@/components/shareView'
+import LongImgView from '@/components/longImgView'
 import './index.less'
 
 /**
@@ -53,9 +56,13 @@ const MineScreen = () => {
   const [cityName, setCityName] = useState('奔赴山海')
   const [isShowCanvas, setIsShowCanvas] = useState(false)
   const [userInfo, setUserInfo] = useState({})
+
+  const [isShowLongImg, setIsShowLongImg] = useState(false)
+  const [image, setImage] = useState('')
+
   const picture =
     'https://shanhai-shoping.oss-cn-beijing.aliyuncs.com/img/user/pic/cd2d77f5983f44c5b6e20c313e12d26e.jpg'
-  useEffect(() => {}, [])
+  useEffect(() => { }, [])
   const toFist = () => {
     // Taro.navigateBack()
   }
@@ -186,6 +193,21 @@ const MineScreen = () => {
 
     // 将以上绘画操作进行渲染
     ctx.draw()
+    let res = await Taro.canvasToTempFilePath({
+      x: 0,
+      y: 0,
+      width: 400,
+      height: 500,
+      destWidth: 360,
+      destHeight: 450,
+      canvasId: 'cardCanvas',
+      fileType: 'png',
+    })
+    console.log('res', res)
+    if (res.errMsg == 'canvasToTempFilePath:ok') {
+      setImage(res.tempFilePath)
+    }
+
   }
   /**
    * saveCard() 保存图片到本地
@@ -222,6 +244,14 @@ const MineScreen = () => {
       })
     }
   }
+
+  const startDrawImg = async () => {
+    setOpen(false)
+    await drawImage()
+    setIsShowLongImg(true)
+
+    // setIsShowCanvas(true)
+  }
   /**
    * 用户点击右上角分享
    */
@@ -247,11 +277,27 @@ const MineScreen = () => {
   //     }
   //   }
   // }
+
   return (
     <View className='MineScreen__root'>
+      <ShareView
+        onLongImg={startDrawImg}
+        copyLink='23123123123'
+        onClose={() => {
+          setOpen(false)
+        }}
+        open={open}
+      />
+      <LongImgView
+        open={isShowLongImg}
+        imgUrl={image}
+        onClose={() => {
+          setIsShowLongImg(false)
+        }}
+      />
       <View className='index'>
         {/* 使用Canvas绘制分享图片 */}
-        {isShowCanvas && (
+        {/* {isShowCanvas && (
           <View className='canvas-wrap'>
             <Canvas
               id='card-canvas'
@@ -263,7 +309,13 @@ const MineScreen = () => {
               保存到相册
             </Button>
           </View>
-        )}
+        )} */}
+        <Canvas
+          id='card-canvas'
+          className='card-canvas'
+          style='width: 320px; height: 450px; position:fixed; left:100%'
+          canvasId='cardCanvas'
+        ></Canvas>
       </View>
 
       <View className='Header__btn'>
@@ -343,6 +395,10 @@ const MineScreen = () => {
         <View className='item' onClick={toFollowStore}>
           <Image className='img' src={store} />
           <View className='item-text'>关注小店</View>
+        </View>
+        <View className='item' onClick={() => setOpen(true)}>
+          <Image className='img' src={map} />
+          <View className='item-text'>分享</View>
         </View>
         {/* <View className='item'>
           <Image className='img' src={join} />

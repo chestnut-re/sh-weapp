@@ -17,6 +17,10 @@ const IndexPage = () => {
 
   useEffect(() => {
     userStore.initCity()
+    Taro.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
 
     console.log('index q', decodeURIComponent(Taro.getCurrentInstance()?.router?.params?.q ?? ''))
     if (Taro.getCurrentInstance()?.router?.params?.q) {
