@@ -37,7 +37,7 @@ const MyLikedPage = () => {
     const params = {} as any
     params.type = 1
     params.size = 10
-    params.current = 1
+    params.current = pageRef.current.current
     setLoading(true)
     let newList = pageRef.current.current === 1 ? [] : list
     LikeService.likeList(params).then((res) => {
@@ -53,6 +53,7 @@ const MyLikedPage = () => {
     })
   }
   function onRefresh() {
+    pageRef.current.current = 1
     refreshingRef.current = true
     setLoading(false)
     onLoad()

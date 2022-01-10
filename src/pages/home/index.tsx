@@ -1,0 +1,313 @@
+import { View, ScrollView, Image, Input, Text } from '@tarojs/components'
+import Taro, { } from '@tarojs/taro' // Taro 专有 Hooks
+import { observer } from 'mobx-react'
+import { useEffect, useCallback, useState, useRef } from 'react'
+import { List, Loading, Swiper, PullRefresh } from '@taroify/core'
+import Img from '@/components/Img'
+import { commonStore, useStore } from '@/store/context'
+import place from '@/assets/img/home/vdizhi@3x.png'
+import search from '@/assets/img/home/sousuo-2@2x.png'
+import GoodsItem from '@/components/GoodsItem'
+import { H5 } from '@/constants/h5'
+import { HomeService } from '@/service/HomeService'
+import { LikeService } from '@/service/Like'
+import { getUrlParams } from '@/utils/webviewUtils'
+
+import './index.less'
+
+const HomeScreen = () => {
+  const pageRef = useRef<any>({ current: 1, hasMores: true })
+
+  const { userStore } = useStore()
+
+  const [loading, setLoading] = useState(false);
+  const [bannerList, setBannerList] = useState<any>([])
+  const [activityList, setActivityList] = useState<any[]>([])
+  const [list, setList] = useState<any[]>([])
+  const [showActivity, setShowActivity] = useState(false);
+
+
+
+  useEffect(() => {
+    userStore.initCity()
+    userStore.init(() => {
+      getBanner()
+      getActivity()
+      onRefresherRefresh();
+    })
+    if (Taro.getCurrentInstance()?.router?.params?.q) {
+      const q = decodeURIComponent(Taro.getCurrentInstance()?.router?.params?.q ?? '')
+      const bizId = getUrlParams(q)['bizId']
+      const jumpTo = getUrlParams(q)['jumpTo']
+      commonStore.bizId = bizId
+      commonStore.jumpTo = jumpTo
+
+      // 判断是否登录，没有登录先去登录
+      if (userStore.isBindMobile) {
+        // 已经登录
+        Taro.navigateTo({ url: decodeURIComponent(jumpTo) })
+      } else {
+        // 未登录
+        commonStore.setAfterLoginCallback(() => {
+          Taro.redirectTo({ url: decodeURIComponent(jumpTo) }) // 替换登录页面
+          commonStore.removeAfterLoginCallback()
+        })
+        Taro.navigateTo({ url: '/pages/login/index' })
+      }
+    }
+  }, [])
+
+  const onRefresherRefresh = useCallback(() => {
+    pageRef.current.current = 1
+    pageRef.current.hasMores = true
+    setLoading(true)
+    getList()
+  }, []);
+
+  const onScrollToLower = useCallback(() => {
+    setShowActivity(true)
+    getList()
+  }, []);
+
+  const getList = async () => {
+    if (!pageRef.current.hasMores) {
+      setShowActivity(false)
+      return
+    }
+
+    const result = await HomeService.getGoodsPage(pageRef.current.current) as any
+
+    if (result.data.code == '200') {
+      if (pageRef.current.current === 1) {
+        setList(result.data.data.records)
+      } else {
+        result.data.data.records.map((item) => {
+          list.push(item)
+        })
+      }
+      pageRef.current.current++
+      pageRef.current.hasMores = result.data.data.records.length < 10 ? false : true
+    }
+    setShowActivity(false)
+    setLoading(false)
+  }
+  const toSearch = () => {
+    Taro.navigateTo({ url: '/pages/search/index' })
+  }
+
+  const toLocation = () => {
+    Taro.navigateTo({ url: '/pages/location/index' })
+  }
+
+  const anOrder = (e) => {
+    if (!userStore.isBindMobile) {
+      console.log(userStore.isBindMobile)
+      // 未登录
+      Taro.navigateTo({ url: '/pages/login/index' })
+      return
+    }
+    const l = `${H5.goodsDetail}?id=${e.id}&goodsPriceId=${e.goodsPriceId}`
+    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(l)}` })
+  }
+
+  //获取banner
+  const getBanner = async () => {
+    const result = await HomeService.getBanner()
+    if (result.statusCode === 200) {
+      setBannerList(result.data.data)
+    }
+  }
+
+  const getActivity = async () => {
+    const result = await HomeService.getActivity()
+    if (result.statusCode === 200) {
+      const poshDataNum = 3 - result.data.data.length
+      const newActivityList = result.data.data as any
+      for (let index = 0; index < poshDataNum; index++) {
+        newActivityList.push({
+          activityImg: '',
+          activityUrl: ''
+        })
+      }
+      setActivityList(newActivityList)
+    }
+  }
+
+  const toBannerUrl = (url) => {
+    if (!userStore.isBindMobile) {
+      console.log(userStore.isBindMobile)
+      // 未登录
+      Taro.navigateTo({ url: '/pages/login/index' })
+      return
+    }
+    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(url)}` })
+  }
+
+  const toActivityUrl = (url) => {
+    if (url) {
+      Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(url)}` })
+    }
+  }
+
+  /**
+  * 点赞
+  */
+
+  const onLike = (item) => {
+    const params = {} as any
+    params.goodsId = item.id
+    params.state = item.isLike == 1 ? 0 : 1
+    LikeService.like(params).then((res) => {
+      const { data } = res.data
+      if (data) {
+        let newList = [...list]
+        list.forEach((listItem: any) => {
+          if (listItem.id == item.id) {
+            listItem.isLike = item.isLike == 1 ? 0 : 1
+            listItem.shamLikes = item.isLike == 1 ? Number(listItem.shamLikes) + 1 : Number(listItem.shamLikes) - 1
+          }
+        })
+        setList(newList)
+      }
+      console.log(data)
+    })
+  }
+  const scrollStyle = {
+    height: '100vh'
+  }
+  /**
+  * 活动指示器
+  * 这里用Taro UI的活动指示器来实现上拉加载的动画效果
+  */
+  const ActivityIndicator = () => {
+    return (
+      <View style={{ display: 'flex', justifyContent: 'center', paddingTop: '10px', paddingBottom: '10px' }}>
+        <Loading>加载中...</Loading>
+      </View>
+    );
+  }
+  return (
+    <View className='HomeScreen__root'>
+      <ScrollView
+        className='home-scroll'
+        scrollY
+        scrollWithAnimation
+        refresherEnabled
+        refresherTriggered={loading}
+        onRefresherRefresh={onRefresherRefresh}
+        style={scrollStyle}
+        onScrollToLower={onScrollToLower}
+      >
+        <View className='banner'>
+          {bannerList.length > 0 && (
+            <Swiper className='top-s' autoplay={3000}>
+              {bannerList.map((item) => (
+                <Swiper.Item className='item' key={item.id} onClick={() => toBannerUrl(item.bannerUrl)}>
+                  <Img
+                    url={item.bannerImg}
+                    className=''
+                  />
+                  {/* <Image src={item.bannerImg} mode='aspectFill'></Image> */}
+                  {/* <View>{item.title}</View> */}
+                </Swiper.Item>
+              ))}
+              <Swiper.Indicator className='basic-swiped' />
+            </Swiper>
+          )}
+          <View className='un-done'></View>
+        </View>
+        <View className='home-header'>
+          <View className='now-place' onClick={toLocation}>
+            {/* .substr(0, 4) + '...' */}
+            <Text className='text'>
+              {userStore.city?.name.length > 4 ? userStore.city?.name.substr(0, 4) + '...' : userStore.city?.name ?? ''}
+            </Text>
+            <Image className='place' src={place} />
+          </View>
+          <View className='search-input' onClick={toSearch}>
+            <Image className='search' src={search} />
+            <Input type='text' placeholder='' disabled />
+          </View>
+          {/* <View
+            className='saoyisao'
+            onClick={() => {
+              Taro.scanCode({}).then((res) => {
+                console.log(res)
+                try {
+                  const params = getUrlParams(res.result)
+                  // shtravel://app?data=%7B%22path%22%3A%22https%3A%2F…466343298036797440%22%2C%22type%22%3A%22web%22%7D
+                  const d = JSON.parse(decodeURIComponent(params['data']))
+                  if (d.type === 'web') {
+                    commonStore.bizId = getUrlParams(d['path'])['bizId']
+                    console.log(commonStore.bizId)
+
+                    Taro.navigateTo({ url: `/pages/webview/index?url=${d['path']}` })
+                  } else {
+                    showMToast('请扫描店铺二维码')
+                  }
+                } catch (e) {
+                  console.log(e)
+                }
+              })
+            }}
+          >
+            <Image className='sao' src={sao} />
+          </View> */}
+        </View>
+
+        <View className='go-done'>
+          <View className='home-body'>
+            {activityList && activityList.length > 0 && (
+              <View className='swiper' onClick={() => toActivityUrl(activityList[0] && activityList[0].activityUrl)}>
+                <View className='swiper-left'>
+                  <Img
+                    url={activityList[0].activityImg}
+                    className='first'
+                  />
+                </View>
+                <View className='swiper-right'>
+                  <View className='right-top' onClick={() => toActivityUrl(activityList[1] && activityList[1].activityUrl)}>
+                    <Img
+                      url={activityList[1].activityImg}
+                      className='second'
+                    />
+                  </View>
+                  <View className='right-bottom' onClick={() => toActivityUrl(activityList[2] && activityList[2].activityUrl)}>
+                    <Img
+                      url={activityList[2].activityImg}
+                      className='third'
+                    />
+                  </View>
+                </View>
+              </View>
+            )}
+          </View>
+          <View className='product-list'>
+            {list.length > 0 && list.map((item) => (
+              <GoodsItem
+                key={item.id}
+                onItemClick={() => {
+                  anOrder(item)
+                }}
+                onLikeClick={() => {
+                  onLike(item)
+                }}
+                item={item}
+              />
+            ))}
+            {/* {loading && <Loading>加载中...</Loading>}
+            {!hasMore && <View className='noMore'>没有更多了</View>} */}
+          </View>
+          {showActivity ? (
+            ActivityIndicator()
+          ) : (
+            !pageRef.current.hasMores && <View className='noMore'>没有更多了</View>
+          )}
+        </View>
+
+      </ScrollView>
+    </View>
+  )
+}
+
+export default observer(HomeScreen)
