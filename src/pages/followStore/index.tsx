@@ -99,7 +99,6 @@ const MyBrowsePage = () => {
                     </View>
                     <View className='top-all' onClick={() => toAbulkshop(item)}>
                       <Img
-                        onClick={() => { }}
                         url={item['shopHeadUrl']}
                         className='header'
                       />
@@ -111,14 +110,13 @@ const MyBrowsePage = () => {
                     <View className='img-list'>
                       {item['shopGoods'] && item['shopGoods'].length > 0 && item['shopGoods'].map((items, index) => (
                         index < 4 && (
-
-                          <Img
-                            key={`index${index}`}
-                            onClick={() => { anOrder(items) }}
-                            url={items['promotionalImageUrl']}
-                            className='Image'
-                          />
-
+                          <View onClick={() => { anOrder(items) }}>
+                            <Img
+                              key={`index${index}`}
+                              url={items['promotionalImageUrl']}
+                              className='Image'
+                            />
+                          </View>
                         )
                       ))}
                     </View>

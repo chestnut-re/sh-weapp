@@ -8,17 +8,15 @@ import './index.less'
 interface Props {
   url: any
   className: string
-  onClick: () => void
 }
 
 /**
  * Img 懒加载图片
  */
-const Img: React.FC<Props> = ({ className, url, onClick }) => {
+const Img: React.FC<Props> = ({ className, url }) => {
 
   return (
     <Image
-      onClick={onClick}
       lazyLoad
       src={url ? url : ' '}
       className={`Img__root ${className}`}

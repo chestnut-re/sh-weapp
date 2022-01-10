@@ -8,11 +8,14 @@ import search from '@/assets/img/home/sousuo-2@2x.png'
 import GoodsItem from '@/components/GoodsItem'
 import { H5 } from '@/constants/h5'
 import { HomeService } from '@/service/HomeService'
+import { LikeService } from '@/service/Like'
+
 import sao from '@/assets/img/home/sao.png'
 import './index.less'
 import { getUrlParams } from '@/utils/webviewUtils'
 import { showMToast } from '@/utils/ui'
 import { observer } from 'mobx-react'
+import Img from '@/components/Img'
 
 /**
  * 首页
@@ -101,8 +104,15 @@ const HomeScreen = () => {
   const getActivity = async () => {
     const result = await HomeService.getActivity()
     if (result.statusCode === 200) {
-      console.log(result.data.data)
-      setActivityList(result.data.data)
+      const poshDataNum = 3 - result.data.data.length
+      const newActivityList = result.data.data as any
+      for (let index = 0; index < poshDataNum; index++) {
+        newActivityList.push({
+          activityImg: '',
+          activityUrl: ''
+        })
+      }
+      setActivityList(newActivityList)
     }
   }
 
@@ -117,7 +127,33 @@ const HomeScreen = () => {
   }
 
   const toActivityUrl = (url) => {
-    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(url)}` })
+    if (url) {
+      Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(url)}` })
+    }
+  }
+
+  /**
+ * 点赞
+ */
+
+  const onLike = (item) => {
+    const params = {} as any
+    params.goodsId = item.id
+    params.state = item.isLike == 1 ? 0 : 1
+    LikeService.like(params).then((res) => {
+      const { data } = res.data
+      if (data) {
+        let newList = [...list]
+        list.forEach((listItem: any) => {
+          if (listItem.id == item.id) {
+            listItem.isLike = item.isLike == 1 ? 0 : 1
+            listItem.shamLikes = item.isLike == 1 ? Number(listItem.shamLikes) + 1 : Number(listItem.shamLikes) - 1
+          }
+        })
+        setList(newList)
+      }
+      console.log(data)
+    })
   }
 
   return (
@@ -178,16 +214,25 @@ const HomeScreen = () => {
         <View className='go-done'>
           <View className='home-body'>
             {activityList && activityList.length > 0 && (
-              <View className='swiper' onClick={() => toActivityUrl(activityList[0].activityUrl)}>
+              <View className='swiper' onClick={() => toActivityUrl(activityList[0] && activityList[0].activityUrl)}>
                 <View className='swiper-left'>
-                  {/* <Image className='first' src={activityList[0].activityImg} /> */}
+                  <Img
+                    url={activityList[0].activityImg}
+                    className='first'
+                  />
                 </View>
                 <View className='swiper-right'>
-                  <View className='right-top' onClick={() => toActivityUrl(activityList[1].activityUrl)}>
-                    {/* <Image className='second' src={activityList[1].activityImg} /> */}
+                  <View className='right-top' onClick={() => toActivityUrl(activityList[1] && activityList[1].activityUrl)}>
+                    <Img
+                      url={activityList[1].activityImg}
+                      className='second'
+                    />
                   </View>
-                  <View className='right-bottom' onClick={() => toActivityUrl(activityList[2].activityUrl)}>
-                    {/* <Image className='third' src={activityList[2].activityImg} /> */}
+                  <View className='right-bottom' onClick={() => toActivityUrl(activityList[2] && activityList[2].activityUrl)}>
+                    <Img
+                      url={activityList[2].activityImg}
+                      className='third'
+                    />
                   </View>
                 </View>
               </View>
@@ -201,6 +246,9 @@ const HomeScreen = () => {
                     key={item.id}
                     onItemClick={() => {
                       anOrder(item)
+                    }}
+                    onLikeClick={() => {
+                      onLike(item)
                     }}
                     item={item}
                   />
