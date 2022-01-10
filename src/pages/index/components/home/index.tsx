@@ -129,7 +129,7 @@ const HomeScreen = () => {
               {bannerList.map((item) => (
                 <Swiper.Item className='item' key={item.id} onClick={() => toBannerUrl(item.bannerUrl)}>
                   <Image src={item.bannerImg} mode='aspectFill'></Image>
-                  <View>{item.title}</View>
+                  {/* <View>{item.title}</View> */}
                 </Swiper.Item>
               ))}
               <Swiper.Indicator className='basic-swiped' />
@@ -180,14 +180,14 @@ const HomeScreen = () => {
             {activityList && activityList.length > 0 && (
               <View className='swiper' onClick={() => toActivityUrl(activityList[0].activityUrl)}>
                 <View className='swiper-left'>
-                  <Image className='first' src={activityList[0].activityImg} />
+                  {/* <Image className='first' src={activityList[0].activityImg} /> */}
                 </View>
                 <View className='swiper-right'>
                   <View className='right-top' onClick={() => toActivityUrl(activityList[1].activityUrl)}>
-                    <Image className='second' src={activityList[1].activityImg} />
+                    {/* <Image className='second' src={activityList[1].activityImg} /> */}
                   </View>
                   <View className='right-bottom' onClick={() => toActivityUrl(activityList[2].activityUrl)}>
-                    <Image className='third' src={activityList[2].activityImg} />
+                    {/* <Image className='third' src={activityList[2].activityImg} /> */}
                   </View>
                 </View>
               </View>
@@ -207,12 +207,14 @@ const HomeScreen = () => {
                 ))}
                 {!refreshingRef.current && (
                   <List.Placeholder>
-                    {loading && <Loading>加载中...</Loading>}
-                    {!hasMore && <View className='noMore'>没有更多了</View>}
+                    {/* {loading && <Loading>加载中...</Loading>} */}
+                    {/* {!hasMore && <View className='noMore'>没有更多了</View>} */}
                   </List.Placeholder>
                 )}
               </List>
             )}
+            {loading && <Loading>加载中...</Loading>}
+            {!hasMore && <View className='noMore'>没有更多了</View>}
           </View>
         </View>
       </PullRefresh>
