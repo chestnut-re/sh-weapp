@@ -101,27 +101,7 @@ const UsualMessagePage = () => {
                 <View className='left-top'>
                   <View className='user-name'>
                     <View className='state'>{item.travelerName}</View>
-                    {item.userTravelerRelation === 0 ? (
-                      <View className='myself'>本人</View>
-                    ) : (
-                      <View className='order-p'>
-                        {item.userTravelerRelation == 1
-                          ? '夫妻'
-                          : item.userTravelerRelation == 2
-                          ? '父母'
-                          : item.userTravelerRelation == 3
-                          ? '子女'
-                          : item.userTravelerRelation == 4
-                          ? '亲戚'
-                          : item.userTravelerRelation == 5
-                          ? '朋友'
-                          : item.userTravelerRelation == 6
-                          ? '兄弟'
-                          : item.userTravelerRelation == 7
-                          ? '姐妹'
-                          : ''}
-                      </View>
-                    )}
+                    {item.userTravelerRelation === 0 && <View className='myself'>本人</View>}
                   </View>
                   <View className='tel'>{item.phoneNumber}</View>
                 </View>

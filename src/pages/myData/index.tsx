@@ -55,8 +55,8 @@ const MyDataPage = () => {
   const [address, setAddress] = useState('请选择地址')
   //三级联动
   const [customArray, setCustomArray] = useState<any>(userStore?.cityInfo)
-  const [customIndex, setCustomIndex] = useState([0, 0, 0])
-  let [onlyArray, setOnlyArray] = useState([[], [], []])
+  const [customIndex, setCustomIndex] = useState([0, 0])
+  let [onlyArray, setOnlyArray] = useState([[], []])
   useEffect(() => {
     const data = {
       customArray: customArray,
@@ -71,10 +71,10 @@ const MyDataPage = () => {
       // @ts-ignore
       data.onlyArray[1].push(customArray[customIndex[0]].areas[j].name)
     }
-    for (let k = 0; k < customArray[customIndex[0]].areas[customIndex[1]].areas.length; k++) {
-      // @ts-ignore
-      data.onlyArray[2].push(customArray[customIndex[0]].areas[customIndex[1]].areas[k].name)
-    }
+    // for (let k = 0; k < customArray[customIndex[0]].areas[customIndex[1]].areas.length; k++) {
+    //   // @ts-ignore
+    //   data.onlyArray[2].push(customArray[customIndex[0]].areas[customIndex[1]].areas[k].name)
+    // }
     setCustomArray(data.customArray)
     setCustomIndex(data.customIndex)
     setOnlyArray(data.onlyArray)
@@ -94,14 +94,14 @@ const MyDataPage = () => {
           for (let j = 0; j < newCustomArray[i].areas.length; j++) {
             // @ts-ignore
             arr1.push(newCustomArray[i].areas[j].name)
-            if (j == newCustomIndex[1]) {
-              for (let k = 0; k < newCustomArray[i].areas[j].areas.length; k++) {
-                // @ts-ignore
-                arr2.push(newCustomArray[i].areas[j].areas[k].name)
-              }
-              newOnlyArray[2] = arr2
-              console.log('arr2', arr2)
-            }
+            // if (j == newCustomIndex[1]) {
+            //   for (let k = 0; k < newCustomArray[i].areas[j].areas.length; k++) {
+            //     // @ts-ignore
+            //     arr2.push(newCustomArray[i].areas[j].areas[k].name)
+            //   }
+            //   newOnlyArray[2] = arr2
+            //   console.log('arr2', arr2)
+            // }
           }
           newOnlyArray[1] = arr1
           console.log('arr1', arr1)
@@ -121,7 +121,7 @@ const MyDataPage = () => {
         break
     }
     //这里要清空原来的数据进行数据更新
-    setOnlyArray([[], [], []])
+    setOnlyArray([[], []])
     setCustomIndex(newCustomIndex)
     console.log(newCustomIndex)
   }
@@ -129,18 +129,9 @@ const MyDataPage = () => {
   //选择地区
   const addressOnChange = async (e) => {
     const indexArr = e.detail.value
-    console.log(
-      customArray[indexArr[0]].name,
-      customArray[indexArr[0]].areas[indexArr[1]].name,
-      customArray[indexArr[0]].areas[indexArr[1]].areas[indexArr[2]].name
-    )
+    console.log(customArray[indexArr[0]].name, customArray[indexArr[0]].areas[indexArr[1]].name)
 
-    const addressText =
-      `${customArray[indexArr[0]].name}` +
-      ' ' +
-      `${customArray[indexArr[0]].areas[indexArr[1]].name}` +
-      ' ' +
-      `${customArray[indexArr[0]].areas[indexArr[1]].areas[indexArr[2]].name}`
+    const addressText = `${customArray[indexArr[0]].name}` + ' ' + `${customArray[indexArr[0]].areas[indexArr[1]].name}`
     setAddress(addressText)
     const userRes = await UserService.editUserInfo({ address: addressText })
     console.log('修改返回参数', userRes)

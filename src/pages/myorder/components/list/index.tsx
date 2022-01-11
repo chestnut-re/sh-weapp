@@ -78,7 +78,7 @@ const OrderListPage = (props) => {
                         : '退款失败'}
                     </View>
                     <View className='content'>
-                      <Image className='img' src={pic} />
+                      <Image className='img' src={item.promotionalImageUrl} />
                       <View className='name'>
                         {item.goodsName}
                         <View className='small-name'>
