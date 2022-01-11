@@ -8,22 +8,14 @@ import './index.less'
 interface Props {
   onItemClick: () => void
   item: any
-  onLikeClick: () => void
 }
-
-
 
 /**
  * GoodsItem 商品Item
  */
-const GoodsItem: React.FC<Props> = ({ item, onItemClick, onLikeClick }) => {
+const GoodsItem: React.FC<Props> = ({ item, onItemClick }) => {
   const _itemClick = () => {
     onItemClick()
-  }
-
-  const likeClick = (e) => {
-    e.stopPropagation()
-    onLikeClick()
   }
 
   return (
@@ -38,11 +30,11 @@ const GoodsItem: React.FC<Props> = ({ item, onItemClick, onLikeClick }) => {
         </View>
         <View className='content'>
           <View className='text'>{item.goodsName}</View>
-          <View className='money'>¥ {item.personMarkPrice}</View>
+          <View className='money'>¥ {item.personMarkPrice / 100}</View>
           <View className='consume'>
             <Text>{item.shamSales}人已付款</Text>
-            <View onClick={likeClick}>
-              <Image className='is-like' src={item.isLike == 1 ? liked : noLike} />
+            <View>
+              <Image className='is-like' src={liked} />
               {item.shamLikes}
             </View>
           </View>
