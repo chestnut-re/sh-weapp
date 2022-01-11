@@ -34,12 +34,13 @@ export default {
     custom: false,
     color: '#b4c1c0',
     selectedColor: '#4dcfc5',
+    borderStyle: 'white',
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
     list: [
       {
         pagePath: 'pages/home/index',
         iconPath: './assets/img/home/home.png',
-        selectedIconPath: './assets/img/home/message-selected.png',
+        selectedIconPath: './assets/img/home/home-selected.png',
         text: '首页',
       },
       {

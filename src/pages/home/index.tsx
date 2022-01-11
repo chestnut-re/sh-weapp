@@ -1,5 +1,5 @@
 import { View, ScrollView, Image, Input, Text } from '@tarojs/components'
-import Taro, { } from '@tarojs/taro' // Taro 专有 Hooks
+import Taro, { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
 import { observer } from 'mobx-react'
 import { useEffect, useCallback, useState, useRef } from 'react'
 import { List, Loading, Swiper, PullRefresh } from '@taroify/core'
@@ -12,6 +12,7 @@ import { H5 } from '@/constants/h5'
 import { HomeService } from '@/service/HomeService'
 import { LikeService } from '@/service/Like'
 import { getUrlParams } from '@/utils/webviewUtils'
+import NavBar from '@/components/navbar'
 
 import './index.less'
 
@@ -25,8 +26,6 @@ const HomeScreen = () => {
   const [activityList, setActivityList] = useState<any[]>([])
   const [list, setList] = useState<any[]>([])
   const [showActivity, setShowActivity] = useState(false);
-
-
 
   useEffect(() => {
     userStore.initCity()
@@ -56,6 +55,16 @@ const HomeScreen = () => {
       }
     }
   }, [])
+
+  const onPageScroll = (scrollTop) => {
+    if (scrollTop.detail.scrollTop > 160) {
+      document.getElementsByClassName('home-header')[0]['style'].backgroundColor = 'rgb(77, 207, 197)'
+    } else {
+      document.getElementsByClassName('home-header')[0]['style'].backgroundColor = 'rgb(153, 153, 153,.5)'
+    }
+  }
+
+
 
   const onRefresherRefresh = useCallback(() => {
     pageRef.current.current = 1
@@ -126,7 +135,7 @@ const HomeScreen = () => {
       for (let index = 0; index < poshDataNum; index++) {
         newActivityList.push({
           activityImg: '',
-          activityUrl: ''
+          id: ''
         })
       }
       setActivityList(newActivityList)
@@ -143,9 +152,10 @@ const HomeScreen = () => {
     Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(url)}` })
   }
 
-  const toActivityUrl = (url) => {
-    if (url) {
-      Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(url)}` })
+  const toActivityUrl = (id) => {
+    if (id != '') {
+      const l = `${H5.specialEvents}?id=${id}`
+      Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(l)}` })
     }
   }
 
@@ -188,37 +198,9 @@ const HomeScreen = () => {
   }
   return (
     <View className='HomeScreen__root'>
-      <ScrollView
-        className='home-scroll'
-        scrollY
-        scrollWithAnimation
-        refresherEnabled
-        refresherTriggered={loading}
-        onRefresherRefresh={onRefresherRefresh}
-        style={scrollStyle}
-        onScrollToLower={onScrollToLower}
-      >
-        <View className='banner'>
-          {bannerList.length > 0 && (
-            <Swiper className='top-s' autoplay={3000}>
-              {bannerList.map((item) => (
-                <Swiper.Item className='item' key={item.id} onClick={() => toBannerUrl(item.bannerUrl)}>
-                  <Img
-                    url={item.bannerImg}
-                    className=''
-                  />
-                  {/* <Image src={item.bannerImg} mode='aspectFill'></Image> */}
-                  {/* <View>{item.title}</View> */}
-                </Swiper.Item>
-              ))}
-              <Swiper.Indicator className='basic-swiped' />
-            </Swiper>
-          )}
-          <View className='un-done'></View>
-        </View>
-        <View className='home-header'>
+      <NavBar className='home-header'>
+        <View className='home-nav'>
           <View className='now-place' onClick={toLocation}>
-            {/* .substr(0, 4) + '...' */}
             <Text className='text'>
               {userStore.city?.name.length > 4 ? userStore.city?.name.substr(0, 4) + '...' : userStore.city?.name ?? ''}
             </Text>
@@ -228,6 +210,7 @@ const HomeScreen = () => {
             <Image className='search' src={search} />
             <Input type='text' placeholder='' disabled />
           </View>
+          <View className='capsule' />
           {/* <View
             className='saoyisao'
             onClick={() => {
@@ -255,24 +238,55 @@ const HomeScreen = () => {
           </View> */}
         </View>
 
+      </NavBar>
+      <ScrollView
+        className='home-scroll'
+        scrollY
+        scrollWithAnimation
+        refresherEnabled
+        refresherTriggered={loading}
+        onRefresherRefresh={onRefresherRefresh}
+        style={scrollStyle}
+        onScrollToLower={onScrollToLower}
+        onScroll={onPageScroll}
+      >
+        <View className='banner'>
+          {bannerList.length > 0 && (
+            <Swiper className='top-s' autoplay={3000}>
+              {bannerList.map((item) => (
+                <Swiper.Item className='item' key={item.id} onClick={() => toBannerUrl(item.bannerUrl)}>
+                  <Img
+                    url={item.bannerImg}
+                    className=''
+                  />
+                  {/* <Image src={item.bannerImg} mode='aspectFill'></Image> */}
+                  {/* <View>{item.title}</View> */}
+                </Swiper.Item>
+              ))}
+              <Swiper.Indicator className='basic-swiped' />
+            </Swiper>
+          )}
+          <View className='un-done'></View>
+        </View>
+
         <View className='go-done'>
           <View className='home-body'>
             {activityList && activityList.length > 0 && (
-              <View className='swiper' onClick={() => toActivityUrl(activityList[0] && activityList[0].activityUrl)}>
-                <View className='swiper-left'>
+              <View className='swiper'>
+                <View onClick={() => toActivityUrl(activityList[0] && activityList[0].id)} className='swiper-left'>
                   <Img
                     url={activityList[0].activityImg}
                     className='first'
                   />
                 </View>
                 <View className='swiper-right'>
-                  <View className='right-top' onClick={() => toActivityUrl(activityList[1] && activityList[1].activityUrl)}>
+                  <View className='right-top' onClick={() => toActivityUrl(activityList[1] && activityList[1].id)}>
                     <Img
                       url={activityList[1].activityImg}
                       className='second'
                     />
                   </View>
-                  <View className='right-bottom' onClick={() => toActivityUrl(activityList[2] && activityList[2].activityUrl)}>
+                  <View className='right-bottom' onClick={() => toActivityUrl(activityList[2] && activityList[2].id)}>
                     <Img
                       url={activityList[2].activityImg}
                       className='third'

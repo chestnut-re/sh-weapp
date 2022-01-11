@@ -78,7 +78,7 @@ const MyBrowsePage = () => {
                   />
                   <View className={item['state'] == 3 ? 'no-right-all' : 'right-all'}>
                     <View className='text'>{item['goodsName']}</View>
-                    <View className='money'>{`¥ ${item['personCurrentPrice'] || 0}`}</View>
+                    <View className='money'>{`¥ ${item['personCurrentPrice'] / 100 || 0}`}</View>
                   </View>
                 </View>
               </View>

@@ -1,8 +1,10 @@
 import Taro from '@tarojs/taro'
 import { Provider, userStore } from './store/context'
+import config from './utils/systemInfo'
 import './app.less'
 
 import { clearStorage } from './utils/storage'
+import { useEffect } from 'react'
 // eslint-disable-next-line import/no-commonjs
 const JSONbigString = require('json-bigint')({ storeAsString: true })
 
@@ -52,6 +54,30 @@ Taro.getLaunchOptionsSync()
 
 
 const App = ({ children }) => {
+  useEffect(() => {
+    try {
+      let res = Taro.getSystemInfoSync();
+      config.pixelRate = res.windowWidth / 750;
+      config.platform = res.platform;
+      config.statusBarHeight = res.statusBarHeight;
+      if (res.platform.toLowerCase() == 'devtools') {
+        config.capsuleHeight = 44;
+      }
+      if (res.platform.toLowerCase() == 'android') {
+        config.capsuleHeight = 48;
+      }
+      config.titleHeight = (config.capsuleHeight + config.statusBarHeight) / config.pixelRate;
+      if (res.statusBarHeight >= 44) {
+        config.isHighHead = true;
+      }
+      if (res.windowHeight > 750) config.isAllScreen = true;
+      config.systemHeight = res.windowHeight;
+
+      console.log('resresresres', res)
+    } catch (e) {
+      console.log(e);
+    }
+  }, [])
   return <Provider>{children}</Provider>
 }
 

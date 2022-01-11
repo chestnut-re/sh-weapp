@@ -79,7 +79,7 @@ const MyLikedPage = () => {
                     />
                     <View className={item['state'] == 3 ? 'no-right-all' : 'right-all'}>
                       <View className='text'>{item['goodsName']}</View>
-                      <View className='money'>{`¥ ${item['personCurrentPrice'] || 0}`}</View>
+                      <View className='money'>{`¥ ${item['personCurrentPrice'] / 100}`}</View>
                     </View>
                   </View>
                 </View>
@@ -89,7 +89,7 @@ const MyLikedPage = () => {
         </View>
       ) : (
         <NoDataView
-          text='亲，还没有浏览商品记录哦~'
+          text='亲，还没有点赞商品记录哦~'
         />
       )}
     </View>

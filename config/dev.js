@@ -1,3 +1,5 @@
+import { resolve } from 'path'
+
 module.exports = {
   env: {
     NODE_ENV: '"development"'
@@ -5,5 +7,8 @@ module.exports = {
   defineConstants: {
   },
   mini: {},
-  h5: {}
+  h5: {},
+  plugins: [
+    resolve(__dirname, './plugins/minifyMainPackage')
+  ]
 }
