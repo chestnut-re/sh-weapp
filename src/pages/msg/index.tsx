@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro'
-import { View, Text, Image } from '@tarojs/components'
+import { View, Text, Image, ScrollView } from '@tarojs/components'
 import { useStore } from '@/store/context'
 import { observer } from 'mobx-react'
 import { useEffect, useState } from 'react'
@@ -21,7 +21,7 @@ import './index.less'
 const MsgScreen = (props) => {
   const { commonStore } = useStore()
   const [hasMore, setHasMore] = useState(true)
-  const [list, setList] = useState<string[]>([])
+  const [list, setList] = useState<string[]>([{ id: 1 }, { id: 1 }, { id: 1 }, { id: 1 }, { id: 1 }, { id: 1 }, { id: 1 }, { id: 1 }, { id: 1 }, { id: 1 }, { id: 1 }, { id: 1 }])
   const [loading, setLoading] = useState(false)
   const [scrollTop, setScrollTop] = useState(0)
 
@@ -50,6 +50,9 @@ const MsgScreen = (props) => {
 
   const onChatPage = (item) => {
     // Taro.navigateTo({ url: `/msgPages/pages/chat/index?title=五星团长${item}` })
+  }
+  const getCommentInfo = () => {
+
   }
 
   return (
@@ -85,23 +88,8 @@ const MsgScreen = (props) => {
           <Text className='txt'>行程消息</Text>
         </View>
       </View>
-      <List
-        loading={loading}
-        hasMore={hasMore}
-        scrollTop={scrollTop}
-        onLoad={() => {
-          setLoading(true)
-          setTimeout(() => {
-            for (let i = 0; i < 10; i++) {
-              const text = list.length + 1
-              list.push(text < 10 ? "0" + text : String(text))
-            }
-            setList([...list])
-            setHasMore(list.length < 10)
-            setLoading(false)
-          }, 1000)
-        }}
-      >
+      <ScrollView scrollY className='msg-scroll' scrollWithAnimation onScrollToLower={() => getCommentInfo()}>
+        {/* <Loading /> */}
         <View className='msg-list'>
           {
             list.map((item, index) => (
@@ -121,12 +109,7 @@ const MsgScreen = (props) => {
             ))
           }
         </View>
-
-        {/* <List.Placeholder>
-          {loading && <View>加载中...</View>}
-          {!hasMore && "没有更多了"}
-        </List.Placeholder> */}
-      </List>
+      </ScrollView>
     </View>
   )
 }

@@ -12,6 +12,7 @@ import { H5 } from '@/constants/h5'
 import { HomeService } from '@/service/HomeService'
 import { LikeService } from '@/service/Like'
 import { getUrlParams } from '@/utils/webviewUtils'
+
 import NavBar from '@/components/navbar'
 
 import './index.less'
@@ -87,13 +88,8 @@ const HomeScreen = () => {
     const result = await HomeService.getGoodsPage(pageRef.current.current) as any
 
     if (result.data.code == '200') {
-      if (pageRef.current.current === 1) {
-        setList(result.data.data.records)
-      } else {
-        result.data.data.records.map((item) => {
-          list.push(item)
-        })
-      }
+
+      setList(list.concat(result.data.data.records))
       pageRef.current.current++
       pageRef.current.hasMores = result.data.data.records.length < 10 ? false : true
     }
