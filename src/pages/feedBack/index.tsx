@@ -106,7 +106,7 @@ const FeedBackPage = () => {
         <View className='uploadView'>
           {upLoadImg && upLoadImg.length > 0 && upLoadImg.map((item, index) => (
             <View key={`index${index}`} className='upload'>
-              <Image className='img' src={item} />
+              <Image className='preview-img' src={item} />
               <View onClick={() => onDeleteImg(index)} className='closeView'>
                 <Image className='closeIcon' src={closeIcon} />
               </View>

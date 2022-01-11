@@ -1,0 +1,119 @@
+.MsgScreen__root {
+  background-color: #f3f4f4;
+  padding: 0 30px;
+  padding-bottom: 140px;
+  min-height: 100vh;
+  border-radius: 32px 32px 0 0;
+  padding-top: 20px;
+  .msg-tabbar {
+    height: 212px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 30px;
+    .item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 24px;
+      .img-view {
+        position: relative;
+        .img {
+          width: 93px;
+          height: 93px;
+        }
+      }
+      .tag {
+        position: absolute;
+        width: 33px;
+        height: 33px;
+        background: #fd7d81;
+        border: 3px solid #ffffff;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 33px;
+        font-size: 20px;
+        color: #fff;
+        top: -0px;
+        right: -10px;
+        z-index: 10;
+      }
+
+      .txt {
+        margin-top: 15px;
+        font-size: 24px;
+        color: #000;
+        font-weight: 400;
+      }
+    }
+  }
+  .msg-list {
+    background-color: #ffffff;
+    margin-top: 20px;
+    padding: 0 30px;
+    border-radius: 20px;
+    .item {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      height: 148px;
+      overflow: hidden;
+      width: 100%;
+      .img {
+        width: 88px;
+        height: 88px;
+      }
+      .right {
+        margin-left: 24px;
+        height: 146px;
+        border-bottom: 1px solid #eeeeee;
+        display: flex;
+        flex: 1;
+        flex-direction: row;
+        align-items: center;
+        .info {
+          overflow: hidden;
+          .title {
+            font-size: 28px;
+            color: #000;
+          }
+          .content {
+            margin-top: 6px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            font-size: 24px;
+            color: #999;
+          }
+        }
+        .time {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          width: 120px;
+          margin-top: 6px;
+          .text {
+            font-size: 24px;
+            color: #ccc;
+            margin-bottom: 10px;
+          }
+          .tag {
+            width: 30px;
+            height: 30px;
+            background: #fd7d81;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-size: 20px;
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+}

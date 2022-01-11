@@ -1,15 +1,24 @@
 /* eslint-disable import/first */
-import { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
+import Taro, { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
 import { View, Image } from '@tarojs/components'
 import { List, PullRefresh } from '@taroify/core'
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { observer } from 'mobx-react'
 import pic from '@/assets/img/common/shg.png'
 import './index.less'
+import { LikeService } from '@/service/Like'
+import Img from '@/components/Img'
+import { H5 } from '@/constants/h5'
+import NoDataView from '@/components/noDataView'
+
+
+
 /**
  * 我的点赞
  */
 const MyLikedPage = () => {
+  const pageRef = useRef<any>({ current: 1, loading: false })
+
   const [hasMore, setHasMore] = useState(true)
   const [list, setList] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
@@ -21,47 +30,68 @@ const MyLikedPage = () => {
     setScrollTop(aScrollTop)
     setReachTop(aScrollTop === 0)
   })
+  useEffect(() => {
+    onLoad()
+  }, [])
   const onLoad = () => {
+    const params = {} as any
+    params.type = 1
+    params.size = 10
+    params.current = pageRef.current.current
     setLoading(true)
-    const newList = refreshingRef.current ? [] : list
-    setTimeout(() => {
+    let newList = pageRef.current.current === 1 ? [] : list
+    LikeService.likeList(params).then((res) => {
       refreshingRef.current = false
-      for (let i = 0; i < 20; i++) {
-        const text = newList.length + 1
-        newList.push(text < 1 ? '0' + text : String(text))
-      }
-      setList(newList)
-      setLoading(false)
-      setHasMore(newList.length < 21)
-    }, 1000)
-  }
 
+      const { data } = res.data
+      console.log(data.records)
+      setList(newList.concat(data.records))
+      setLoading(false)
+      setHasMore(data.records.length >= 10)
+      pageRef.current.current++
+
+    })
+  }
   function onRefresh() {
+    pageRef.current.current = 1
     refreshingRef.current = true
     setLoading(false)
     onLoad()
   }
+  const anOrder = (e) => {
+    const l = `${H5.goodsDetail}?id=${e.goodsId}&goodsPriceId=${e.goodsPriceId}`
+    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(l)}` })
+  }
   return (
     <View className='MyLikedPage__root'>
-      <View className='liked-list'>
-        <PullRefresh className='list' loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
-          <List loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}>
-            {list.map((item) => (
-              <View className='item' key={item}>
-                <View className='date'>2021/11/03</View>
-                <View className='card'>
-                  {Number(item) == 2 ? <View className='no-jump'>已下架</View> : null}
-                  <Image className='jump' src={pic} />
-                  <View className={Number(item) == 2 ? 'no-right-all' : 'right-all'}>
-                    <View className='text'>三亚5日自由行(5钻)·直减300『高星4…</View>
-                    <View className='money'>¥2899</View>
+      {list.length > 0 ? (
+        <View className='liked-list'>
+          <PullRefresh className='list' loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
+            <List loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}>
+              {list.map((item) => (
+                <View onClick={() => { anOrder(item) }} className='item' key={item['goodsId']}>
+                  <View className='date'>{item['createTime']}</View>
+                  <View className='card'>
+                    {item['state'] == 3 ? <View className='no-jump'>已下架</View> : null}
+                    <Img
+                      url={item['promotionalImageUrl']}
+                      className='jump'
+                    />
+                    <View className={item['state'] == 3 ? 'no-right-all' : 'right-all'}>
+                      <View className='text'>{item['goodsName']}</View>
+                      <View className='money'>{`¥ ${item['personCurrentPrice'] || 0}`}</View>
+                    </View>
                   </View>
                 </View>
-              </View>
-            ))}
-          </List>
-        </PullRefresh>
-      </View>
+              ))}
+            </List>
+          </PullRefresh>
+        </View>
+      ) : (
+        <NoDataView
+          text='亲，还没有浏览商品记录哦~'
+        />
+      )}
     </View>
   )
 }

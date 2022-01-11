@@ -1,6 +1,7 @@
 import Taro from '@tarojs/taro'
 import { Provider, userStore } from './store/context'
 import './app.less'
+
 import { clearStorage } from './utils/storage'
 // eslint-disable-next-line import/no-commonjs
 const JSONbigString = require('json-bigint')({ storeAsString: true })
@@ -39,13 +40,16 @@ const jsonParse = function (chain) {
     // console.log('resJSON', res)
     try {
       res.data = JSONbigString.parse(res.data)
-    } catch (error) {}
+    } catch (error) { }
     return res
   })
 }
 
 Taro.addInterceptor(loginStateCheck)
 Taro.addInterceptor(jsonParse)
+Taro.getLaunchOptionsSync()
+// console.log(Taro.getLaunchOptionsSync())
+
 
 const App = ({ children }) => {
   return <Provider>{children}</Provider>

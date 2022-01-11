@@ -37,11 +37,11 @@ import long from '@/assets/img/mine/long.png'
 import link from '@/assets/img/mine/link.png'
 import del from '@/assets/img/mine/del.png'
 import { H5 } from '@/constants/h5'
-
-import ShareView from '@/components/shareView'
-import LongImgView from '@/components/longImgView'
 import { LikeService } from '@/service/Like'
 
+import ShareView from '@/components/shareView'
+
+import LongImgView from '@/components/longImgView'
 import './index.less'
 
 /**
@@ -57,16 +57,16 @@ const MineScreen = () => {
   const [open, setOpen] = useState(false)
   const [cityName, setCityName] = useState('奔赴山海')
   const [isShowCanvas, setIsShowCanvas] = useState(false)
+  const [likeObj, setLikeObj] = useState({})
+
   const [userInfo, setUserInfo] = useState({})
+
 
   const [isShowLongImg, setIsShowLongImg] = useState(false)
   const [image, setImage] = useState('')
-  const [likeObj, setLikeObj] = useState({})
-
 
   const picture =
     'https://shanhai-shoping.oss-cn-beijing.aliyuncs.com/img/user/pic/cd2d77f5983f44c5b6e20c313e12d26e.jpg'
-
   useEffect(() => {
     onLikeCount()
   }, [])
@@ -388,14 +388,14 @@ const MineScreen = () => {
         <View className='Card__Item Card__Left' onClick={toMyBrowse}>
           <Image className='img' src={liulan} />
           <View>
-            <View className='num'>125</View>
+            <View className='num'>{likeObj['browseCountNum']}</View>
             <View className='text'>浏览</View>
           </View>
         </View>
         <View className='Card__Item' onClick={toMyLiked}>
           <Image className='img' src={good} />
           <View>
-            <View className='num'>265</View>
+            <View className='num'>{likeObj['likeCountNum']}</View>
             <View className='text'>点赞</View>
           </View>
         </View>

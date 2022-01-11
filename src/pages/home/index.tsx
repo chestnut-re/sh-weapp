@@ -1,79 +1,96 @@
-import Taro, { usePageScroll } from '@tarojs/taro'
-import { View, Text, Image, Input } from '@tarojs/components'
+import { View, ScrollView, Image, Input, Text } from '@tarojs/components'
+import Taro, { } from '@tarojs/taro' // Taro 专有 Hooks
+import { observer } from 'mobx-react'
+import { useEffect, useCallback, useState, useRef } from 'react'
 import { List, Loading, Swiper, PullRefresh } from '@taroify/core'
+import Img from '@/components/Img'
 import { commonStore, useStore } from '@/store/context'
-import { useEffect, useRef, useState } from 'react'
 import place from '@/assets/img/home/vdizhi@3x.png'
 import search from '@/assets/img/home/sousuo-2@2x.png'
 import GoodsItem from '@/components/GoodsItem'
 import { H5 } from '@/constants/h5'
 import { HomeService } from '@/service/HomeService'
 import { LikeService } from '@/service/Like'
-
-import sao from '@/assets/img/home/sao.png'
-import './index.less'
 import { getUrlParams } from '@/utils/webviewUtils'
-import { showMToast } from '@/utils/ui'
-import { observer } from 'mobx-react'
-import Img from '@/components/Img'
 
-/**
- * 首页
- */
+import './index.less'
+
 const HomeScreen = () => {
+  const pageRef = useRef<any>({ current: 1, hasMores: true })
+
   const { userStore } = useStore()
-  const pageRef = useRef<any>({ current: 1, loading: false })
-  const [hasMore, setHasMore] = useState(true)
-  const [list, setList] = useState<any[]>([])
-  const [loading, setLoading] = useState(false)
-  const [scrollTop, setScrollTop] = useState(0)
-  const [reachTop, setReachTop] = useState(true)
-  const refreshingRef = useRef(false)
+
+  const [loading, setLoading] = useState(false);
   const [bannerList, setBannerList] = useState<any>([])
   const [activityList, setActivityList] = useState<any[]>([])
+  const [list, setList] = useState<any[]>([])
+  const [showActivity, setShowActivity] = useState(false);
+
+
 
   useEffect(() => {
-    getBanner()
-    getActivity()
-    onLoad()
+    userStore.initCity()
+    userStore.init(() => {
+      getBanner()
+      getActivity()
+      onRefresherRefresh();
+    })
+    if (Taro.getCurrentInstance()?.router?.params?.q) {
+      const q = decodeURIComponent(Taro.getCurrentInstance()?.router?.params?.q ?? '')
+      const bizId = getUrlParams(q)['bizId']
+      const jumpTo = getUrlParams(q)['jumpTo']
+      commonStore.bizId = bizId
+      commonStore.jumpTo = jumpTo
+
+      // 判断是否登录，没有登录先去登录
+      if (userStore.isBindMobile) {
+        // 已经登录
+        Taro.navigateTo({ url: decodeURIComponent(jumpTo) })
+      } else {
+        // 未登录
+        commonStore.setAfterLoginCallback(() => {
+          Taro.redirectTo({ url: decodeURIComponent(jumpTo) }) // 替换登录页面
+          commonStore.removeAfterLoginCallback()
+        })
+        Taro.navigateTo({ url: '/pages/login/index' })
+      }
+    }
   }, [])
 
-  usePageScroll(({ scrollTop: aScrollTop }) => {
-    setScrollTop(aScrollTop)
-    setReachTop(aScrollTop === 0)
-    if (aScrollTop > 160) {
-      document.getElementsByClassName('home-header')[0]['style'].backgroundColor = 'rgb(77, 207, 197)'
-    } else {
-      document.getElementsByClassName('home-header')[0]['style'].backgroundColor = 'rgb(153, 153, 153,.5)'
-    }
-  })
-
-  const onLoad = async () => {
-    console.log(pageRef.current.loading)
-    console.log(pageRef.current.current)
-    if (pageRef.current.loading) return
-    pageRef.current.loading = true
-    setLoading(true)
-    let newList = pageRef.current.current === 1 ? [] : list
-    HomeService.getGoodsPage(pageRef.current.current).then((result) => {
-      refreshingRef.current = false
-      if (result.data.code == '200') {
-        setList(newList.concat(result.data.data.records))
-        setLoading(false)
-        setHasMore(result.data.data.records.length >= 10)
-        pageRef.current.current++
-      }
-      pageRef.current.loading = false
-    })
-  }
-
-  const onRefresh = () => {
+  const onRefresherRefresh = useCallback(() => {
     pageRef.current.current = 1
-    refreshingRef.current = true
+    pageRef.current.hasMores = true
     setLoading(true)
-    onLoad()
-  }
+    getList()
+  }, []);
 
+  const onScrollToLower = useCallback(() => {
+    setShowActivity(true)
+    getList()
+  }, []);
+
+  const getList = async () => {
+    if (!pageRef.current.hasMores) {
+      setShowActivity(false)
+      return
+    }
+
+    const result = await HomeService.getGoodsPage(pageRef.current.current) as any
+
+    if (result.data.code == '200') {
+      if (pageRef.current.current === 1) {
+        setList(result.data.data.records)
+      } else {
+        result.data.data.records.map((item) => {
+          list.push(item)
+        })
+      }
+      pageRef.current.current++
+      pageRef.current.hasMores = result.data.data.records.length < 10 ? false : true
+    }
+    setShowActivity(false)
+    setLoading(false)
+  }
   const toSearch = () => {
     Taro.navigateTo({ url: '/pages/search/index' })
   }
@@ -133,8 +150,8 @@ const HomeScreen = () => {
   }
 
   /**
- * 点赞
- */
+  * 点赞
+  */
 
   const onLike = (item) => {
     const params = {} as any
@@ -155,16 +172,42 @@ const HomeScreen = () => {
       console.log(data)
     })
   }
-
+  const scrollStyle = {
+    height: '100vh'
+  }
+  /**
+  * 活动指示器
+  * 这里用Taro UI的活动指示器来实现上拉加载的动画效果
+  */
+  const ActivityIndicator = () => {
+    return (
+      <View style={{ display: 'flex', justifyContent: 'center', paddingTop: '10px', paddingBottom: '10px' }}>
+        <Loading>加载中...</Loading>
+      </View>
+    );
+  }
   return (
     <View className='HomeScreen__root'>
-      <PullRefresh loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
+      <ScrollView
+        className='home-scroll'
+        scrollY
+        scrollWithAnimation
+        refresherEnabled
+        refresherTriggered={loading}
+        onRefresherRefresh={onRefresherRefresh}
+        style={scrollStyle}
+        onScrollToLower={onScrollToLower}
+      >
         <View className='banner'>
           {bannerList.length > 0 && (
             <Swiper className='top-s' autoplay={3000}>
               {bannerList.map((item) => (
                 <Swiper.Item className='item' key={item.id} onClick={() => toBannerUrl(item.bannerUrl)}>
-                  <Image src={item.bannerImg} mode='aspectFill'></Image>
+                  <Img
+                    url={item.bannerImg}
+                    className=''
+                  />
+                  {/* <Image src={item.bannerImg} mode='aspectFill'></Image> */}
                   {/* <View>{item.title}</View> */}
                 </Swiper.Item>
               ))}
@@ -211,6 +254,7 @@ const HomeScreen = () => {
             <Image className='sao' src={sao} />
           </View> */}
         </View>
+
         <View className='go-done'>
           <View className='home-body'>
             {activityList && activityList.length > 0 && (
@@ -239,33 +283,29 @@ const HomeScreen = () => {
             )}
           </View>
           <View className='product-list'>
-            {list.length > 0 && (
-              <List loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}>
-                {list.map((item) => (
-                  <GoodsItem
-                    key={item.id}
-                    onItemClick={() => {
-                      anOrder(item)
-                    }}
-                    onLikeClick={() => {
-                      onLike(item)
-                    }}
-                    item={item}
-                  />
-                ))}
-                {!refreshingRef.current && (
-                  <List.Placeholder>
-                    {/* {loading && <Loading>加载中...</Loading>} */}
-                    {/* {!hasMore && <View className='noMore'>没有更多了</View>} */}
-                  </List.Placeholder>
-                )}
-              </List>
-            )}
-            {loading && <Loading>加载中...</Loading>}
-            {!hasMore && <View className='noMore'>没有更多了</View>}
+            {list.length > 0 && list.map((item) => (
+              <GoodsItem
+                key={item.id}
+                onItemClick={() => {
+                  anOrder(item)
+                }}
+                onLikeClick={() => {
+                  onLike(item)
+                }}
+                item={item}
+              />
+            ))}
+            {/* {loading && <Loading>加载中...</Loading>}
+            {!hasMore && <View className='noMore'>没有更多了</View>} */}
           </View>
+          {showActivity ? (
+            ActivityIndicator()
+          ) : (
+            !pageRef.current.hasMores && <View className='noMore'>没有更多了</View>
+          )}
         </View>
-      </PullRefresh>
+
+      </ScrollView>
     </View>
   )
 }

@@ -43,13 +43,14 @@ class UserData {
       setCityCode: action,
       initCity: action,
     })
-    this.init()
+    // this.init()
   }
 
   /// 初始化
-  init() {
+  async init(callback) {
     console.log('wx user init')
-    this.login()
+    await this.login()
+    callback()
   }
 
   async loginIfNeed() {
