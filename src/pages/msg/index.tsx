@@ -44,12 +44,13 @@ const MsgScreen = (props) => {
       Taro.navigateTo({ url: '/minePackage/pages/systemsNotice/index?type=0' })
       console.log('系统通知')
     } else {
+      onChatPage('12')
       console.log('其他通知')
     }
   }
 
   const onChatPage = (item) => {
-    Taro.navigateTo({ url: `/minePackage/pages/systemsNotice/index` })
+    Taro.navigateTo({ url: `/minePackage/pages/chat/index?title=xxxx` })
   }
   const getCommentInfo = () => {
 

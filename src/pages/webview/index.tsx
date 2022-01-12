@@ -13,6 +13,10 @@ const WebViewPage = () => {
   const [initUrl, setInitUrl] = useState('')
 
   useEffect(() => {
+    Taro.showShareMenu({
+      withShareTicket: true,
+      showShareItems: ['wechatMoment', 'wechatFriends']
+    })
     const url = decodeURIComponent(Taro.getCurrentInstance()?.router?.params?.url ?? '')
     console.log(dealWebViewURL(url));
     setInitUrl(dealWebViewURL(url))
