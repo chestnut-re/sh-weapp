@@ -1,16 +1,14 @@
 .MyLikedPage__root {
   box-sizing: border-box;
-  height: 100vh;
   overflow-y: auto;
   background: #f3f4f4;
   border-radius: 20px 20px 0 0;
   padding: 24px;
   position: relative;
-
+  height: calc(100vh - 24px);
   .liked-list {
     .listView {
       height: calc(100vh - 48px);
-
       .item {
         margin: 20px 0px 10px;
         .date {

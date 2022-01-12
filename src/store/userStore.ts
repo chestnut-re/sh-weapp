@@ -121,8 +121,8 @@ class UserData {
     this.sessionKey = null
     clearStorage()
     // 回到首页
-    Taro.reLaunch({
-      url: '/pages/index/index',
+    Taro.switchTab({
+      url: '/pages/home/index',
     })
   }
 

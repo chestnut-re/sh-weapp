@@ -51,7 +51,7 @@ const LoginPage = () => {
           commonStore.removeAfterLoginCallback()
         } else {
           // 成功
-          Taro.reLaunch({ url: '/pages/index/index' })
+          Taro.switchTab({ url: '/pages/home/index' })
         }
 
         userStore.init()
@@ -67,7 +67,7 @@ const LoginPage = () => {
   const login = async () => {
     if (selectProtocol) {
       await userStore.init()
-      Taro.reLaunch({ url: '/pages/index/index' })
+      Taro.reLaunch({ url: '/pages/home/index' })
     } else {
       setOpenProtocol(true)
     }

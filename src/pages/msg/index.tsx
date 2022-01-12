@@ -40,13 +40,14 @@ const MsgScreen = (props) => {
    * @param type 消息类型 type = 0 系统通知，type = 1 订单消息，type = 2 行程消息
    */
   const onTabClick = (type: number) => {
-    if (type === 0) {
-      Taro.navigateTo({ url: '/minePackage/pages/systemsNotice/index?type=0' })
-      console.log('系统通知')
-    } else {
-      onChatPage('12')
-      console.log('其他通知')
-    }
+    Taro.navigateTo({ url: `/minePackage/pages/systemsNotice/index?type=${type}` })
+    // if (type === 0) {
+
+    //   console.log('系统通知')
+    // } else {
+    //   onChatPage('12')
+    //   console.log('其他通知')
+    // }
   }
 
   const onChatPage = (item) => {
@@ -62,7 +63,7 @@ const MsgScreen = (props) => {
         <View
           className='item'
           onClick={() => {
-            onTabClick(0)
+            onTabClick(1)
           }}
         >
           <View className='img-view'>
@@ -74,7 +75,7 @@ const MsgScreen = (props) => {
         <View
           className='item'
           onClick={() => {
-            onTabClick(1)
+            onTabClick(2)
           }}
         >
           <View className='img-view'>
@@ -82,7 +83,12 @@ const MsgScreen = (props) => {
           </View>
           <Text className='txt'>订单消息</Text>
         </View>
-        <View className='item'>
+        <View
+          onClick={() => {
+            onTabClick(3)
+          }}
+          className='item'
+        >
           <View className='img-view'>
             <Image className='img' src={journey} />
           </View>
