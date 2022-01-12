@@ -21,7 +21,7 @@ import './index.less'
 const MsgScreen = (props) => {
   const { commonStore } = useStore()
   const [hasMore, setHasMore] = useState(true)
-  const [list, setList] = useState<string[]>([{ id: 1 }, { id: 1 }, { id: 1 }, { id: 1 }, { id: 1 }, { id: 1 }, { id: 1 }, { id: 1 }, { id: 1 }, { id: 1 }, { id: 1 }, { id: 1 }])
+  const [list, setList] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
   const [scrollTop, setScrollTop] = useState(0)
 
@@ -41,7 +41,7 @@ const MsgScreen = (props) => {
    */
   const onTabClick = (type: number) => {
     if (type === 0) {
-      Taro.navigateTo({ url: '/msgPages/pages/msgPush/index?type=0' })
+      Taro.navigateTo({ url: '/minePackage/pages/systemsNotice/index?type=0' })
       console.log('系统通知')
     } else {
       console.log('其他通知')
@@ -49,7 +49,7 @@ const MsgScreen = (props) => {
   }
 
   const onChatPage = (item) => {
-    // Taro.navigateTo({ url: `/msgPages/pages/chat/index?title=五星团长${item}` })
+    Taro.navigateTo({ url: `/minePackage/pages/systemsNotice/index` })
   }
   const getCommentInfo = () => {
 

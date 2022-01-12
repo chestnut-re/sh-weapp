@@ -60,6 +60,13 @@ export default {
     //   customtabbar: "custom-tab-bar/index"
     // }
   },
+  subpackages: [
+    {
+      root: 'minePackage',
+      name: 'mine',
+      pages: ['pages/systemsNotice/index'],
+    },
+  ],
   window: {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#fff',

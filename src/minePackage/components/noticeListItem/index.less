@@ -1,0 +1,47 @@
+.notice-item {
+  background-color: transparent;
+  position: relative;
+  .time {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    color: #999;
+    font-size: 24px;
+    padding: 24px 0;
+  }
+  .content {
+    background: #fff;
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    .title {
+      color: #333333;
+      font-size: 32px;
+      font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+    }
+    .info {
+      margin-top: 16px;
+      color: #999;
+      font-size: 24px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+    }
+  }
+  .point {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: #fd7d81;
+    border-radius: 50%;
+    right: 30px;
+    bottom: 30px;
+  }
+}
