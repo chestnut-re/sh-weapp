@@ -1,6 +1,8 @@
 .MyBrowsePage__root {
   background: #f3f4f4;
-
+  height: 100vh;
+  overflow-y: auto;
+  padding: 24px;
   .item {
     margin: 20px 0px 10px;
     .date {
@@ -46,7 +48,26 @@
         font-weight: 500;
       }
       .text {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
+      }
+      .shopInfo {
+        display: flex;
+        flex-direction: row;
+        margin-top: 10px;
+        align-items: center;
+        .shopHeadImg {
+          width: 32px;
+          height: 32px;
+          border-radius: 32px;
+          overflow: hidden;
+        }
+        .shopName {
+          margin-left: 8px;
+          font-size: 22px;
+          font-weight: 400;
+          color: #999999;
+          line-height: 32px;
+        }
       }
     }
   }

@@ -1,6 +1,7 @@
 .MyLikedPage__root {
   box-sizing: border-box;
-  // height: 100vh;
+  height: 100vh;
+  overflow-y: auto;
   background: #f3f4f4;
   border-radius: 20px 20px 0 0;
   padding: 24px;
@@ -9,6 +10,7 @@
   .liked-list {
     .listView {
       height: calc(100vh - 48px);
+
       .item {
         margin: 20px 0px 10px;
         .date {
@@ -16,6 +18,7 @@
           font-size: 24px;
           line-height: 34px;
           margin-bottom: 12px;
+          text-align: center;
         }
         .card {
           background: #fff;
@@ -41,6 +44,25 @@
             border-radius: 18px;
             margin-right: 21px;
           }
+          .shopInfo {
+            display: flex;
+            flex-direction: row;
+            margin-top: 10px;
+            align-items: center;
+            .shopHeadImg {
+              width: 32px;
+              height: 32px;
+              border-radius: 32px;
+              overflow: hidden;
+            }
+            .shopName {
+              margin-left: 8px;
+              font-size: 22px;
+              font-weight: 400;
+              color: #999999;
+              line-height: 32px;
+            }
+          }
           .right-all {
             color: #333;
             font-size: 28px;
@@ -54,7 +76,7 @@
             font-weight: 500;
           }
           .text {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
           }
         }
       }

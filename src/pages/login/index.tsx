@@ -85,7 +85,7 @@ const LoginPage = () => {
         <Image className='img' src={pic} />
       </View>
       <View className='login'>
-        <View className='text-one'>登陆后开启旅程</View>
+        <View className='text-one'>登录后开启旅程</View>
         <View className='text-two'>世界那样美好 待你游历细品</View>
       </View>
       <View className='btn-box'>
@@ -120,8 +120,6 @@ const LoginPage = () => {
             登录表示你已同意
             <View onClick={(e) => { onLinkProtocol(e, 'service') }} className='txt highlight'>用户协议、</View>
             <View onClick={(e) => { onLinkProtocol(e, 'privacy') }} className='txt highlight'>隐私政策</View>
-            &ensp;及&ensp;
-            <View onClick={(e) => { onLinkProtocol(e, 'service') }} className='txt highlight'>***统一认证服务条款</View>
           </View>
         </View>
       </View>

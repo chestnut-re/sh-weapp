@@ -1,6 +1,6 @@
 /* eslint-disable import/first */
 import Taro, { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
-import { View, Image } from '@tarojs/components'
+import { View, Image, Text } from '@tarojs/components'
 import { List, PullRefresh } from '@taroify/core'
 import { useRef, useState, useEffect } from 'react'
 import { observer } from 'mobx-react'
@@ -49,7 +49,6 @@ const MyLikedPage = () => {
       setLoading(false)
       setHasMore(data.records.length >= 10)
       pageRef.current.current++
-
     })
   }
   function onRefresh() {
@@ -77,7 +76,7 @@ const MyLikedPage = () => {
             <List className='listView' loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}>
               {list.map((item) => (
                 <View onClick={() => { anOrder(item) }} className='item' key={item['goodsId']}>
-                  <View className='date'>{item['createTime']}</View>
+                  <View className='date'>{item['createTime'] || '2022/00/00'}</View>
                   <View className='card'>
                     {item['state'] == 3 ? <View className='no-jump'>已下架</View> : null}
                     <Img
@@ -87,6 +86,13 @@ const MyLikedPage = () => {
                     <View className={item['state'] == 3 ? 'no-right-all' : 'right-all'}>
                       <View className='text'>{item['goodsName']}</View>
                       <View className='money'>{`¥ ${item['personCurrentPrice'] / 100}`}</View>
+                      <View className='shopInfo'>
+                        <Img
+                          url={item['shopHeadUrl']}
+                          className='shopHeadImg'
+                        />
+                        <Text className='shopName'>{item['shopName'] || '暂无'}</Text>
+                      </View>
                     </View>
                   </View>
                 </View>
