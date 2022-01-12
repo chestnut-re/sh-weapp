@@ -1,6 +1,6 @@
 import Taro, { useDidShow, usePageScroll, useShareAppMessage } from '@tarojs/taro'
 import { useStore } from '@/store/context'
-import { Button, View, Text, Image, Canvas } from '@tarojs/components'
+import { ScrollView, View, Text, Image, Canvas } from '@tarojs/components'
 import { Steps, List, Popup } from '@taroify/core'
 import { observer } from 'mobx-react'
 import { useEffect, useState } from 'react'
@@ -297,21 +297,6 @@ const MineScreen = () => {
 
   return (
     <View className='MineScreen__root'>
-      <ShareView
-        onLongImg={startDrawImg}
-        copyLink='23123123123'
-        onClose={() => {
-          setOpen(false)
-        }}
-        open={open}
-      />
-      <LongImgView
-        open={isShowLongImg}
-        imgUrl={image}
-        onClose={() => {
-          setIsShowLongImg(false)
-        }}
-      />
       <View className='index'>
         {/* 使用Canvas绘制分享图片 */}
         {/* {isShowCanvas && (
@@ -334,94 +319,111 @@ const MineScreen = () => {
           canvasId='cardCanvas'
         ></Canvas>
       </View>
-
-      <View className='Header__btn'>
-        <View className='btn' onClick={toFist}>
-          <Image className='img1' src={lingdang} />
-        </View>
-        <View
-          className='btn'
-          onClick={() => {
-            Taro.scanCode({}).then((res) => {
-              console.log(res)
-              try {
-                const params = getUrlParams(res.result)
-                const d = JSON.parse(decodeURIComponent(params['data']))
-                if (d.type === 'web') {
-                  Taro.navigateTo({ url: `/pages/webview/index?url=${d['path']}` })
-                } else {
-                  showMToast('请扫描店铺二维码')
-                }
-              } catch (e) {
-                console.log(e)
-              }
-            })
+      <ScrollView className='mineScroll' scrollY scrollWithAnimation >
+        <ShareView
+          onLongImg={startDrawImg}
+          copyLink='23123123123'
+          onClose={() => {
+            setOpen(false)
           }}
-        >
-          <Image className='img2' src={saoyisao1} />
+          open={open}
+        />
+        <LongImgView
+          open={isShowLongImg}
+          imgUrl={image}
+          onClose={() => {
+            setIsShowLongImg(false)
+          }}
+        />
+
+
+        <View className='Header__btn'>
+          <View className='btn' onClick={toFist}>
+            <Image className='img1' src={lingdang} />
+          </View>
+          <View
+            className='btn'
+            onClick={() => {
+              Taro.scanCode({}).then((res) => {
+                console.log(res)
+                try {
+                  const params = getUrlParams(res.result)
+                  const d = JSON.parse(decodeURIComponent(params['data']))
+                  if (d.type === 'web') {
+                    Taro.navigateTo({ url: `/pages/webview/index?url=${d['path']}` })
+                  } else {
+                    showMToast('请扫描店铺二维码')
+                  }
+                } catch (e) {
+                  console.log(e)
+                }
+              })
+            }}
+          >
+            <Image className='img2' src={saoyisao1} />
+          </View>
+          <View className='btn' onClick={toSetUp}>
+            <Image className='img3' src={shezhi1} />
+          </View>
         </View>
-        <View className='btn' onClick={toSetUp}>
-          <Image className='img3' src={shezhi1} />
+        <View className='user' onClick={toMyData}>
+          <View className='User__Img'>
+            <Image className='img' src={userStore.userInfo?.pic ?? picture} />
+          </View>
+          <View className='User__Name'>
+            <View className='name'>{userStore.userInfo?.nickName}</View>
+            <View className='autograph'>{userStore.userInfo?.personalSignature}</View>
+          </View>
         </View>
-      </View>
-      <View className='user' onClick={toMyData}>
-        <View className='User__Img'>
-          <Image className='img' src={userStore.userInfo?.pic ?? picture} />
-        </View>
-        <View className='User__Name'>
-          <View className='name'>{userStore.userInfo?.nickName}</View>
-          <View className='autograph'>{userStore.userInfo?.personalSignature}</View>
-        </View>
-      </View>
-      <View className='dolor' onClick={toMyToken}>
-        {/* <View className='details'> */}
-        <Image className='img-1' src={tishi} />
-        {/* </View> */}
-        <View className='token'>
-          <View className='Token__Num'>{userStore?.totalAmount}</View>
-          {/* <View className='Token__Img'> */}
-          <Image className='img' src={db} />
+        <View className='dolor' onClick={toMyToken}>
+          {/* <View className='details'> */}
+          <Image className='img-1' src={tishi} />
           {/* </View> */}
-        </View>
-      </View>
-      <View className='card'>
-        <View className='Card__Item Card__Left' onClick={toMyBrowse}>
-          <Image className='img' src={liulan} />
-          <View>
-            <View className='num'>{likeObj['browseCountNum']}</View>
-            <View className='text'>浏览</View>
+          <View className='token'>
+            <View className='Token__Num'>{userStore?.totalAmount}</View>
+            {/* <View className='Token__Img'> */}
+            <Image className='img' src={db} />
+            {/* </View> */}
           </View>
         </View>
-        <View className='Card__Item' onClick={toMyLiked}>
-          <Image className='img' src={good} />
-          <View>
-            <View className='num'>{likeObj['likeCountNum']}</View>
-            <View className='text'>点赞</View>
+        <View className='card'>
+          <View className='Card__Item Card__Left' onClick={toMyBrowse}>
+            <Image className='img' src={liulan} />
+            <View>
+              <View className='num'>{likeObj['browseCountNum']}</View>
+              <View className='text'>浏览</View>
+            </View>
+          </View>
+          <View className='Card__Item' onClick={toMyLiked}>
+            <Image className='img' src={good} />
+            <View>
+              <View className='num'>{likeObj['likeCountNum']}</View>
+              <View className='text'>点赞</View>
+            </View>
           </View>
         </View>
-      </View>
-      <View className='use-list'>
-        <View className='item' onClick={toUsual}>
-          <Image className='img' src={cyxx} />
-          <View className='item-text'>常用信息</View>
-        </View>
-        <View className='item'>
-          <Image className='img' src={kefu} />
-          <View className='item-text'>专属客服</View>
-        </View>
-        <View className='item' onClick={toFollowStore}>
-          <Image className='img' src={store} />
-          <View className='item-text'>关注小店</View>
-        </View>
-        <View className='item' onClick={() => setOpen(true)}>
-          <Image className='img' src={map} />
-          <View className='item-text'>分享</View>
-        </View>
-        {/* <View className='item'>
+        <View className='use-list'>
+          <View className='item' onClick={toUsual}>
+            <Image className='img' src={cyxx} />
+            <View className='item-text'>常用信息</View>
+          </View>
+          <View className='item'>
+            <Image className='img' src={kefu} />
+            <View className='item-text'>专属客服</View>
+          </View>
+          <View className='item' onClick={toFollowStore}>
+            <Image className='img' src={store} />
+            <View className='item-text'>关注小店</View>
+          </View>
+          <View className='item' onClick={() => setOpen(true)}>
+            <Image className='img' src={map} />
+            <View className='item-text'>分享</View>
+          </View>
+          {/* <View className='item'>
           <Image className='img' src={join} />
           <View className='item-text'>邀请好友</View>
         </View> */}
-        {/* <View className='item'>
+          {/* <View className='item'>
           <Image className='img' src={renzheng} />
           <View className='item-text'>学生认证</View>
         </View>
@@ -437,8 +439,8 @@ const MineScreen = () => {
           <Image className='img' src={map} />
           <View className='item-text'>分享</View>
         </View> */}
-      </View>
-      {/* <View className='travel' onClick={toMyTravel}>
+        </View>
+        {/* <View className='travel' onClick={toMyTravel}>
         <View className='travel-title'>
           <View className='my'>我的行程</View>
           <View className='all'>
@@ -453,31 +455,31 @@ const MineScreen = () => {
           </View>
         </View>
       </View> */}
-      <View className='my-order'>
-        <View className='order-tab'>
-          <View className='tab'>我的订单</View>
-          <View className='all-order' onClick={toMyOrder}>
-            全部订单
-            <Image className='img' src={jump} />
+        <View className='my-order'>
+          <View className='order-tab'>
+            <View className='tab'>我的订单</View>
+            <View className='all-order' onClick={toMyOrder}>
+              全部订单
+              <Image className='img' src={jump} />
+            </View>
+          </View>
+          <View className='order-type'>
+            <View className='red-body' onClick={toMyOrder}>
+              <Image src={wpey} />
+              <View>待付款</View>
+              {/* <View className='red-num'>2</View> */}
+            </View>
+            <View className='sec' onClick={toMyOrder}>
+              <Image src={peying} />
+              <View>待核销</View>
+            </View>
+            <View onClick={toMyOrder}>
+              <Image src={overpey} />
+              <View>已完成</View>
+            </View>
           </View>
         </View>
-        <View className='order-type'>
-          <View className='red-body' onClick={toMyOrder}>
-            <Image src={wpey} />
-            <View>待付款</View>
-            {/* <View className='red-num'>2</View> */}
-          </View>
-          <View className='sec' onClick={toMyOrder}>
-            <Image src={peying} />
-            <View>待核销</View>
-          </View>
-          <View onClick={toMyOrder}>
-            <Image src={overpey} />
-            <View>已完成</View>
-          </View>
-        </View>
-      </View>
-      {/* <View className='play-game' onClick={toReferenceRouter}>
+        {/* <View className='play-game' onClick={toReferenceRouter}>
         <View className='trip'>
           <View className='header'>
             <View className='happy'>乐享游玩中</View>
@@ -598,6 +600,7 @@ const MineScreen = () => {
         </View>
         <View className='btn'>取消</View>
       </Popup> */}
+      </ScrollView>
     </View>
   )
 }

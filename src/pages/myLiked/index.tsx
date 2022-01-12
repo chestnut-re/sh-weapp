@@ -64,10 +64,17 @@ const MyLikedPage = () => {
   }
   return (
     <View className='MyLikedPage__root'>
-      {list.length > 0 ? (
-        <View className='liked-list'>
-          <PullRefresh className='list' loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
-            <List loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}>
+      <View className='liked-list'>
+        <PullRefresh className='list' loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
+          {list.length < 0 ? (
+            <NoDataView
+              text='亲，还没有点赞商品记录哦~'
+            />
+          ) : (
+            ""
+          )}
+          {list.length > 0 ? (
+            <List className='listView' loading={loading} hasMore={hasMore} scrollTop={scrollTop} onLoad={onLoad}>
               {list.map((item) => (
                 <View onClick={() => { anOrder(item) }} className='item' key={item['goodsId']}>
                   <View className='date'>{item['createTime']}</View>
@@ -85,13 +92,10 @@ const MyLikedPage = () => {
                 </View>
               ))}
             </List>
-          </PullRefresh>
-        </View>
-      ) : (
-        <NoDataView
-          text='亲，还没有点赞商品记录哦~'
-        />
-      )}
+          ) : (null)}
+        </PullRefresh>
+      </View>
+
     </View>
   )
 }

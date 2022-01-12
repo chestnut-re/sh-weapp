@@ -204,7 +204,7 @@ const HomeScreen = () => {
           </View>
           <View className='search-input' onClick={toSearch}>
             <Image className='search' src={search} />
-            <Input type='text' placeholder='' disabled />
+            <Input type='text' placeholder='大千世界在这里' disabled />
           </View>
           <View className='capsule' />
           {/* <View
