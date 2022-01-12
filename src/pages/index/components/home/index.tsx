@@ -117,6 +117,7 @@ const HomeScreen = () => {
   }
 
   const toBannerUrl = (url) => {
+    console.log('url',url)
     if (!userStore.isBindMobile) {
       console.log(userStore.isBindMobile)
       // 未登录
