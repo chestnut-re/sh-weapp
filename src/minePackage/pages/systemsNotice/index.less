@@ -1,9 +1,40 @@
 .MsgPushPage__root {
   min-height: 100vh;
   background-color: #f3f4f4;
-  padding: 0 30px;
+  .msg_scroll {
+    height: 100vh;
+    padding-top: 24px;
+    width: 100%;
+  }
   .msg_list {
-    height: 100%;
+    padding: 0 30px;
+    .unreadMsgView {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 20px;
+      .text {
+        font-size: 24px;
+        font-weight: 400;
+        color: #666666;
+      }
+      .btn {
+        width: 144px;
+        height: 52px;
+        opacity: 0.92;
+        border: 1px solid #999999;
+        border-radius: 27.4px;
+        font-size: 24px;
+        font-weight: 400;
+        color: #333333;
+        line-height: 52px;
+        text-align: center;
+      }
+    }
   }
   .noMore {
     font-size: 28px;

@@ -5,7 +5,9 @@
   border-radius: 20px 20px 0 0;
   padding: 24px;
   position: relative;
-  height: calc(100vh - 24px);
+  padding-bottom: constant(safe-area-inset-bottom); /* 兼容 iOS < 11.2 */
+  padding-bottom: env(safe-area-inset-bottom); /* 兼容 iOS >= 11.2 */
+  height: 100vh;
   .liked-list {
     .listView {
       height: calc(100vh - 48px);

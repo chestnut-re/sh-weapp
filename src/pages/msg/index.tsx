@@ -4,6 +4,7 @@ import { useStore } from '@/store/context'
 import { observer } from 'mobx-react'
 import { useEffect, useState } from 'react'
 import { PullRefresh, List } from '@taroify/core';
+import { MsgService } from '@/service/MsgService'
 
 import notice from '@/assets/img/msg/msg-notice.png'
 import order from '@/assets/img/msg/msg-order.png'
@@ -20,14 +21,19 @@ import './index.less'
  */
 const MsgScreen = (props) => {
   const { commonStore } = useStore()
+
+  const [unreadMsg, setUnreadMsg] = useState({}) as any
+
   const [hasMore, setHasMore] = useState(true)
   const [list, setList] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
   const [scrollTop, setScrollTop] = useState(0)
 
+
   // usePageScroll(({ scrollTop: aScrollTop }) => setScrollTop(aScrollTop))
 
   useEffect(() => {
+    getUnreadMsg()
     // WebIM.conn.getSessionList().then((res) => {
     //   console.log('WebIMWebIMWebIM', res)
     // }).catch((err) => {
@@ -37,21 +43,22 @@ const MsgScreen = (props) => {
 
   /**
    * 消息页面跳转
-   * @param type 消息类型 type = 0 系统通知，type = 1 订单消息，type = 2 行程消息
+   * @param type 消息类型 type = 1 系统通知，type = 2 订单消息，type = 3 行程消息
    */
   const onTabClick = (type: number) => {
     Taro.navigateTo({ url: `/minePackage/pages/systemsNotice/index?type=${type}` })
-    // if (type === 0) {
-
-    //   console.log('系统通知')
-    // } else {
-    //   onChatPage('12')
-    //   console.log('其他通知')
-    // }
   }
 
   const onChatPage = (item) => {
     Taro.navigateTo({ url: `/minePackage/pages/chat/index?title=xxxx` })
+  }
+
+  const getUnreadMsg = () => {
+    MsgService.getUnread().then((res) => {
+      const { data: { data } } = res
+      console.log(data)
+      setUnreadMsg(data)
+    })
   }
   const getCommentInfo = () => {
 
@@ -67,7 +74,7 @@ const MsgScreen = (props) => {
           }}
         >
           <View className='img-view'>
-            <View className='tag'> 2 </View>
+            {unreadMsg && unreadMsg.systemMessageCount > 0 && (<View className='tag'> {unreadMsg.systemMessageCount} </View>)}
             <Image className='img' src={notice} />
           </View>
           <Text className='txt'>系统通知</Text>
@@ -79,6 +86,8 @@ const MsgScreen = (props) => {
           }}
         >
           <View className='img-view'>
+            {unreadMsg && unreadMsg.orderMessageCount > 0 && (<View className='tag'> {unreadMsg.orderMessageCount} </View>)}
+
             <Image className='img' src={order} />
           </View>
           <Text className='txt'>订单消息</Text>
@@ -90,6 +99,8 @@ const MsgScreen = (props) => {
           className='item'
         >
           <View className='img-view'>
+            {unreadMsg && unreadMsg.travelMessageCount > 0 && (<View className='tag'> {unreadMsg.travelMessageCount} </View>)}
+
             <Image className='img' src={journey} />
           </View>
           <Text className='txt'>行程消息</Text>

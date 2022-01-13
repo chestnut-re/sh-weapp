@@ -15,13 +15,13 @@ const NoticeListItem = (props) => {
       <View className='time'>
         {getMyDate(itemData.updateTime)}
       </View>
-      <View className='content'>
+      <View onClick={props.onRead} className='content'>
         <View className='title'>{itemData.title}</View>
         <View className='info'>
           {itemData.content}
         </View>
       </View>
-      {props.item == 2 && <View className='point' />}
+      {itemData.isRead == 0 && <View className='point' />}
     </View>
   )
 }

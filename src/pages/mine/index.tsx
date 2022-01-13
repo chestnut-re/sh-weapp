@@ -97,11 +97,15 @@ const MineScreen = () => {
   const toMyData = () => {
     Taro.navigateTo({ url: '/pages/myData/index' })
   }
-  const toMyBrowse = () => {
-    Taro.navigateTo({ url: '/pages/myBrowse/index' })
-  }
-  const toMyLiked = () => {
-    Taro.navigateTo({ url: '/pages/myLiked/index' })
+
+  /**
+   * 点赞列表或浏览列表
+   * @param from 1 点赞 2 分享
+   */
+
+  const onLikeOrBrowse = (from) => {
+    Taro.navigateTo({ url: `/minePackage/pages/browse/index?from=${from}` })
+
   }
   const toUsual = () => {
     Taro.navigateTo({ url: '/pages/usualMessage/index' })
@@ -387,14 +391,14 @@ const MineScreen = () => {
           </View>
         </View>
         <View className='card'>
-          <View className='Card__Item Card__Left' onClick={toMyBrowse}>
+          <View className='Card__Item Card__Left' onClick={() => onLikeOrBrowse(2)}>
             <Image className='img' src={liulan} />
             <View>
               <View className='num'>{likeObj['browseCountNum']}</View>
               <View className='text'>浏览</View>
             </View>
           </View>
-          <View className='Card__Item' onClick={toMyLiked}>
+          <View className='Card__Item' onClick={() => onLikeOrBrowse(1)}>
             <Image className='img' src={good} />
             <View>
               <View className='num'>{likeObj['likeCountNum']}</View>

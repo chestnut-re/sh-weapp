@@ -64,7 +64,7 @@ export default {
     {
       root: 'minePackage',
       name: 'mine',
-      pages: ['pages/systemsNotice/index', 'pages/chat/index'],
+      pages: ['pages/systemsNotice/index', 'pages/chat/index', 'pages/browse/index'],
     },
   ],
   window: {

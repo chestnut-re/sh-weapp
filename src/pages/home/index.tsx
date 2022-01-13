@@ -17,23 +17,25 @@ import NavBar from '@/components/navbar'
 
 import './index.less'
 
+let pageIndex = 1;
+
 const HomeScreen = () => {
-  const pageRef = useRef<any>({ current: 1, hasMores: true })
 
   const { userStore } = useStore()
 
-  const [loading, setLoading] = useState(false);
   const [bannerList, setBannerList] = useState<any>([])
   const [activityList, setActivityList] = useState<any[]>([])
-  const [list, setList] = useState<any[]>([])
-  const [showActivity, setShowActivity] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [hasMores, setHasMores] = useState(false);
+  const [goodsList, setGoodsList] = useState<any[]>([])
 
   useEffect(() => {
     userStore.initCity()
     userStore.init(() => {
       getBanner()
       getActivity()
-      onRefresherRefresh();
+      pullDownRefresh();
     })
     if (Taro.getCurrentInstance()?.router?.params?.q) {
       const q = decodeURIComponent(Taro.getCurrentInstance()?.router?.params?.q ?? '')
@@ -57,6 +59,15 @@ const HomeScreen = () => {
     }
   }, [])
 
+  const getGoodsList = async (pIndex = pageIndex) => {
+    if (pIndex === 1) setIsLoaded(false);
+    const {
+      data: { data }
+    } = await HomeService.getGoodsPage(pIndex)
+    setLoading(false)
+    return { list: data.records, hasMore: data.total > pIndex * 10 ? true : false, isLoaded: pIndex === 1 };
+  }
+
   const onPageScroll = (scrollTop) => {
     if (scrollTop.detail.scrollTop > 160) {
       document.getElementsByClassName('home-header')[0]['style'].backgroundColor = 'rgb(77, 207, 197)'
@@ -66,36 +77,24 @@ const HomeScreen = () => {
   }
 
 
+  const onScrollToLower = async () => {
+    if (!hasMores) return
+    const { list, hasMore, isLoaded } = await getGoodsList(++pageIndex);
+    setGoodsList(goodsList.concat(list))
+    setHasMores(hasMore)
+    setIsLoaded(isLoaded)
+  };
 
-  const onRefresherRefresh = useCallback(() => {
-    pageRef.current.current = 1
-    pageRef.current.hasMores = true
+  const pullDownRefresh = async () => {
     setLoading(true)
-    getList()
-  }, []);
+    pageIndex = 1;
+    const res = await getGoodsList(1);
+    setHasMores(res.hasMore)
+    setGoodsList(res.list)
+    setIsLoaded(res.isLoaded)
+  };
 
-  const onScrollToLower = useCallback(() => {
-    setShowActivity(true)
-    getList()
-  }, []);
 
-  const getList = async () => {
-    if (!pageRef.current.hasMores) {
-      setShowActivity(false)
-      return
-    }
-
-    const result = await HomeService.getGoodsPage(pageRef.current.current) as any
-
-    if (result.data.code == '200') {
-
-      setList(list.concat(result.data.data.records))
-      pageRef.current.current++
-      pageRef.current.hasMores = result.data.data.records.length < 10 ? false : true
-    }
-    setShowActivity(false)
-    setLoading(false)
-  }
   const toSearch = () => {
     Taro.navigateTo({ url: '/pages/search/index' })
   }
@@ -111,7 +110,8 @@ const HomeScreen = () => {
       Taro.navigateTo({ url: '/pages/login/index' })
       return
     }
-    const l = `${H5.goodsDetail}?id=${e.id}&goodsPriceId=${e.goodsPriceId}`
+    console.log('12123213123213213', e, e.isRebate)
+    const l = `${H5.goodsDetail}?id=${e.id}&goodsPriceId=${e.goodsPriceId}&isRebate=${e.isRebate}`
     Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(l)}` })
   }
 
@@ -166,21 +166,19 @@ const HomeScreen = () => {
     LikeService.like(params).then((res) => {
       const { data } = res.data
       if (data) {
-        let newList = [...list]
-        list.forEach((listItem: any) => {
+        let newList = [...goodsList]
+        goodsList.forEach((listItem: any) => {
           if (listItem.id == item.id) {
             listItem.isLike = item.isLike == 1 ? 0 : 1
             listItem.shamLikes = item.isLike == 1 ? Number(listItem.shamLikes) + 1 : Number(listItem.shamLikes) - 1
           }
         })
-        setList(newList)
+        setGoodsList([...newList])
       }
       console.log(data)
     })
   }
-  const scrollStyle = {
-    height: '100vh'
-  }
+
   /**
   * 活动指示器
   * 这里用Taro UI的活动指示器来实现上拉加载的动画效果
@@ -193,7 +191,7 @@ const HomeScreen = () => {
     );
   }
   return (
-    <View className='HomeScreen__root'>
+    <View className='HomeScreen__root lazy-view'>
       <NavBar className='home-header'>
         <View className='home-nav'>
           <View className='now-place' onClick={toLocation}>
@@ -241,11 +239,12 @@ const HomeScreen = () => {
         scrollWithAnimation
         refresherEnabled
         refresherTriggered={loading}
-        onRefresherRefresh={onRefresherRefresh}
-        style={scrollStyle}
+        onRefresherRefresh={pullDownRefresh}
+        style={{ height: "100vh" }}
         onScrollToLower={onScrollToLower}
         onScroll={onPageScroll}
       >
+
         <View className='banner'>
           {bannerList.length > 0 && (
             <Swiper className='top-s' autoplay={3000}>
@@ -293,7 +292,7 @@ const HomeScreen = () => {
             )}
           </View>
           <View className='product-list'>
-            {list.length > 0 && list.map((item) => (
+            {goodsList.length > 0 && goodsList.map((item) => (
               <GoodsItem
                 key={item.id}
                 onItemClick={() => {
@@ -305,16 +304,13 @@ const HomeScreen = () => {
                 item={item}
               />
             ))}
-            {/* {loading && <Loading>加载中...</Loading>}
-            {!hasMore && <View className='noMore'>没有更多了</View>} */}
           </View>
-          {showActivity ? (
+          {isLoaded ? (
             ActivityIndicator()
           ) : (
-            !pageRef.current.hasMores && <View className='noMore'>没有更多了</View>
+            !hasMores && <View className='noMore'>没有更多了</View>
           )}
         </View>
-
       </ScrollView>
     </View>
   )

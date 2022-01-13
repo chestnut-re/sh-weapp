@@ -2,7 +2,6 @@ import Taro, { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
 import { View, Image, Text } from '@tarojs/components'
 import { List, PullRefresh } from '@taroify/core'
 import { useRef, useState, useEffect } from 'react'
-import pic from '@/assets/img/common/shg.png'
 import { LikeService } from '@/service/Like'
 import Img from '@/components/Img'
 import { H5 } from '@/constants/h5'
