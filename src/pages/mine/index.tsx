@@ -48,7 +48,7 @@ import './index.less'
  * 我的页面
  */
 const MineScreen = () => {
-  const { userStore } = useStore()
+  const { userStore, commonStore } = useStore()
   const [hasMore, setHasMore] = useState(true)
   const [list, setList] = useState<any>([])
   const [loading, setLoading] = useState(false)
@@ -299,6 +299,34 @@ const MineScreen = () => {
   //   }
   // }
 
+  const onScanCode = () => {
+    // 判断是否登录，没有登录先去登录
+    if (!userStore.isBindMobile) {
+      // 未登录
+      Taro.navigateTo({ url: '/pages/login/index' })
+      return
+    }
+    Taro.scanCode({}).then((res) => {
+      try {
+        const params = getUrlParams(res.result)
+        const d = JSON.parse(decodeURIComponent(params['data']))
+        if (d.type === 'web') {
+          const webUrlParams = getUrlParams(d['path'])
+          if (webUrlParams.userId) {
+            UserService.bindRecommend(webUrlParams.userId).then((data) => {
+              console.log('1476572045910441984', data, webUrlParams.userId)
+            })
+          }
+          Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(d['path'])}` })
+        } else {
+          showMToast('请扫描店铺二维码')
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    })
+  }
+
   return (
     <View className='MineScreen__root'>
       <View className='index'>
@@ -348,23 +376,7 @@ const MineScreen = () => {
           <View
             className='btn'
             onClick={() => {
-              Taro.scanCode({}).then((res) => {
-                console.log(res)
-                try {
-                  UserService.bindRecommend('1476572045910441984').then((data) => {
-                    console.log('1476572045910441984', data)
-                  })
-                  const params = getUrlParams(res.result)
-                  const d = JSON.parse(decodeURIComponent(params['data']))
-                  if (d.type === 'web') {
-                    Taro.navigateTo({ url: `/pages/webview/index?url=${d['path']}` })
-                  } else {
-                    showMToast('请扫描店铺二维码')
-                  }
-                } catch (e) {
-                  console.log(e)
-                }
-              })
+              onScanCode()
             }}
           >
             <Image className='img2' src={saoyisao1} />
