@@ -311,10 +311,10 @@ const MineScreen = () => {
         const params = getUrlParams(res.result)
         const d = JSON.parse(decodeURIComponent(params['data']))
         if (d.type === 'web') {
-          const webUrlParams = getUrlParams(d['path'])
-          if (webUrlParams.userId && getUrlPath(d['path']) == 'goods-detail') {
-            UserService.bindRecommend(webUrlParams.userId)
-          }
+          // const webUrlParams = getUrlParams(d['path'])
+          // if (webUrlParams.userId && getUrlPath(d['path']) == 'goods-detail') {
+          //   UserService.bindRecommend(webUrlParams.userId)
+          // }
           Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(d['path'])}` })
         } else {
           showMToast('请扫描店铺二维码')
