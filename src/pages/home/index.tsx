@@ -110,7 +110,6 @@ const HomeScreen = () => {
       Taro.navigateTo({ url: '/pages/login/index' })
       return
     }
-    console.log('12123213123213213', e, e.isRebate)
     const l = `${H5.goodsDetail}?id=${e.id}&goodsPriceId=${e.goodsPriceId}&isRebate=${e.isRebate}&isPurchase=${e.isPurchase}&isPurchaseAdd=${e.isPurchaseAdd}`
     Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(l)}` })
   }
@@ -270,20 +269,20 @@ const HomeScreen = () => {
               <View className='swiper'>
                 <View onClick={() => toActivityUrl(activityList[0] && activityList[0].id)} className='swiper-left'>
                   <Img
-                    url={activityList[0].activityImg}
+                    url={activityList[0].activityImg || 'https://travel-h5.oss-cn-beijing.aliyuncs.com/img/%402x-fffd.png'}
                     className='first'
                   />
                 </View>
                 <View className='swiper-right'>
                   <View className='right-top' onClick={() => toActivityUrl(activityList[1] && activityList[1].id)}>
                     <Img
-                      url={activityList[1].activityImg}
+                      url={activityList[1].activityImg || 'https://travel-h5.oss-cn-beijing.aliyuncs.com/img/%403x-45c7.png'}
                       className='second'
                     />
                   </View>
                   <View className='right-bottom' onClick={() => toActivityUrl(activityList[2] && activityList[2].id)}>
                     <Img
-                      url={activityList[2].activityImg}
+                      url={activityList[2].activityImg || 'https://travel-h5.oss-cn-beijing.aliyuncs.com/img/%403x%20(1)-e3fc.png'}
                       className='third'
                     />
                   </View>

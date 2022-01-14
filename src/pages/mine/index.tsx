@@ -4,7 +4,7 @@ import { ScrollView, View, Text, Image, Canvas } from '@tarojs/components'
 import { Steps, List, Popup } from '@taroify/core'
 import { observer } from 'mobx-react'
 import { useEffect, useState } from 'react'
-import { getUrlParams } from '@/utils/webviewUtils'
+import { getUrlParams, getUrlPath } from '@/utils/webviewUtils'
 import { showMToast } from '@/utils/ui'
 import pic from '@/assets/img/common/shg.png'
 import lingdang from '@/assets/img/mine/lingdang.png'
@@ -312,10 +312,8 @@ const MineScreen = () => {
         const d = JSON.parse(decodeURIComponent(params['data']))
         if (d.type === 'web') {
           const webUrlParams = getUrlParams(d['path'])
-          if (webUrlParams.userId) {
-            UserService.bindRecommend(webUrlParams.userId).then((data) => {
-              console.log('1476572045910441984', data, webUrlParams.userId)
-            })
+          if (webUrlParams.userId && getUrlPath(d['path']) == 'goods-detail') {
+            UserService.bindRecommend(webUrlParams.userId)
           }
           Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(d['path'])}` })
         } else {
