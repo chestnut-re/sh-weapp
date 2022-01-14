@@ -50,4 +50,11 @@ export class UserService {
   static bindBizUser(userId) {
     return doPostAction({ url: `${BASE_URL}/users/customer/salesmanRelation/bind/${userId}`, data: {} })
   }
+
+  /**
+   * 建立推荐关系
+   */
+  static bindRecommend(userId) {
+    return doPostAction({ url: `${BASE_URL}/users/recommend/bind/${userId}`, data: {} })
+  }
 }

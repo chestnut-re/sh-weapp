@@ -40,7 +40,7 @@ import { H5 } from '@/constants/h5'
 import { LikeService } from '@/service/Like'
 
 import ShareView from '@/components/shareView'
-
+import { UserService } from '@/service/UserService'
 import LongImgView from '@/components/longImgView'
 import './index.less'
 
@@ -351,6 +351,9 @@ const MineScreen = () => {
               Taro.scanCode({}).then((res) => {
                 console.log(res)
                 try {
+                  UserService.bindRecommend('1476572045910441984').then((data) => {
+                    console.log('1476572045910441984', data)
+                  })
                   const params = getUrlParams(res.result)
                   const d = JSON.parse(decodeURIComponent(params['data']))
                   if (d.type === 'web') {

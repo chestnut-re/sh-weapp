@@ -66,8 +66,11 @@ const LoginPage = () => {
 
   const login = async () => {
     if (selectProtocol) {
-      await userStore.init()
-      Taro.reLaunch({ url: '/pages/home/index' })
+      console.log('pages/home/index', '1')
+      await userStore.init(() => {
+        Taro.switchTab({ url: '/pages/home/index' })
+      })
+
     } else {
       setOpenProtocol(true)
     }

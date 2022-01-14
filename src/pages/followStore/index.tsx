@@ -27,8 +27,8 @@ const MyBrowsePage = () => {
     Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(`${H5.groupShop}?id=${item['id']}`)}` })
   }
 
-  const anOrder = (item) => {
-    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(`${H5.goodsDetail}?id=${item['id']}`)}` })
+  const anOrder = (e) => {
+    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(`${H5.goodsDetail}?id=${e['id']}&isRebate=${e.isRebate}&isPurchase=${e.isPurchase}&isPurchaseAdd=${e.isPurchaseAdd}`)}` })
   }
   usePageScroll(({ scrollTop: aScrollTop }) => {
     setScrollTop(aScrollTop)
