@@ -102,7 +102,7 @@ const BrowsePage = () => {
             ))
           ) : (
             <NoDataView
-              text='亲，还没有浏览商品记录哦~'
+              text={type == '1' ? '亲，还没有点赞商品记录哦～' : '亲，还没有浏览商品记录哦~'}
             />
           )}
         </View>

@@ -24,7 +24,7 @@ const FeedBackPage = () => {
   const toMyData = () => {
     if (description == '') {
       Taro.showToast({
-        image: 'none',
+        icon: 'none',
         title: '请输入反馈内容',
         duration: 2000,
       })

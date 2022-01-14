@@ -34,7 +34,7 @@ const WebViewPage = () => {
   const onJumpUrl = (url) => {
     const webUrlParams = getUrlParams(url)
     if (webUrlParams.userId && getUrlPath(url) == 'goods-detail') {
-      console.log('bindRecommend')
+      console.log(getUrlPath(url))
       UserService.bindRecommend(webUrlParams.userId)
     }
     setInitUrl(dealWebViewURL(url))
