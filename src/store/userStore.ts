@@ -119,6 +119,7 @@ class UserData {
     this.openId = null
     this._isBindMobile = null
     this.sessionKey = null
+    this.userInfo = null
     clearStorage()
     // 回到首页
     Taro.switchTab({

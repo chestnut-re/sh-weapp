@@ -39,4 +39,7 @@ export class H5 {
 
   /**专题活动 */
   static specialEvents = `${h5Domain}/special-events`
+
+  /** 乐豆说明页 */
+  static beansExplain = `${h5Domain}/beans-explain`
 }

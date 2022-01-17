@@ -71,6 +71,15 @@ const MineScreen = () => {
     onLikeCount()
   }, [])
 
+  useDidShow(() => {
+    if (!userStore.isBindMobile) {
+      console.log(userStore.isBindMobile)
+      // 未登录
+      Taro.navigateTo({ url: '/pages/login/index' })
+      return
+    }
+  })
+
   const onLikeCount = () => {
     LikeService.likeCount({}).then((res) => {
       const { data } = res.data
@@ -87,8 +96,8 @@ const MineScreen = () => {
     Taro.navigateTo({ url: '/pages/myOrder/index' })
   }
   const toMyToken = () => {
-    showMToast('正在开发中')
-    // Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent('http://192.168.10.75:4000/test/page')}` })
+    // showMToast('正在开发中')
+    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(H5.beansExplain)}` })
     // Taro.navigateTo({ url: `/pages/webview/index?url=${H5.myToken}` })
   }
   const toSetUp = () => {
