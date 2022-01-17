@@ -21,9 +21,12 @@ const WebViewPage = () => {
       showShareItems: ['wechatMoment', 'wechatFriends']
     })
     const url = decodeURIComponent(Taro.getCurrentInstance()?.router?.params?.url ?? '')
+    const url2 = decodeURIComponent(url)
+
     // 判断是否登录，没有登录先去登录
     if (!userStore.isBindMobile && getUrlPath(url) == 'goods-detail') {
       userStore.init(() => {
+        console.log('webView登录成功', url)
         onJumpUrl(url)
       })
     } else {
@@ -32,11 +35,14 @@ const WebViewPage = () => {
   }, [])
 
   const onJumpUrl = (url) => {
+
     const webUrlParams = getUrlParams(url)
     if (webUrlParams.userId && getUrlPath(url) == 'goods-detail') {
       console.log(getUrlPath(url))
       UserService.bindRecommend(webUrlParams.userId)
     }
+    console.log('initUrl11111', dealWebViewURL(url))
+
     setInitUrl(dealWebViewURL(url))
   }
 

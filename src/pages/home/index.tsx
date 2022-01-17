@@ -60,7 +60,6 @@ const HomeScreen = () => {
   }, [])
 
   const getGoodsList = async (pIndex = pageIndex) => {
-    if (pIndex === 1) setIsLoaded(false);
     const {
       data: { data }
     } = await HomeService.getGoodsPage(pIndex)
@@ -79,10 +78,11 @@ const HomeScreen = () => {
 
   const onScrollToLower = async () => {
     if (!hasMores) return
-    const { list, hasMore, isLoaded } = await getGoodsList(++pageIndex);
+    setIsLoaded(true)
+    const { list, hasMore } = await getGoodsList(++pageIndex);
+    setIsLoaded(false)
     setGoodsList(goodsList.concat(list))
     setHasMores(hasMore)
-    setIsLoaded(isLoaded)
   };
 
   const pullDownRefresh = async () => {
@@ -91,7 +91,7 @@ const HomeScreen = () => {
     const res = await getGoodsList(1);
     setHasMores(res.hasMore)
     setGoodsList(res.list)
-    setIsLoaded(res.isLoaded)
+    console.log('res.isLoaded', res.isLoaded)
   };
 
 
