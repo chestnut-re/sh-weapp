@@ -2,6 +2,7 @@ import { ACCESS_TOKEN, CITY_INFO, REFRESH_TOKEN, SESSION_KEY } from '@/constants
 import { WXService } from '@/service/WXService'
 import { UserService } from '@/service/UserService'
 import { LocationService } from '@/service/LocationService'
+import { LikeService } from '@/service/Like'
 import { clearStorage, get, save } from '@/utils/storage'
 import Taro from '@tarojs/taro'
 import { makeObservable, observable, action } from 'mobx'
@@ -31,17 +32,24 @@ class UserData {
   cityInfo = null
   /** totalAmount 代币信息*/
   totalAmount = null
+  /** likeNum 点赞数量 */
+  likeNum = null
+  /** browseNum 浏览数量 */
+  browseNum = null
   constructor() {
     makeObservable(this, {
       totalAmount: observable,
       userInfo: observable,
       city: observable,
       _isBindMobile: observable,
+      likeNum: observable,
+      browseNum: observable,
       init: action,
       login: action,
       loginOut: action,
       setCityCode: action,
       initCity: action,
+      likeCount: action,
     })
     // this.init()
   }
@@ -154,6 +162,17 @@ class UserData {
     this.city = city
     save(CITY_INFO, JSON.stringify(city))
     console.log('设置城市', city)
+  }
+
+  /** 点赞浏览数量 */
+  async likeCount() {
+    const {
+      data: { data },
+    } = await LikeService.likeCount()
+    this.likeNum = data.likeCountNum
+    /** browseNum 浏览数量 */
+    this.browseNum = data.browseCountNum
+    console.log('datadata', data)
   }
 }
 

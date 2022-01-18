@@ -159,6 +159,12 @@ const HomeScreen = () => {
   */
 
   const onLike = (item) => {
+    if (!userStore.isBindMobile) {
+      console.log(userStore.isBindMobile)
+      // 未登录
+      Taro.navigateTo({ url: '/pages/login/index' })
+      return
+    }
     const params = {} as any
     params.goodsId = item.id
     params.state = item.isLike == 1 ? 0 : 1
@@ -173,6 +179,7 @@ const HomeScreen = () => {
           }
         })
         setGoodsList([...newList])
+        userStore.likeCount()
       }
       console.log(data)
     })

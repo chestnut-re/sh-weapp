@@ -80,6 +80,7 @@ const FeedBackPage = () => {
         }
         const imgRes = await UserService.postUploadFile(obj)
         const { data } = JSON.parse(imgRes.data)
+        console.log('datadata', data)
         const imgUrl = `${data.ossServerUrl}${data.fileUrl}`
         upLoadImg.push(imgUrl)
         setUpLoadImg([...upLoadImg])

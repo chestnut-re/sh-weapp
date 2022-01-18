@@ -68,6 +68,7 @@ const MineScreen = () => {
   const picture =
     'https://shanhai-shoping.oss-cn-beijing.aliyuncs.com/img/user/pic/cd2d77f5983f44c5b6e20c313e12d26e.jpg'
   useEffect(() => {
+    userStore.likeCount()
     onLikeCount()
   }, [])
 
@@ -86,7 +87,6 @@ const MineScreen = () => {
       if (data) {
         setLikeObj(data)
       }
-      console.log('123123', data)
     })
   }
   const toFist = () => {
@@ -97,9 +97,15 @@ const MineScreen = () => {
   }
   const toMyToken = () => {
     // showMToast('正在开发中')
-    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(H5.beansExplain)}` })
+    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(H5.myToken)}` })
     // Taro.navigateTo({ url: `/pages/webview/index?url=${H5.myToken}` })
   }
+
+  const toMyTokenExplain = (e) => {
+    e.stopPropagation();
+    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(H5.beansExplain)}` })
+  }
+
   const toSetUp = () => {
     Taro.navigateTo({ url: '/pages/setUp/index' })
   }
@@ -403,7 +409,7 @@ const MineScreen = () => {
         </View>
         <View className='dolor' onClick={toMyToken}>
           {/* <View className='details'> */}
-          <Image className='img-1' src={tishi} />
+          <Image onClick={toMyTokenExplain} className='img-1' src={tishi} />
           {/* </View> */}
           <View className='token'>
             <View className='Token__Num'>{userStore?.totalAmount}</View>
@@ -416,14 +422,14 @@ const MineScreen = () => {
           <View className='Card__Item Card__Left' onClick={() => onLikeOrBrowse(2)}>
             <Image className='img' src={liulan} />
             <View>
-              <View className='num'>{likeObj['browseCountNum']}</View>
+              <View className='num'>{userStore.browseNum}</View>
               <View className='text'>浏览</View>
             </View>
           </View>
           <View className='Card__Item' onClick={() => onLikeOrBrowse(1)}>
             <Image className='img' src={good} />
             <View>
-              <View className='num'>{likeObj['likeCountNum']}</View>
+              <View className='num'>{userStore.likeNum}</View>
               <View className='text'>点赞</View>
             </View>
           </View>

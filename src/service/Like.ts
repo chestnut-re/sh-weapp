@@ -24,7 +24,7 @@ export class LikeService {
 
   /// 点赞浏览总数
 
-  static likeCount(data) {
-    return doGetAction({ url: `${BASE_URL}/operation/goodsLikeView/pageTypeCount`, data })
+  static likeCount() {
+    return doGetAction({ url: `${BASE_URL}/operation/goodsLikeView/pageTypeCount`, data: {} })
   }
 }

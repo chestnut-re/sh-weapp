@@ -14,6 +14,8 @@ import { H5 } from '@/constants/h5'
 import { UserService } from '@/service/UserService'
 import './index.less'
 
+
+
 /**
  * 登录页
  */
@@ -30,6 +32,8 @@ const LoginPage = () => {
       hideLoading()
     })
   }, [])
+
+
 
   const onGetPhoneNumberEventDetail = async (res) => {
     if (res.detail.errMsg == 'getPhoneNumber:ok') {
@@ -70,7 +74,6 @@ const LoginPage = () => {
       await userStore.init(() => {
         Taro.switchTab({ url: '/pages/home/index' })
       })
-
     } else {
       setOpenProtocol(true)
     }
