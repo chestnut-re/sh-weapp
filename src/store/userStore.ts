@@ -1,9 +1,10 @@
+import { token } from '@/assets/img/token/22token.png'
 import { ACCESS_TOKEN, CITY_INFO, REFRESH_TOKEN, SESSION_KEY } from '@/constants/c'
 import { WXService } from '@/service/WXService'
 import { UserService } from '@/service/UserService'
 import { LocationService } from '@/service/LocationService'
 import { LikeService } from '@/service/Like'
-import { clearStorage, get, save } from '@/utils/storage'
+import { clearStorage, get, save, remove } from '@/utils/storage'
 import Taro from '@tarojs/taro'
 import { makeObservable, observable, action } from 'mobx'
 import { hideLoading, showLoading, showMToast } from '@/utils/ui'
@@ -36,6 +37,10 @@ class UserData {
   likeNum = null
   /** browseNum 浏览数量 */
   browseNum = null
+
+  tokenRefreshing = false
+  subscribers: ((params?: any) => void)[][] = []
+
   constructor() {
     makeObservable(this, {
       totalAmount: observable,
@@ -52,6 +57,7 @@ class UserData {
       likeCount: action,
     })
     // this.init()
+    this.getToken()
   }
 
   /// 初始化
@@ -65,6 +71,16 @@ class UserData {
     if (!this.accessToken) {
       // 需要登录
       await this.login()
+    }
+  }
+  getToken() {
+    try {
+      const value = Taro.getStorageSync(ACCESS_TOKEN)
+      if (value) {
+        this.accessToken = value
+      }
+    } catch (e) {
+      // Do something when catch error
     }
   }
 
@@ -84,12 +100,16 @@ class UserData {
       save(SESSION_KEY, this.sessionKey!)
       save(ACCESS_TOKEN, this.accessToken!)
       save(REFRESH_TOKEN, this.refreshToken!)
-      this.getUserInfo()
-      this.getAreaList()
-      this.getWallet()
+      this.getMineInfo()
     } else {
       showMToast(openIdRes.data.msg)
     }
+  }
+
+  getMineInfo() {
+    this.getUserInfo()
+    this.getAreaList()
+    this.getWallet()
   }
 
   //获取用户信息
@@ -128,6 +148,10 @@ class UserData {
     this._isBindMobile = null
     this.sessionKey = null
     this.userInfo = null
+
+    remove(SESSION_KEY)
+    remove(ACCESS_TOKEN)
+    remove(REFRESH_TOKEN)
     clearStorage()
     // 回到首页
     Taro.switchTab({
@@ -137,7 +161,7 @@ class UserData {
 
   /**true: 表示已经绑定，用这个判断是否已经登录 */
   get isBindMobile() {
-    return this._isBindMobile === 1
+    return this.accessToken && true
   }
 
   /**初始化城市信息 */
@@ -173,6 +197,40 @@ class UserData {
     /** browseNum 浏览数量 */
     this.browseNum = data.browseCountNum
     console.log('datadata', data)
+  }
+
+  /**
+   * 更新token,并在更新token后重新调用接口
+   */
+  updateToken = (): Promise<void> => {
+    return new Promise(async (resolve, reject) => {
+      if (this.tokenRefreshing) {
+        this.addSubscribers(resolve, reject)
+        return
+      }
+      this.tokenRefreshing = true
+      await this.login()
+      resolve()
+      this.notify()
+      this.tokenRefreshing = false
+    })
+  }
+
+  addSubscribers(resolve: (params?: any) => void, reject: (params?: any) => void) {
+    this.subscribers.push([resolve, reject])
+  }
+
+  notify() {
+    this.subscribers.forEach((callbacks) => {
+      callbacks?.[0]?.()
+    })
+    this.subscribers = []
+  }
+  rejectAll(params: any) {
+    this.subscribers.forEach((callbacks) => {
+      callbacks?.[1]?.(params)
+    })
+    this.subscribers = []
   }
 }
 

@@ -32,11 +32,9 @@ const HomeScreen = () => {
 
   useEffect(() => {
     userStore.initCity()
-    userStore.init(() => {
-      getBanner()
-      getActivity()
-      pullDownRefresh();
-    })
+    getBanner()
+    getActivity()
+    pullDownRefresh();
     if (Taro.getCurrentInstance()?.router?.params?.q) {
       const q = decodeURIComponent(Taro.getCurrentInstance()?.router?.params?.q ?? '')
       const bizId = getUrlParams(q)['bizId']

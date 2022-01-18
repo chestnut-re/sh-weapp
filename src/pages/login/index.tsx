@@ -27,20 +27,17 @@ const LoginPage = () => {
   const [selectProtocol, setSelectProtocol] = useState(false)
 
   useEffect(() => {
-    showLoading()
-    userStore.loginIfNeed().then(() => {
-      hideLoading()
-    })
+
   }, [])
 
 
 
   const onGetPhoneNumberEventDetail = async (res) => {
     if (res.detail.errMsg == 'getPhoneNumber:ok') {
+      console.log('getPhoneNumber', res.detail.encryptedData, res.detail.iv, userStore.sessionKey)
       showLoading()
       const result = await WXService.bindMobile(res.detail.encryptedData, res.detail.iv, userStore.sessionKey)
       hideLoading()
-      console.log(result.data.code)
       if (result.data.code == 200) {
         console.log('start bind', commonStore.bizId)
         if (commonStore.bizId) {
@@ -57,8 +54,9 @@ const LoginPage = () => {
           // 成功
           Taro.switchTab({ url: '/pages/home/index' })
         }
+        console.log('result.data.code', result.data.code)
 
-        userStore.init()
+        userStore.init(() => { })
       } else {
         showToast({ title: result.data.msg ?? '登录失败', icon: 'none', duration: 2000 })
       }
@@ -84,6 +82,43 @@ const LoginPage = () => {
     Taro.navigateTo({ url: `/pages/webview/index?url=${H5[type]}` })
   }
 
+  /**
+   * 微信授权登录
+   */
+
+  const wxAuthorizeLogin = async (res) => {
+    if (res.detail.errMsg == 'getPhoneNumber:ok') {
+      showLoading()
+      await userStore.login()
+      const result = await WXService.bindMobile(res.detail.encryptedData, res.detail.iv, userStore.sessionKey)
+      hideLoading()
+      if (result.data.code == 200) {
+        console.log('start bind', commonStore.bizId)
+        if (commonStore.bizId) {
+          UserService.bindBizUser(commonStore.bizId).then((bindRes) => {
+            commonStore.bizId = null
+            console.log(`bind result: ${JSON.stringify(bindRes)}`)
+          })
+        }
+
+        if (commonStore.afterLoginCallback) {
+          commonStore.afterLoginCallback()
+          commonStore.removeAfterLoginCallback()
+        } else {
+          // 成功
+          Taro.switchTab({ url: '/pages/home/index' })
+        }
+        console.log('result.data.code', result.data.code)
+      } else {
+        showToast({ title: result.data.msg ?? '登录失败', icon: 'none', duration: 2000 })
+      }
+
+    } else if (res.detail.errMsg == 'getPhoneNumber:fail user deny') {
+      console.log(res.detail)
+      setOpen(true)
+    }
+  }
+
   return (
     <View className='LoginPage__root'>
       <View className='bg'></View>
@@ -95,16 +130,22 @@ const LoginPage = () => {
         <View className='text-two'>世界那样美好 待你游历细品</View>
       </View>
       <View className='btn-box'>
-        {!userStore.isBindMobile && (
-          <Button className='btn' lang='zh_CN' openType='getPhoneNumber' onGetPhoneNumber={onGetPhoneNumberEventDetail}>
+        <Button className='btn' lang='zh_CN' openType='getPhoneNumber' onGetPhoneNumber={wxAuthorizeLogin}>
+          授权登录
+        </Button>
+        <Button className='btn' onClick={login}>
+          登录
+        </Button>
+        {/* {!userStore.isBindMobile && (
+          <Button className='btn' lang='zh_CN' openType='getPhoneNumber' onGetPhoneNumber={wxAuthorizeLogin}>
             授权登录
           </Button>
-        )}
-        {userStore.isBindMobile && (
+        )} */}
+        {/* {userStore.isBindMobile && (
           <Button className='btn' onClick={login}>
             登录
           </Button>
-        )}
+        )} */}
       </View>
       <View
         onClick={() => {

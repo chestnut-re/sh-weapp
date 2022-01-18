@@ -57,7 +57,6 @@ const MineScreen = () => {
   const [open, setOpen] = useState(false)
   const [cityName, setCityName] = useState('奔赴山海')
   const [isShowCanvas, setIsShowCanvas] = useState(false)
-  const [likeObj, setLikeObj] = useState({})
 
   const [userInfo, setUserInfo] = useState({})
 
@@ -68,27 +67,21 @@ const MineScreen = () => {
   const picture =
     'https://shanhai-shoping.oss-cn-beijing.aliyuncs.com/img/user/pic/cd2d77f5983f44c5b6e20c313e12d26e.jpg'
   useEffect(() => {
-    userStore.likeCount()
-    onLikeCount()
+    if (userStore.isBindMobile) {
+      userStore.getMineInfo()
+      userStore.likeCount()
+    }
   }, [])
 
   useDidShow(() => {
     if (!userStore.isBindMobile) {
-      console.log(userStore.isBindMobile)
       // 未登录
       Taro.navigateTo({ url: '/pages/login/index' })
       return
     }
   })
 
-  const onLikeCount = () => {
-    LikeService.likeCount({}).then((res) => {
-      const { data } = res.data
-      if (data) {
-        setLikeObj(data)
-      }
-    })
-  }
+
   const toFist = () => {
     // Taro.navigateBack()
   }

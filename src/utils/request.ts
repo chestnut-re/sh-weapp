@@ -1,8 +1,28 @@
 import { userStore } from '@/store/context'
 import Taro from '@tarojs/taro'
+import { ACCESS_TOKEN, SUCCESS, REFRESH_TOKEN, UNAUTHORIZED } from '@/constants/c'
+import { showMToast } from '@/utils/ui'
+
+/**
+ * 获取本地缓存的Token
+ * @returns token
+ */
+
+export const getToken = () => {
+  try {
+    const value = Taro.getStorageSync(ACCESS_TOKEN)
+    if (value) {
+      return value
+      // Do something with return value
+    }
+  } catch (e) {
+    // Do something when catch error
+  }
+}
 
 export const getHeader = () => {
   const ret: any = {}
+  console.log('userStore.accessToken', userStore.accessToken)
   if (userStore.accessToken) {
     ret.Authorization = userStore.accessToken
   }
@@ -21,13 +41,14 @@ export const getHeader = () => {
  * @returns
  */
 export const doPostAction = ({ url, data }) => {
-  return Taro.request({
-    method: 'POST',
-    url: url,
-    header: getHeader(),
-    data: data,
-    dataType: 'test',
-  })
+  return request('POST', url, data)
+  // return Taro.request({
+  //   method: 'POST',
+  //   url: url,
+  //   header: getHeader(),
+  //   data: data,
+  //   dataType: 'test',
+  // })
 }
 
 /**
@@ -37,13 +58,14 @@ export const doPostAction = ({ url, data }) => {
  * @returns
  */
 export const doGetAction = ({ url, data }) => {
-  return Taro.request({
-    method: 'GET',
-    url: url,
-    header: getHeader(),
-    data: data,
-    dataType: 'test',
-  })
+  return request('GET', url, data)
+  // return Taro.request({
+  //   method: 'GET',
+  //   url: url,
+  //   header: getHeader(),
+  //   data: data,
+  //   dataType: 'test',
+  // })
 }
 
 /**
@@ -74,5 +96,47 @@ export const doDeleteAction = ({ url }) => {
     url: url,
     header: getHeader(),
     dataType: 'test',
+  })
+}
+
+export const request = (options, url, data) => {
+  const requestParams = {} as any
+  requestParams.method = options
+  requestParams.url = url
+  requestParams.header = getHeader()
+  requestParams.dataType = 'test'
+  if (data) {
+    requestParams.data = data
+  }
+
+  return new Promise((resolve, reject) => {
+    Taro.request(requestParams)
+      .then(async (res) => {
+        const {
+          data: { code },
+        } = res
+
+        const requestWithNewToken = async () => {
+          if (!getToken) {
+            showMToast('您还未登录，请登录')
+          } else {
+            try {
+              await userStore.updateToken()
+              const datas = await request(options, url, data)
+              resolve(datas)
+            } catch (e) {}
+          }
+        }
+
+        if (code == SUCCESS) {
+          resolve(res)
+        } else if (UNAUTHORIZED.some((a) => a == code)) {
+          /** 登录过期或者未登录 */
+          await requestWithNewToken()
+        } else {
+          reject(res)
+        }
+      })
+      .catch(() => {})
   })
 }

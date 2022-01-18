@@ -8,8 +8,8 @@
 // export const BASE_URL = 'http://192.168.10.60:39210/api' //杨东
 // export const BASE_URL = 'http://192.168.10.188:19001/api' //刘金凯
 // export const BASE_URL = 'http://192.168.10.52:19001' //邢浩
-// export const BASE_URL = 'https://testapi.mountainseas.cn/api' //测试环境
-export const BASE_URL = 'https://devapi.mountainseas.cn/api' //开发环境
+export const BASE_URL = 'https://testapi.mountainseas.cn/api' //测试环境
+// export const BASE_URL = 'https://devapi.mountainseas.cn/api' //开发环境
 
 /**
  * H5 url 地址
@@ -41,3 +41,14 @@ export const USER_INFO = 'user_info'
  * cityInfo 城市信息
  */
 export const CITY_INFO = 'city_info'
+
+/**
+ * 请求成功状态码
+ */
+export const SUCCESS = '200'
+
+/**
+ * token 失效状态码
+ */
+
+export const UNAUTHORIZED = ['010010', '010011', '010012', '010014', '000003']
