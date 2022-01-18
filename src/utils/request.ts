@@ -22,7 +22,6 @@ export const getToken = () => {
 
 export const getHeader = () => {
   const ret: any = {}
-  console.log('userStore.accessToken', userStore.accessToken)
   if (userStore.accessToken) {
     ret.Authorization = userStore.accessToken
   }
@@ -118,13 +117,16 @@ export const request = (options, url, data) => {
 
         const requestWithNewToken = async () => {
           if (!getToken) {
+            reject()
             showMToast('您还未登录，请登录')
           } else {
             try {
               await userStore.updateToken()
               const datas = await request(options, url, data)
               resolve(datas)
-            } catch (e) {}
+            } catch (e) {
+              reject(e)
+            }
           }
         }
 

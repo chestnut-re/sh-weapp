@@ -9,6 +9,7 @@ import pic from '@/assets/img/common/login2.png'
 import checked from '@/assets/img/login/checked.png'
 import uncheck from '@/assets/img/login/uncheck.png'
 import { H5 } from '@/constants/h5'
+import NavBar from '@/components/navbar'
 
 
 import { UserService } from '@/service/UserService'
@@ -119,8 +120,17 @@ const LoginPage = () => {
     }
   }
 
+  const onBack = () => {
+    Taro.switchTab({ url: '/pages/home/index' })
+  }
+
   return (
     <View className='LoginPage__root'>
+      <NavBar className='loginNav'>
+        <View className='loginNav-body'>
+          <View className='back' onClick={() => onBack()}>返回</View>
+        </View>
+      </NavBar>
       <View className='bg'></View>
       <View className='logo'>
         <Image className='img' src={pic} />
@@ -133,9 +143,9 @@ const LoginPage = () => {
         <Button className='btn' lang='zh_CN' openType='getPhoneNumber' onGetPhoneNumber={wxAuthorizeLogin}>
           授权登录
         </Button>
-        <Button className='btn' onClick={login}>
+        {/* <Button className='btn' onClick={login}>
           登录
-        </Button>
+        </Button> */}
         {/* {!userStore.isBindMobile && (
           <Button className='btn' lang='zh_CN' openType='getPhoneNumber' onGetPhoneNumber={wxAuthorizeLogin}>
             授权登录
