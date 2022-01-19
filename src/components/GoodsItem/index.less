@@ -4,12 +4,13 @@
   .card {
     background: #fff;
     border-radius: 14px;
+    box-shadow: 0 0 10px #f4f4f4;
     overflow: hidden;
     .big-img {
       position: relative;
       height: 415px;
       .label {
-        width: 166px;
+        width: 176px;
         height: 45px;
         display: flex;
         position: absolute;
@@ -18,21 +19,22 @@
         background: #fff;
         border-radius: 8px;
         font-size: 22px;
-        // line-height: 42px;
         .label-pic {
           margin: 6px 8px 5px 6px;
-          min-width: 76px;
+          padding-right: 10px;
+          padding-left: 4px;
+          width: 86px;
           height: 34px;
           background: url('../../assets/img/home/black.png') no-repeat;
           background-size: 100% 100%;
           color: #fff;
           text-align: center;
+          overflow: hidden;
         }
         .text {
-          margin: 5px 11px 7px 0;
+          margin: 6px 11px 7px 0;
+          width: 80px;
           overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
         }
       }
     }
@@ -46,19 +48,22 @@
       .text {
         font-size: 28px;
         line-height: 32px;
-        font-weight: bold;
+        font-family: PingFang SC, PingFang SC-Regular;
         margin-bottom: 26px;
         padding-top: 15px;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
+        -webkit-line-clamp: 1;
       }
       .money {
-        font-size: 28px;
+        font-size: 30px;
         line-height: 42px;
         font-weight: bold;
+        .rmbIcon {
+          font-size: 26px;
+        }
       }
       .consume {
         display: flex;
@@ -68,10 +73,17 @@
         color: #ababab;
         padding: 22px 0 27px;
       }
-      .is-like {
-        width: 28px;
-        height: 20px;
-        margin-right: 5px;
+      .likeView {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        line-height: 24px;
+        .is-like {
+          width: 28px;
+          height: 24px;
+          margin-right: 5px;
+        }
       }
     }
     .right-all {

@@ -212,8 +212,11 @@ const HomeScreen = () => {
             <Image className='place' src={place} />
           </View>
           <View className='search-input' onClick={toSearch}>
-            <Image className='search' src={search} />
-            <Input type='text' placeholder='大千世界在这里' disabled />
+            <View>
+              <Image className='search' src={search} />
+            </View>
+
+            <Input type='text' placeholder='搜索感兴趣的旅行路线' disabled />
           </View>
           <View className='capsule' />
           {/* <View
@@ -270,8 +273,8 @@ const HomeScreen = () => {
               <Swiper.Indicator className='basic-swiped' />
             </Swiper>
           )}
-          <View className='un-done'></View>
-          <View className='mask' />
+          {/* <View className='un-done'></View> */}
+          <View style={{ bottom: '-6px' }} className='mask' />
         </View>
 
         <View className='go-done'>

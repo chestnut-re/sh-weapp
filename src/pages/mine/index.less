@@ -85,29 +85,42 @@
     }
   }
   .dolor {
+    background-image: url('../../assets/img/token/tokenBj.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    height: 200px;
     margin-top: 30px;
-    background: #4dcfc5;
+    // background: #4dcfc5;
     border-radius: 14px;
-    .img-1 {
-      width: 36px;
-      height: 36px;
-      float: right;
-      padding-top: 18px;
-      padding-right: 18px;
+    .myTokenView {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding-top: 30px;
+      padding-left: 35px;
+      .txt {
+        font-size: 28px;
+        text-align: left;
+        color: #b7f8f4;
+      }
+      .img {
+        margin-left: 15px;
+        width: 31px;
+        height: 31px;
+      }
     }
-    .token {
+    .myTokenNum {
       display: flex;
       align-items: center;
-      padding: 45px 30px;
+      padding-left: 35px;
       .img {
-        width: 44px;
-        height: 44px;
+        width: 54px;
+        height: 60px;
       }
       .Token__Num {
         color: #fff;
         font-size: 58px;
         font-weight: 600;
-        line-height: 82px;
         font-weight: bold;
         padding-right: 16px;
       }

@@ -28,11 +28,14 @@
   }
   .mask {
     position: absolute;
-    bottom: -2;
+    bottom: 0;
     left: 0;
     right: 0;
     height: 148px;
+    z-index: 1;
     background-image: url('../../assets/img/home/home_bottom.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
   }
   .un-done {
     position: absolute;
@@ -83,17 +86,18 @@
       flex: 1;
       align-items: center;
       padding: 16px 25px;
-      opacity: 0.65;
+      // opacity: 0.9;
       background: rgba(230, 230, 230, 0.9);
       border-radius: 50px;
       // box-shadow: 7px 7px 29px 1px rgba(218, 218, 218, 0.39);
       .search {
         width: 28px;
         height: 28px;
-        padding-right: 18px;
+        margin-right: 18px;
       }
       Input {
         .input-placeholder {
+          font-size: 24px;
           color: #f4fffe;
         }
       }
@@ -111,6 +115,7 @@
     position: relative;
     padding-bottom: 80px;
     margin-top: -120px;
+    z-index: 88;
   }
   .home-body {
     margin: 24px 24px;
@@ -125,6 +130,7 @@
       padding: 18px;
       background: #fff;
       border-radius: 18px;
+      box-shadow: 0 0 10px #f4f4f4;
       .select-route {
         display: flex;
         padding-bottom: 22px;

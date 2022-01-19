@@ -58,7 +58,7 @@ const MyBrowsePage = () => {
     onLoad()
   }
   const anOrder = (e) => {
-    const l = `${H5.goodsDetail}?id=${e.goodsId}&goodsPriceId=${e.goodsPriceId}`
+    const l = `${H5.goodsDetail}?id=${e.goodsId}&goodsPriceId=${e.goodsPriceId}&tagCity=${e.departureCity}&tapInfo=${e.goodsTypeTag}`
     Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(l)}` })
   }
   return (

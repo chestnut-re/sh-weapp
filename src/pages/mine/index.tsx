@@ -89,9 +89,10 @@ const MineScreen = () => {
     Taro.navigateTo({ url: '/pages/myOrder/index' })
   }
   const toMyToken = () => {
-    // showMToast('正在开发中')
-    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(H5.myToken)}` })
-    // Taro.navigateTo({ url: `/pages/webview/index?url=${H5.myToken}` })
+    if (userStore?.totalAmount > 0) {
+      Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(H5.myToken)}` })
+
+    }
   }
 
   const toMyTokenExplain = (e) => {
@@ -373,8 +374,6 @@ const MineScreen = () => {
             setIsShowLongImg(false)
           }}
         />
-
-
         <View className='Header__btn'>
           <View className='btn' onClick={toFist}>
             <Image className='img1' src={lingdang} />
@@ -401,14 +400,13 @@ const MineScreen = () => {
           </View>
         </View>
         <View className='dolor' onClick={toMyToken}>
-          {/* <View className='details'> */}
-          <Image onClick={toMyTokenExplain} className='img-1' src={tishi} />
-          {/* </View> */}
-          <View className='token'>
+          <View className='myTokenView'>
+            <Text className='txt'>我的乐豆</Text>
+            <Image onClick={toMyTokenExplain} className='img' src={tishi} />
+          </View>
+          <View className='myTokenNum'>
             <View className='Token__Num'>{userStore?.totalAmount}</View>
-            {/* <View className='Token__Img'> */}
             <Image className='img' src={db} />
-            {/* </View> */}
           </View>
         </View>
         <View className='card'>
@@ -440,10 +438,10 @@ const MineScreen = () => {
             <Image className='img' src={store} />
             <View className='item-text'>关注小店</View>
           </View>
-          <View className='item' onClick={() => setOpen(true)}>
+          {/* <View className='item' onClick={() => setOpen(true)}>
             <Image className='img' src={map} />
             <View className='item-text'>分享</View>
-          </View>
+          </View> */}
           {/* <View className='item'>
           <Image className='img' src={join} />
           <View className='item-text'>邀请好友</View>

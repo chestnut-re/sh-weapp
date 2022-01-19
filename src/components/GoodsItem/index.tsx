@@ -33,7 +33,6 @@ const GoodsItem: React.FC<Props> = ({ item, onItemClick, onLikeClick }) => {
             url={item.promotionalImageUrl}
             className='big'
           />
-          {/* <Image className='big' src={item.promotionalImageUrl} /> */}
           <View className='label'>
             <View className='label-pic'>{item.departureCity}</View>
             <View className='text'>{item.goodsNickName}</View>
@@ -41,10 +40,10 @@ const GoodsItem: React.FC<Props> = ({ item, onItemClick, onLikeClick }) => {
         </View>
         <View className='content'>
           <View className='text'>{item.goodsName}</View>
-          <View className='money'>¥ {item.personMarkPrice / 100}</View>
+          <View className='money'><Text className='rmbIcon'>¥</Text>{item.personMarkPrice / 100}</View>
           <View className='consume'>
             <Text>{item.shamSales}人已付款</Text>
-            <View onClick={likeClick}>
+            <View className='likeView' onClick={likeClick}>
               <Image className='is-like' src={item.isLike == 1 ? liked : noLike} />
               {item.shamLikes}
             </View>

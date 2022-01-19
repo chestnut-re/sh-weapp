@@ -47,7 +47,6 @@ const LoginPage = () => {
       showLoading()
       const result = await userStore.login(res.detail.encryptedData, res.detail.iv)
       hideLoading()
-      console.log('openInfoopenInfo', result)
 
       if (result.code == 200) {
         if (commonStore.bizId) {
@@ -57,15 +56,14 @@ const LoginPage = () => {
           })
         }
 
+        const params = Taro.getCurrentInstance()?.router?.params as any
+
+
         if (commonStore.afterLoginCallback) {
           commonStore.afterLoginCallback()
           commonStore.removeAfterLoginCallback()
-        } else {
-          // 成功
-          Taro.switchTab({ url: '/pages/home/index' })
         }
 
-        const params = Taro.getCurrentInstance()?.router?.params as any
         if (params.from == 'web') {
           Taro.navigateTo({ url: `/pages/webview/index?url=${params.url}` })
         } else {
