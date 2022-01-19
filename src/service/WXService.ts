@@ -1,4 +1,4 @@
-import { doPostAction, doPutAction } from '@/utils/request'
+import { doPostAction, doPutAction, doGetAction } from '@/utils/request'
 import { BASE_URL } from '../constants/c'
 
 /**
@@ -6,8 +6,17 @@ import { BASE_URL } from '../constants/c'
  */
 export class WXService {
   /// 获取 openid，accessToken，
+  // static getOpenId(code: string) {
+  //   return doPostAction({ url: `${BASE_URL}/users/login/mini`, data: { code } })
+  // }
+
+  /// 小程序登录，获取openId
   static getOpenId(code: string) {
-    return doPostAction({ url: `${BASE_URL}/users/login/mini`, data: { code } })
+    return doGetAction({ url: `${BASE_URL}/users/customer/weichatOpenId/get`, data: { code } })
+  }
+
+  static login(data: object) {
+    return doPostAction({ url: `${BASE_URL}/users/login/mini`, data: data })
   }
 
   /// 绑定手机号

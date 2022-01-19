@@ -1,5 +1,5 @@
 import { View, ScrollView, Image, Input, Text } from '@tarojs/components'
-import Taro, { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
+import Taro, { useTabItemTap } from '@tarojs/taro' // Taro 专有 Hooks
 import { observer } from 'mobx-react'
 import { useEffect, useCallback, useState, useRef } from 'react'
 import { List, Loading, Swiper, PullRefresh } from '@taroify/core'
@@ -12,6 +12,7 @@ import { H5 } from '@/constants/h5'
 import { HomeService } from '@/service/HomeService'
 import { LikeService } from '@/service/Like'
 import { getUrlParams } from '@/utils/webviewUtils'
+import mask from '@/assets/img/home/mask.png'
 
 import NavBar from '@/components/navbar'
 
@@ -55,6 +56,9 @@ const HomeScreen = () => {
         Taro.navigateTo({ url: '/pages/login/index' })
       }
     }
+    // onTabItemTap() {
+
+    // }
   }, [])
 
   const getGoodsList = async (pIndex = pageIndex) => {
@@ -69,7 +73,7 @@ const HomeScreen = () => {
     if (scrollTop.detail.scrollTop > 160) {
       document.getElementsByClassName('home-header')[0]['style'].backgroundColor = 'rgb(77, 207, 197)'
     } else {
-      document.getElementsByClassName('home-header')[0]['style'].backgroundColor = 'rgb(153, 153, 153,.5)'
+      document.getElementsByClassName('home-header')[0]['style'].backgroundColor = 'transparent'
     }
   }
 
@@ -103,7 +107,6 @@ const HomeScreen = () => {
 
   const anOrder = (e) => {
     if (!userStore.isBindMobile) {
-      console.log(userStore.isBindMobile)
       // 未登录
       Taro.navigateTo({ url: '/pages/login/index' })
       return
@@ -183,6 +186,8 @@ const HomeScreen = () => {
     })
   }
 
+
+
   /**
   * 活动指示器
   * 这里用Taro UI的活动指示器来实现上拉加载的动画效果
@@ -258,14 +263,14 @@ const HomeScreen = () => {
                     url={item.bannerImg}
                     className=''
                   />
-                  {/* <Image src={item.bannerImg} mode='aspectFill'></Image> */}
-                  {/* <View>{item.title}</View> */}
                 </Swiper.Item>
               ))}
               <Swiper.Indicator className='basic-swiped' />
             </Swiper>
           )}
+          {/* <View className='banner-img' style={{ height: '556px' }}></View> */}
           <View className='un-done'></View>
+          <View className='mask'></View>
         </View>
 
         <View className='go-done'>

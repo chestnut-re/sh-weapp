@@ -13,11 +13,8 @@ export const getToken = () => {
     const value = Taro.getStorageSync(ACCESS_TOKEN)
     if (value) {
       return value
-      // Do something with return value
     }
-  } catch (e) {
-    // Do something when catch error
-  }
+  } catch (e) {}
 }
 
 export const getHeader = () => {
@@ -40,14 +37,14 @@ export const getHeader = () => {
  * @returns
  */
 export const doPostAction = ({ url, data }) => {
-  return request('POST', url, data)
-  // return Taro.request({
-  //   method: 'POST',
-  //   url: url,
-  //   header: getHeader(),
-  //   data: data,
-  //   dataType: 'test',
-  // })
+  // return request('POST', url, data)
+  return Taro.request({
+    method: 'POST',
+    url: url,
+    header: getHeader(),
+    data: data,
+    dataType: 'test',
+  })
 }
 
 /**
@@ -57,14 +54,14 @@ export const doPostAction = ({ url, data }) => {
  * @returns
  */
 export const doGetAction = ({ url, data }) => {
-  return request('GET', url, data)
-  // return Taro.request({
-  //   method: 'GET',
-  //   url: url,
-  //   header: getHeader(),
-  //   data: data,
-  //   dataType: 'test',
-  // })
+  // return request('GET', url, data)
+  return Taro.request({
+    method: 'GET',
+    url: url,
+    header: getHeader(),
+    data: data,
+    dataType: 'test',
+  })
 }
 
 /**
@@ -121,9 +118,6 @@ export const request = (options, url, data) => {
             showMToast('您还未登录，请登录')
           } else {
             try {
-              await userStore.updateToken()
-              const datas = await request(options, url, data)
-              resolve(datas)
             } catch (e) {
               reject(e)
             }
@@ -133,8 +127,9 @@ export const request = (options, url, data) => {
         if (code == SUCCESS) {
           resolve(res)
         } else if (UNAUTHORIZED.some((a) => a == code)) {
+          console.log('resressssss', res)
           /** 登录过期或者未登录 */
-          await requestWithNewToken()
+          // await requestWithNewToken()
         } else {
           reject(res)
         }

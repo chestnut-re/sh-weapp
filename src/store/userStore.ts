@@ -49,30 +49,15 @@ class UserData {
       _isBindMobile: observable,
       likeNum: observable,
       browseNum: observable,
-      init: action,
       login: action,
       loginOut: action,
       setCityCode: action,
       initCity: action,
       likeCount: action,
     })
-    // this.init()
     this.getToken()
   }
 
-  /// 初始化
-  async init(callback) {
-    console.log('wx user init')
-    await this.login()
-    callback()
-  }
-
-  async loginIfNeed() {
-    if (!this.accessToken) {
-      // 需要登录
-      await this.login()
-    }
-  }
   getToken() {
     try {
       const value = Taro.getStorageSync(ACCESS_TOKEN)
@@ -84,25 +69,48 @@ class UserData {
     }
   }
 
-  /**登录 */
-  async login() {
+  /**
+   * 获取微信openId
+   */
+
+  async getOpenId() {
     const wxRes = await Taro.login()
-    const openIdRes = await WXService.getOpenId(wxRes.code)
+    const {
+      data: { data },
+    } = await WXService.getOpenId(wxRes.code)
+    return data
+  }
 
-    if (openIdRes.data.code == 200) {
-      this.accessToken = openIdRes.data.data.accessToken
-      this.refreshToken = openIdRes.data.data.refreshToken
+  /**登录 */
+  async login(encryptedData, iv) {
+    const loginParams = {} as any
+    const openInfo = await this.getOpenId()
 
-      this.openId = openIdRes.data.data.userDetails.openId
-      this._isBindMobile = openIdRes.data.data.userDetails.isBindMobile
-      this.sessionKey = openIdRes.data.data.userDetails.sessionKey
-      this.phoneNumber = openIdRes.data.data.userDetails.phoneNumber
+    loginParams.encryptedData = encryptedData
+    loginParams.sessionKey = openInfo.sessionKey
+    loginParams.iv = iv
+    loginParams.registerChannel = ''
+    loginParams.salesmanUserId = ''
+
+    const { data } = await WXService.login(loginParams)
+
+    console.log('openIdRes res res res', data)
+
+    if (data.code == 200) {
+      this.accessToken = data.data.accessToken
+      this.refreshToken = data.data.refreshToken
+
+      // this.openId =data.userDetails.openId
+      this._isBindMobile = data.data.userDetails.isBindMobile
+      this.sessionKey = data.data.userDetails.sessionKey
+      // this.phoneNumber = data.userDetails.phoneNumber
       save(SESSION_KEY, this.sessionKey!)
       save(ACCESS_TOKEN, this.accessToken!)
       save(REFRESH_TOKEN, this.refreshToken!)
       this.getMineInfo()
+      return data
     } else {
-      showMToast(openIdRes.data.msg)
+      showMToast(data.msg)
     }
   }
 
@@ -197,40 +205,6 @@ class UserData {
     /** browseNum 浏览数量 */
     this.browseNum = data.browseCountNum
     console.log('datadata', data)
-  }
-
-  /**
-   * 更新token,并在更新token后重新调用接口
-   */
-  updateToken = (): Promise<void> => {
-    return new Promise(async (resolve, reject) => {
-      if (this.tokenRefreshing) {
-        this.addSubscribers(resolve, reject)
-        return
-      }
-      this.tokenRefreshing = true
-      await this.login()
-      resolve()
-      this.notify()
-      this.tokenRefreshing = false
-    })
-  }
-
-  addSubscribers(resolve: (params?: any) => void, reject: (params?: any) => void) {
-    this.subscribers.push([resolve, reject])
-  }
-
-  notify() {
-    this.subscribers.forEach((callbacks) => {
-      callbacks?.[0]?.()
-    })
-    this.subscribers = []
-  }
-  rejectAll(params: any) {
-    this.subscribers.forEach((callbacks) => {
-      callbacks?.[1]?.(params)
-    })
-    this.subscribers = []
   }
 }
 

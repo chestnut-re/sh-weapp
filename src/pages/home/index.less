@@ -2,7 +2,7 @@
   background: #f3f4f4;
   height: 100vh;
   .top-s {
-    height: 528px;
+    height: 558px;
     .item {
       Image {
         width: 100%;
@@ -22,7 +22,17 @@
     }
   }
   .banner {
+    position: relative;
     box-shadow: 3px -8px 72px 20px #47a1a1 inset;
+    height: 556px;
+  }
+  .mask {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 148px;
+    background-image: url('../../assets/img/home/home_bottom.png');
   }
   .un-done {
     position: absolute;
@@ -98,7 +108,9 @@
     // top: 300px;
     // background: #f3f4f4;
     // box-shadow: -3px -2px 20px 20px #f3f4f4;
+    position: relative;
     padding-bottom: 80px;
+    margin-top: -120px;
   }
   .home-body {
     margin: 24px 24px;
@@ -257,7 +269,7 @@
 .basic-swiped {
   position: absolute;
   left: 130px;
-  bottom: 70px;
+  bottom: 120px;
 }
 .taroify-swiper__indicator--active {
   background: #64d0c8;

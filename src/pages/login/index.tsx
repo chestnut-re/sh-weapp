@@ -5,6 +5,7 @@ import { WXService } from '@/service/WXService'
 import { commonStore, useStore } from '@/store/context'
 import { Button, Toast } from '@taroify/core'
 import { observer } from 'mobx-react'
+import back from '@/assets/img/yjfk/back.png'
 import pic from '@/assets/img/common/login2.png'
 import checked from '@/assets/img/login/checked.png'
 import uncheck from '@/assets/img/login/uncheck.png'
@@ -24,59 +25,13 @@ const LoginPage = () => {
   const { userStore } = useStore()
   const [open, setOpen] = useState(false)
   const [openProtocol, setOpenProtocol] = useState(false)
-
   const [selectProtocol, setSelectProtocol] = useState(false)
+
 
   useEffect(() => {
 
   }, [])
 
-
-
-  const onGetPhoneNumberEventDetail = async (res) => {
-    if (res.detail.errMsg == 'getPhoneNumber:ok') {
-      console.log('getPhoneNumber', res.detail.encryptedData, res.detail.iv, userStore.sessionKey)
-      showLoading()
-      const result = await WXService.bindMobile(res.detail.encryptedData, res.detail.iv, userStore.sessionKey)
-      hideLoading()
-      if (result.data.code == 200) {
-        console.log('start bind', commonStore.bizId)
-        if (commonStore.bizId) {
-          UserService.bindBizUser(commonStore.bizId).then((bindRes) => {
-            commonStore.bizId = null
-            console.log(`bind result: ${JSON.stringify(bindRes)}`)
-          })
-        }
-
-        if (commonStore.afterLoginCallback) {
-          commonStore.afterLoginCallback()
-          commonStore.removeAfterLoginCallback()
-        } else {
-          // 成功
-          Taro.switchTab({ url: '/pages/home/index' })
-        }
-        console.log('result.data.code', result.data.code)
-
-        userStore.init(() => { })
-      } else {
-        showToast({ title: result.data.msg ?? '登录失败', icon: 'none', duration: 2000 })
-      }
-    } else if (res.detail.errMsg == 'getPhoneNumber:fail user deny') {
-      console.log(res.detail)
-      setOpen(true)
-    }
-  }
-
-  const login = async () => {
-    if (selectProtocol) {
-      console.log('pages/home/index', '1')
-      await userStore.init(() => {
-        Taro.switchTab({ url: '/pages/home/index' })
-      })
-    } else {
-      setOpenProtocol(true)
-    }
-  }
 
   const onLinkProtocol = (e, type) => {
     e.stopPropagation();
@@ -90,11 +45,11 @@ const LoginPage = () => {
   const wxAuthorizeLogin = async (res) => {
     if (res.detail.errMsg == 'getPhoneNumber:ok') {
       showLoading()
-      await userStore.login()
-      const result = await WXService.bindMobile(res.detail.encryptedData, res.detail.iv, userStore.sessionKey)
+      const result = await userStore.login(res.detail.encryptedData, res.detail.iv)
       hideLoading()
-      if (result.data.code == 200) {
-        console.log('start bind', commonStore.bizId)
+      console.log('openInfoopenInfo', result)
+
+      if (result.code == 200) {
         if (commonStore.bizId) {
           UserService.bindBizUser(commonStore.bizId).then((bindRes) => {
             commonStore.bizId = null
@@ -109,11 +64,16 @@ const LoginPage = () => {
           // 成功
           Taro.switchTab({ url: '/pages/home/index' })
         }
-        console.log('result.data.code', result.data.code)
-      } else {
-        showToast({ title: result.data.msg ?? '登录失败', icon: 'none', duration: 2000 })
-      }
 
+        const params = Taro.getCurrentInstance()?.router?.params as any
+        if (params.from == 'web') {
+          Taro.navigateTo({ url: `/pages/webview/index?url=${params.url}` })
+        } else {
+          Taro.switchTab({ url: '/pages/home/index' })
+        }
+      } else {
+        showToast({ title: result.msg ?? '登录失败', icon: 'none', duration: 2000 })
+      }
     } else if (res.detail.errMsg == 'getPhoneNumber:fail user deny') {
       console.log(res.detail)
       setOpen(true)
@@ -128,7 +88,9 @@ const LoginPage = () => {
     <View className='LoginPage__root'>
       <NavBar className='loginNav'>
         <View className='loginNav-body'>
-          <View className='back' onClick={() => onBack()}>返回</View>
+          <View className='back' onClick={() => onBack()}>
+            <Image className='img' src={back} />
+          </View>
         </View>
       </NavBar>
       <View className='bg'></View>

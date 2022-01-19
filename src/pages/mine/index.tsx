@@ -1,4 +1,4 @@
-import Taro, { useDidShow, usePageScroll, useShareAppMessage } from '@tarojs/taro'
+import Taro, { useDidShow, usePageScroll, useShareAppMessage, useTabItemTap } from '@tarojs/taro'
 import { useStore } from '@/store/context'
 import { ScrollView, View, Text, Image, Canvas } from '@tarojs/components'
 import { Steps, List, Popup } from '@taroify/core'
@@ -73,7 +73,7 @@ const MineScreen = () => {
     }
   }, [])
 
-  useDidShow(() => {
+  useTabItemTap(item => {
     if (!userStore.isBindMobile) {
       // 未登录
       Taro.navigateTo({ url: '/pages/login/index' })

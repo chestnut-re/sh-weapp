@@ -20,15 +20,12 @@ const WebViewPage = () => {
       withShareTicket: true,
       showShareItems: ['wechatMoment', 'wechatFriends']
     })
+
     const url = decodeURIComponent(Taro.getCurrentInstance()?.router?.params?.url ?? '')
-    const url2 = decodeURIComponent(url)
 
     // 判断是否登录，没有登录先去登录
     if (!userStore.isBindMobile && getUrlPath(url) == 'goods-detail') {
-      userStore.init(() => {
-        console.log('webView登录成功', url)
-        onJumpUrl(url)
-      })
+      Taro.navigateTo({ url: `/pages/login/index?url=${Taro.getCurrentInstance()?.router?.params?.url ?? ''}&from=web` })
     } else {
       onJumpUrl(url)
     }
