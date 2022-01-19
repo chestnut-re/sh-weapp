@@ -106,12 +106,14 @@ const HomeScreen = () => {
   }
 
   const anOrder = (e) => {
+    console.log(e)
+
     if (!userStore.isBindMobile) {
       // 未登录
       Taro.navigateTo({ url: '/pages/login/index' })
       return
     }
-    const l = `${H5.goodsDetail}?id=${e.id}&goodsPriceId=${e.goodsPriceId}&isRebate=${e.isRebate}&isPurchase=${e.isPurchase}&isPurchaseAdd=${e.isPurchaseAdd}`
+    const l = `${H5.goodsDetail}?id=${e.id}&goodsPriceId=${e.goodsPriceId}&isRebate=${e.isRebate}&isPurchase=${e.isPurchase}&isPurchaseAdd=${e.isPurchaseAdd}&tagCity=${e.departureCity}&tapInfo=${e.goodsTypeTag}`
     Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(l)}` })
   }
 
@@ -268,9 +270,8 @@ const HomeScreen = () => {
               <Swiper.Indicator className='basic-swiped' />
             </Swiper>
           )}
-          {/* <View className='banner-img' style={{ height: '556px' }}></View> */}
           <View className='un-done'></View>
-          <View className='mask'></View>
+          <View className='mask' />
         </View>
 
         <View className='go-done'>
