@@ -84,10 +84,12 @@ class UserData {
   async login(encryptedData, iv, wxCode) {
     const loginParams = {} as any
     const openInfo = await this.getOpenId(wxCode)
+    console.log('openInfo', openInfo)
 
     loginParams.encryptedData = encryptedData
     loginParams.sessionKey = openInfo.sessionKey
     loginParams.iv = iv
+    loginParams.openId = openInfo.openId
     loginParams.registerChannel = ''
     loginParams.salesmanUserId = ''
 
@@ -117,6 +119,7 @@ class UserData {
     this.getUserInfo()
     this.getAreaList()
     this.getWallet()
+    this.likeCount()
   }
 
   //获取用户信息

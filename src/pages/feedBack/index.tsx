@@ -81,12 +81,9 @@ const FeedBackPage = () => {
         const imgRes = await UserService.postUploadFile(obj)
         const { data } = JSON.parse(imgRes.data)
         console.log('datadata', data)
-        const imgUrl = `${data.ossServerUrl}${data.fileUrl}`
+        const imgUrl = `${data.privateUrl}`
         upLoadImg.push(imgUrl)
         setUpLoadImg([...upLoadImg])
-
-        console.log('[旺柴][旺柴]', upLoadImg, imgRes)
-
 
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
 

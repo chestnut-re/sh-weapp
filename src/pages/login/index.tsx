@@ -46,9 +46,6 @@ const LoginPage = () => {
    */
 
   const wxAuthorizeLogin = async (res) => {
-
-
-
     if (res.detail.errMsg == 'getPhoneNumber:ok') {
       showLoading()
       const result = await userStore.login(res.detail.encryptedData, res.detail.iv, wxCode)
@@ -71,8 +68,9 @@ const LoginPage = () => {
         /**
          * 判断是否h5页面
          */
+
         if (params.from == 'web') {
-          if (urlParams.rebateType == '2' && result.data.userDetails.isBindMobile != 0) {
+          if (urlParams.rebateType == '2' && result.data.userDetails.isBindMobile == 0) {
             const beanParams = {
               recommendId: urlParams.userId,
               taskId: urlParams.taskId

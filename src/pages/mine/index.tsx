@@ -49,11 +49,6 @@ import './index.less'
  */
 const MineScreen = () => {
   const { userStore, commonStore } = useStore()
-  const [hasMore, setHasMore] = useState(true)
-  const [list, setList] = useState<any>([])
-  const [loading, setLoading] = useState(false)
-  const [scrollTop, setScrollTop] = useState(0)
-  const [reachTop, setReachTop] = useState(true)
   const [open, setOpen] = useState(false)
   const [cityName, setCityName] = useState('奔赴山海')
   const [isShowCanvas, setIsShowCanvas] = useState(false)
@@ -89,10 +84,8 @@ const MineScreen = () => {
     Taro.navigateTo({ url: '/pages/myOrder/index' })
   }
   const toMyToken = () => {
-    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(H5.myToken)}` })
-
     if (userStore?.totalAmount > 0) {
-
+      Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(H5.myToken)}` })
     }
   }
 
@@ -129,11 +122,6 @@ const MineScreen = () => {
   const toMyTravel = () => {
     Taro.navigateTo({ url: `/pages/webview/index?url=${H5.myTravel}` })
   }
-  usePageScroll(({ scrollTop: aScrollTop }) => {
-    setScrollTop(aScrollTop)
-    setReachTop(aScrollTop === 0)
-  })
-
   useShareAppMessage((res) => {
     if (res.from === 'button') {
       // 来自页面内转发按钮
