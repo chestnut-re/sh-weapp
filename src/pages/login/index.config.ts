@@ -1,5 +1,5 @@
 export default {
   navigationBarTitleText: '登录',
   navigationStyle: 'custom',
-  disableSwipeBack: true,
+  disableSwipeBack: false,
 }

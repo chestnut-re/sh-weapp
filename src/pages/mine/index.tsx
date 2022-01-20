@@ -70,7 +70,7 @@ const MineScreen = () => {
   useTabItemTap(item => {
     if (!userStore.isBindMobile) {
       // 未登录
-      Taro.navigateTo({ url: '/pages/login/index' })
+      Taro.redirectTo({ url: '/pages/login/index' })
       return
     }
   })
