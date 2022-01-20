@@ -30,6 +30,12 @@ const WebViewPage = () => {
     } else {
       onJumpUrl(url)
     }
+    return () => {
+      if (getUrlPath(url) == 'goods-detail') {
+        console.log('123123123123123123312')
+        userStore.likeCount()
+      }
+    }
   }, [])
 
   const onJumpUrl = (url) => {

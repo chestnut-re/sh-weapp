@@ -64,7 +64,6 @@ const MineScreen = () => {
   useEffect(() => {
     if (userStore.isBindMobile) {
       userStore.getMineInfo()
-      userStore.likeCount()
     }
   }, [])
 

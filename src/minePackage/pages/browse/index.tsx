@@ -8,6 +8,7 @@ import { LikeService } from '@/service/Like'
 import Img from '@/components/Img'
 import { H5 } from '@/constants/h5'
 import NoDataView from '@/components/noDataView'
+import { getMyDate, filterCurDate } from '@/utils/date'
 
 import './index.less'
 
@@ -72,14 +73,13 @@ const BrowsePage = () => {
         refresherEnabled
         refresherTriggered={loading}
         onRefresherRefresh={pullDownRefresh}
-        style={{ height: "100vh" }}
         onScrollToLower={onScrollToLower}
       >
         <View className='browseView'>
           {goodsList.length > 0 ? (
             goodsList.map((item) => (
               <View onClick={() => { anOrder(item) }} className='item' key={item['goodsId']}>
-                <View className='date'>{item['createTime'] || '2022/00/00'}</View>
+                <View className='date'>{filterCurDate(getMyDate(item['createTime'])) || '2022/00/00'}</View>
                 <View className='card'>
                   {item['state'] == 3 ? <View className='no-jump'>已下架</View> : null}
                   <Img
