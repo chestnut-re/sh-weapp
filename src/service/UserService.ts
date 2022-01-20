@@ -57,4 +57,11 @@ export class UserService {
   static bindRecommend(userId) {
     return doPostAction({ url: `${BASE_URL}/users/recommend/bind/${userId}`, data: {} })
   }
+
+  /**
+   * 解锁乐豆
+   */
+  static unLockPullBean(data) {
+    return doGetAction({ url: `${BASE_URL}/market/rebate/unLockPullBean`, data: data })
+  }
 }

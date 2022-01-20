@@ -89,8 +89,9 @@ const MineScreen = () => {
     Taro.navigateTo({ url: '/pages/myOrder/index' })
   }
   const toMyToken = () => {
+    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(H5.myToken)}` })
+
     if (userStore?.totalAmount > 0) {
-      Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(H5.myToken)}` })
 
     }
   }

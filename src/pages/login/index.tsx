@@ -11,6 +11,7 @@ import checked from '@/assets/img/login/checked.png'
 import uncheck from '@/assets/img/login/uncheck.png'
 import { H5 } from '@/constants/h5'
 import NavBar from '@/components/navbar'
+import { getUrlParams } from '@/utils/webviewUtils'
 
 
 import { UserService } from '@/service/UserService'
@@ -26,10 +27,12 @@ const LoginPage = () => {
   const [open, setOpen] = useState(false)
   const [openProtocol, setOpenProtocol] = useState(false)
   const [selectProtocol, setSelectProtocol] = useState(false)
-
+  const [wxCode, setWxCode] = useState('')
 
   useEffect(() => {
-
+    Taro.login().then(wxRes => {
+      setWxCode(wxRes.code)
+    })
   }, [])
 
 
@@ -43,10 +46,15 @@ const LoginPage = () => {
    */
 
   const wxAuthorizeLogin = async (res) => {
+
+
+
     if (res.detail.errMsg == 'getPhoneNumber:ok') {
       showLoading()
-      const result = await userStore.login(res.detail.encryptedData, res.detail.iv)
+      const result = await userStore.login(res.detail.encryptedData, res.detail.iv, wxCode)
       hideLoading()
+      const params = Taro.getCurrentInstance()?.router?.params as any
+      const urlParams = getUrlParams(decodeURIComponent(params.url))
 
       if (result.code == 200) {
         if (commonStore.bizId) {
@@ -56,16 +64,24 @@ const LoginPage = () => {
           })
         }
 
-        const params = Taro.getCurrentInstance()?.router?.params as any
-
-
         if (commonStore.afterLoginCallback) {
           commonStore.afterLoginCallback()
           commonStore.removeAfterLoginCallback()
         }
-
+        /**
+         * 判断是否h5页面
+         */
         if (params.from == 'web') {
-          Taro.navigateTo({ url: `/pages/webview/index?url=${params.url}` })
+          if (urlParams.rebateType == '2' && result.data.userDetails.isBindMobile != 0) {
+            const beanParams = {
+              recommendId: urlParams.userId,
+              taskId: urlParams.taskId
+            }
+            UserService.unLockPullBean(beanParams).then(resBean => {
+              console.log('123133434', resBean)
+            })
+          }
+          Taro.redirectTo({ url: `/pages/webview/index?url=${params.url}` })
         } else {
           Taro.switchTab({ url: '/pages/home/index' })
         }

@@ -73,18 +73,17 @@ class UserData {
    * 获取微信openId
    */
 
-  async getOpenId() {
-    const wxRes = await Taro.login()
+  async getOpenId(wxCode) {
     const {
       data: { data },
-    } = await WXService.getOpenId(wxRes.code)
+    } = await WXService.getOpenId(wxCode)
     return data
   }
 
   /**登录 */
-  async login(encryptedData, iv) {
+  async login(encryptedData, iv, wxCode) {
     const loginParams = {} as any
-    const openInfo = await this.getOpenId()
+    const openInfo = await this.getOpenId(wxCode)
 
     loginParams.encryptedData = encryptedData
     loginParams.sessionKey = openInfo.sessionKey
