@@ -133,7 +133,8 @@ const HomeScreen = () => {
           id: ''
         })
       }
-      setActivityList(newActivityList)
+
+      setActivityList(poshDataNum == 3 ? [] : newActivityList)
     }
   }
 

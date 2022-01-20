@@ -102,7 +102,7 @@ class UserData {
       this.refreshToken = data.data.refreshToken
 
       // this.openId =data.userDetails.openId
-      this._isBindMobile = data.data.userDetails.isBindMobile
+      this._isBindMobile = data.data.userDetails.isResgister
       this.sessionKey = data.data.userDetails.sessionKey
       // this.phoneNumber = data.userDetails.phoneNumber
       save(SESSION_KEY, this.sessionKey!)
