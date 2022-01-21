@@ -108,14 +108,12 @@ const HomeScreen = () => {
   }
 
   const anOrder = (e) => {
-    const l = `${H5.goodsDetail}?id=${e.id}&goodsPriceId=${e.goodsPriceId}&isRebate=${e.isRebate}&isPurchase=${e.isPurchase}&isPurchaseAdd=${e.isPurchaseAdd}&tagCity=${e.departureCity}&tapInfo=${e.goodsTypeTag}`
     if (!userStore.isBindMobile) {
       // 未登录
       Taro.navigateTo({ url: '/pages/login/index' })
-      // Taro.navigateTo({ url: `/pages/login/index?url=${encodeURIComponent('https://travel.mountainseas.cn/goods-detail?id=1482228795917434880&userId=1474953463002791936&source=2&taskId=1483357922770780160&rebateType=2')}&from=web` })
       return
     }
-
+    const l = `${H5.goodsDetail}?id=${e.id}&goodsPriceId=${e.goodsPriceId}&isRebate=${e.isRebate}&isPurchase=${e.isPurchase}&isPurchaseAdd=${e.isPurchaseAdd}&tagCity=${e.departureCity}&tapInfo=${e.goodsTypeTag}`
     Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(l)}` })
   }
 

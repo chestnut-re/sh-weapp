@@ -69,7 +69,15 @@ const BrowsePage = () => {
   }
 
   const tidyGoodsList = (list) => {
-
+    for (var i = 0; i < list.length; i++) {
+      for (var j = i + 1; j < list.length; j++) {
+        if (filterCurDate(getMyDate(list[i].createTime)) == filterCurDate(getMyDate(list[j].createTime))) {
+          console.log(list[j])
+          // arr.splice(j, 1);
+          // j--;
+        }
+      }
+    }
   }
 
   return (
@@ -109,9 +117,11 @@ const BrowsePage = () => {
               </View>
             ))
           ) : (
-            <NoDataView
-              text={type == '1' ? '亲，还没有点赞商品记录哦～' : '亲，还没有浏览商品记录哦~'}
-            />
+            !loading && (
+              <NoDataView
+                text={type == '1' ? '亲，还没有点赞商品记录哦～' : '亲，还没有浏览商品记录哦~'}
+              />
+            )
           )}
         </View>
 

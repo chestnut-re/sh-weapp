@@ -362,7 +362,7 @@ const MineScreen = () => {
             setIsShowLongImg(false)
           }}
         />
-        <View className='Header__btn'>
+        {/* <View className='Header__btn'>
           <View className='btn' onClick={toFist}>
             <Image className='img1' src={lingdang} />
           </View>
@@ -377,7 +377,7 @@ const MineScreen = () => {
           <View className='btn' onClick={toSetUp}>
             <Image className='img3' src={shezhi1} />
           </View>
-        </View>
+        </View> */}
         <View className='user' onClick={toMyData}>
           <View className='User__Img'>
             <Image className='img' src={userStore.userInfo?.pic ?? picture} />
@@ -426,6 +426,12 @@ const MineScreen = () => {
             <Image className='img' src={store} />
             <View className='item-text'>关注小店</View>
           </View>
+          <View className='item' onClick={toSetUp}>
+            <Image className='img' src={shezhi} />
+            <View className='item-text'>设置</View>
+          </View>
+
+
           {/* <View className='item' onClick={() => setOpen(true)}>
             <Image className='img' src={map} />
             <View className='item-text'>分享</View>
