@@ -161,39 +161,6 @@ const HomeScreen = () => {
   }
 
   /**
-  * 点赞
-  */
-
-  const onLike = (item) => {
-    if (!userStore.isBindMobile) {
-      console.log(userStore.isBindMobile)
-      // 未登录
-      Taro.navigateTo({ url: '/pages/login/index' })
-      return
-    }
-    const params = {} as any
-    params.goodsId = item.id
-    params.state = item.isLike == 1 ? 0 : 1
-    LikeService.like(params).then((res) => {
-      const { data } = res.data
-      if (data) {
-        let newList = [...goodsList]
-        goodsList.forEach((listItem: any) => {
-          if (listItem.id == item.id) {
-            listItem.isLike = item.isLike == 1 ? 0 : 1
-            listItem.shamLikes = item.isLike == 1 ? Number(listItem.shamLikes) + 1 : Number(listItem.shamLikes) - 1
-          }
-        })
-        setGoodsList([...newList])
-        userStore.likeCount()
-      }
-      console.log(data)
-    })
-  }
-
-
-
-  /**
   * 活动指示器
   * 这里用Taro UI的活动指示器来实现上拉加载的动画效果
   */
@@ -313,9 +280,6 @@ const HomeScreen = () => {
                 key={item.id}
                 onItemClick={() => {
                   anOrder(item)
-                }}
-                onLikeClick={() => {
-                  onLike(item)
                 }}
                 item={item}
               />

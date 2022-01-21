@@ -20,6 +20,9 @@ const BrowsePage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasMores, setHasMores] = useState(false);
   const [goodsList, setGoodsList] = useState<any[]>([])
+  const [timeTidyGoodsList, setTimeTidyGoodsList] = useState<any[]>([])
+
+
 
   useEffect(() => {
     const { router } = Taro.getCurrentInstance()
@@ -56,12 +59,17 @@ const BrowsePage = () => {
     const res = await getPageData(1);
     setHasMores(res.hasMore)
     setGoodsList(res.list)
+    tidyGoodsList(res.list)
     setIsLoaded(res.isLoaded)
   };
 
   const anOrder = (e) => {
     const l = `${H5.goodsDetail}?id=${e.goodsId}&goodsPriceId=${e.goodsPriceId}&isRebate=${e.isRebate}&isPurchase=${e.isPurchase}&isPurchaseAdd=${e.isPurchaseAdd}&tagCity=${e.departureCity}&tapInfo=${e.goodsTypeTag}`
     Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(l)}` })
+  }
+
+  const tidyGoodsList = (list) => {
+
   }
 
   return (
