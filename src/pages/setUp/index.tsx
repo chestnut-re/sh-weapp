@@ -13,7 +13,7 @@ import './index.less'
  * 设置页面
  */
 const SetUpPage = () => {
-  const { userStore } = useStore()
+  const { userStore, homeStore } = useStore()
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState('20.32Mb')
   const picture =
@@ -21,6 +21,7 @@ const SetUpPage = () => {
 
   /**退出登录并回到首页 */
   const _logout = () => {
+    homeStore.onRefreshHomePage()
     userStore.loginOut()
   }
   const toAboutUs = () => {

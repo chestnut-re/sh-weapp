@@ -66,7 +66,7 @@ const MsgScreen = (props) => {
 
   return (
     !userStore.isBindMobile ? (
-      <NoData text='亲，您还为登录' />
+      <NoData text='亲，您还未登录，请登录！' />
     ) : (
       <View className='MsgScreen__root'>
         <View className='msg-tabbar'>

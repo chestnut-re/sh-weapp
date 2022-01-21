@@ -23,7 +23,7 @@ import './index.less'
  * 登录页
  */
 const LoginPage = () => {
-  const { userStore } = useStore()
+  const { userStore, homeStore } = useStore()
   const [open, setOpen] = useState(false)
   const [openProtocol, setOpenProtocol] = useState(false)
   const [selectProtocol, setSelectProtocol] = useState(false)
@@ -80,7 +80,12 @@ const LoginPage = () => {
           }
           Taro.redirectTo({ url: `/pages/webview/index?url=${params.url}` })
         } else {
-          Taro.switchTab({ url: '/pages/home/index' })
+          Taro.switchTab({
+            url: '/pages/home/index',
+            success: () => {
+              homeStore.onRefreshHomePage()
+            }
+          })
         }
       } else {
         showToast({ title: result.msg ?? '登录失败', icon: 'none', duration: 2000 })
@@ -92,7 +97,12 @@ const LoginPage = () => {
   }
 
   const onBack = () => {
-    Taro.switchTab({ url: '/pages/home/index' })
+    Taro.switchTab({
+      url: '/pages/home/index',
+      success: () => {
+
+      }
+    })
   }
 
   return (
@@ -116,19 +126,6 @@ const LoginPage = () => {
         <Button className='btn' lang='zh_CN' openType='getPhoneNumber' onGetPhoneNumber={wxAuthorizeLogin}>
           授权登录
         </Button>
-        {/* <Button className='btn' onClick={login}>
-          登录
-        </Button> */}
-        {/* {!userStore.isBindMobile && (
-          <Button className='btn' lang='zh_CN' openType='getPhoneNumber' onGetPhoneNumber={wxAuthorizeLogin}>
-            授权登录
-          </Button>
-        )} */}
-        {/* {userStore.isBindMobile && (
-          <Button className='btn' onClick={login}>
-            登录
-          </Button>
-        )} */}
       </View>
       <View
         onClick={() => {

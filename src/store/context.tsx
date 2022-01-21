@@ -2,6 +2,7 @@ import React from 'react'
 import { useLocalObservable } from 'mobx-react-lite'
 import { createUserStore } from './userStore'
 import { createCommonStore } from './commonStore'
+import { createHomeStore } from './homeStore'
 
 export const StoreContext = React.createContext(null)
 
@@ -9,8 +10,10 @@ export const StoreContext = React.createContext(null)
 let userStore: any = {}
 // eslint-disable-next-line import/no-mutable-exports
 let commonStore: any = {}
+// eslint-disable-next-line import/no-mutable-exports
+let homeStore: any = {}
 
-export { userStore, commonStore }
+export { userStore, commonStore, homeStore }
 
 export const useStore = () => {
   const store = React.useContext<any>(StoreContext)
@@ -24,10 +27,12 @@ export const useStore = () => {
 export function Provider({ children }) {
   userStore = useLocalObservable(createUserStore)
   commonStore = useLocalObservable(createCommonStore)
+  homeStore = useLocalObservable(createHomeStore)
 
   const store = {
     userStore,
     commonStore,
+    homeStore,
   }
 
   return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>

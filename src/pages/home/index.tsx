@@ -1,5 +1,5 @@
 import { View, ScrollView, Image, Input, Text } from '@tarojs/components'
-import Taro, { useTabItemTap } from '@tarojs/taro' // Taro 专有 Hooks
+import Taro, { useTabItemTap, useDidShow } from '@tarojs/taro' // Taro 专有 Hooks
 import { observer } from 'mobx-react'
 import { useEffect, useCallback, useState, useRef } from 'react'
 import { List, Loading, Swiper, PullRefresh } from '@taroify/core'
@@ -22,7 +22,7 @@ let pageIndex = 1;
 
 const HomeScreen = () => {
 
-  const { userStore } = useStore()
+  const { userStore, homeStore } = useStore()
 
   const [bannerList, setBannerList] = useState<any>([])
   const [activityList, setActivityList] = useState<any[]>([])
@@ -36,6 +36,7 @@ const HomeScreen = () => {
     getBanner()
     getActivity()
     pullDownRefresh();
+
     if (Taro.getCurrentInstance()?.router?.params?.q) {
       const q = decodeURIComponent(Taro.getCurrentInstance()?.router?.params?.q ?? '')
       const bizId = getUrlParams(q)['bizId']
@@ -56,7 +57,11 @@ const HomeScreen = () => {
         Taro.navigateTo({ url: '/pages/login/index' })
       }
     }
-  }, [])
+  }, [homeStore.refreshHomePage])
+
+  useDidShow(() => {
+    console.log("进入页面", homeStore.refreshHomePage)
+  })
 
   const getGoodsList = async (pIndex = pageIndex) => {
     const {

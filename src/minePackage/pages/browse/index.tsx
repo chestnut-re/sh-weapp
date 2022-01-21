@@ -79,7 +79,7 @@ const BrowsePage = () => {
           {goodsList.length > 0 ? (
             goodsList.map((item) => (
               <View onClick={() => { anOrder(item) }} className='item' key={item['goodsId']}>
-                <View className='date'>{filterCurDate(getMyDate(item['createTime'])) || '2022/00/00'}</View>
+                <View className='date'>{getMyDate(item['createTime']) || '2022/00/00'}</View>
                 <View className='card'>
                   {item['state'] == 3 ? <View className='no-jump'>已下架</View> : null}
                   <Img
