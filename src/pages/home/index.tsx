@@ -32,8 +32,6 @@ const HomeScreen = () => {
   const [goodsList, setGoodsList] = useState<any[]>([])
 
   useEffect(() => {
-    getBanner()
-    getActivity()
     pullDownRefresh();
 
     if (Taro.getCurrentInstance()?.router?.params?.q) {
@@ -91,6 +89,8 @@ const HomeScreen = () => {
   const pullDownRefresh = async () => {
     setLoading(true)
     pageIndex = 1;
+    getBanner()
+    getActivity()
     const res = await getGoodsList(1);
     setHasMores(res.hasMore)
     setGoodsList(res.list)

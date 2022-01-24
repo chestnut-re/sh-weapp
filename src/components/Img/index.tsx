@@ -11,7 +11,7 @@ interface Props {
 }
 
 /**
- * Img 懒加载图片
+ * Img 加载默认图片
  */
 const Img: React.FC<Props> = ({ className, url }) => {
   const [finishLoadFlag, setFinishLoadFlag] = useState(false) as any
