@@ -80,7 +80,7 @@ const MineScreen = () => {
     // Taro.navigateBack()
   }
   const toMyOrder = () => {
-    Taro.navigateTo({ url: '/pages/myOrder/index' })
+    Taro.navigateTo({ url: '/minePackage/pages/myOrder/index' })
   }
   const toMyToken = () => {
     if (userStore?.totalAmount > 0) {
