@@ -42,6 +42,7 @@ const WebViewPage = () => {
     if (webUrlParams.userId && getUrlPath(url) == 'goods-detail') {
       UserService.bindRecommend(webUrlParams.userId)
     }
+    console.log(dealWebViewURL(url))
     setInitUrl(dealWebViewURL(url))
   }
 

@@ -56,6 +56,7 @@ class UserData {
       likeCount: action,
     })
     this.getToken()
+    this.initCity()
   }
 
   getToken() {

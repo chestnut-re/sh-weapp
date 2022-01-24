@@ -30,9 +30,13 @@ const MyOrderPage = () => {
       setOrders(result.data.data.records)
     }
   }
+  const onTabs = (item) => {
+    setValue(item)
+    // console.log('itemitem', item)
+  }
   return (
     <View className='MyOrderPage__root'>
-      <Tabs className='orderTabs' value={value} onChange={setValue} sticky>
+      <Tabs className='orderTabs' value={value} onChange={onTabs} sticky>
         <Tabs.TabPane title='全部'>
           <OrderList por={orders} state={0} />
         </Tabs.TabPane>

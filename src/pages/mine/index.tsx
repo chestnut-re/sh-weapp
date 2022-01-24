@@ -428,7 +428,7 @@ const MineScreen = () => {
           </View>
           <View className='item' onClick={toSetUp}>
             <Image className='img' src={shezhi} />
-            <View className='item-text'>设置</View>
+            <View className='item-text'>设置中心</View>
           </View>
 
 

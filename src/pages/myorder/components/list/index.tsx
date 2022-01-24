@@ -53,6 +53,10 @@ const OrderListPage = (props) => {
     setLoading(true)
     onLoad()
   }
+  const onBuyAgain = (e) => {
+    const l = `${H5.submitOrder}?id=${e.goodsId}&source=${e.source}`
+    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(l)}` })
+  }
   return (
     <View className='all'>
       <PullRefresh loading={refreshingRef.current} reachTop={reachTop} onRefresh={onRefresh}>
@@ -66,16 +70,16 @@ const OrderListPage = (props) => {
                       {item.state == 1
                         ? '待付款'
                         : item.state == 2
-                        ? '已失效'
-                        : item.state == 3
-                        ? '待核销'
-                        : item.state == 4
-                        ? '已完成'
-                        : item.state == 5
-                        ? '退款中'
-                        : item.state == 6
-                        ? '退款成功'
-                        : '退款失败'}
+                          ? '已失效'
+                          : item.state == 3
+                            ? '待核销'
+                            : item.state == 4
+                              ? '已完成'
+                              : item.state == 5
+                                ? '退款中'
+                                : item.state == 6
+                                  ? '退款成功'
+                                  : '退款失败'}
                     </View>
                     <View className='content'>
                       <Image className='img' src={item.promotionalImageUrl} />
@@ -115,12 +119,12 @@ const OrderListPage = (props) => {
                   ) : item.state == 3 ? (
                     <View className='message'>
                       <View className='message-one'>咨询</View>
-                      <View className='message-one'>再次购买</View>
+                      <View onClick={() => { onBuyAgain(item) }} className='message-one'>再次购买</View>
                       {/* <View className='message-two'>填写出行人信息</View> */}
                     </View>
                   ) : item.state == 4 ? (
                     <View className='message'>
-                      <View className='message-one'>再次购买</View>
+                      <View onClick={() => { onBuyAgain(item) }} className='message-one'>再次购买</View>
                       <View className='message-one'>分享给TA</View>
                     </View>
                   ) : (

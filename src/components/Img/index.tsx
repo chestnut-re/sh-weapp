@@ -19,7 +19,7 @@ const Img: React.FC<Props> = ({ className, url }) => {
       lazyLoad
       src={url ? url : ' '}
       className={`Img__root ${className}`}
-      fallback={<Image src="https://shanhai-shoping.oss-cn-beijing.aliyuncs.com/img/user/pic/327f2ff9f41a4276a670494e49954fb4.gif" />}
+      fallback={<Image src='https://shanhai-shoping.oss-cn-beijing.aliyuncs.com/img/user/pic/327f2ff9f41a4276a670494e49954fb4.gif' />}
     />
   )
 }

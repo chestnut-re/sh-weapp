@@ -42,4 +42,6 @@ export class H5 {
 
   /** 乐豆说明页 */
   static beansExplain = `${h5Domain}/beans-explain`
+  /** 再次购买 */
+  static submitOrder = `${h5Domain}/submit-order`
 }

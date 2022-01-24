@@ -111,6 +111,12 @@ const MsgScreen = (props) => {
         </View>
         <ScrollView scrollY className='msg-scroll' scrollWithAnimation onScrollToLower={() => getCommentInfo()}>
           {/* <Loading /> */}
+          <View className='refundInfoView'>
+            <View className='refundInfoItem'>
+              <View className='txt'>成人X2</View>
+              <View className='btn'>退款失败</View>
+            </View>
+          </View>
           <View className='msg-list'>
             {
               list.map((item, index) => (

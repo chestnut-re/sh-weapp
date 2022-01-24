@@ -32,7 +32,6 @@ const HomeScreen = () => {
   const [goodsList, setGoodsList] = useState<any[]>([])
 
   useEffect(() => {
-    userStore.initCity()
     getBanner()
     getActivity()
     pullDownRefresh();
@@ -175,7 +174,7 @@ const HomeScreen = () => {
         <View className='home-nav'>
           <View className='now-place' onClick={toLocation}>
             <Text className='text'>
-              {userStore.city?.name.length > 4 ? userStore.city?.name.substr(0, 4) + '...' : userStore.city?.name ?? ''}
+              {userStore.city?.name && userStore.city?.name.length > 4 ? userStore.city?.name.substr(0, 4) + '...' : userStore.city?.name ?? ''}
             </Text>
             <Image className='place' src={place} />
           </View>
@@ -228,7 +227,7 @@ const HomeScreen = () => {
       >
 
         <View className='banner'>
-          {bannerList.length > 0 && (
+          {bannerList && bannerList.length > 0 && (
             <Swiper className='top-s' autoplay={3000}>
               {bannerList.map((item) => (
                 <Swiper.Item className='item' key={item.id} onClick={() => toBannerUrl(item.bannerUrl)}>
@@ -273,7 +272,7 @@ const HomeScreen = () => {
             )}
           </View>
           <View className='product-list'>
-            {goodsList.length > 0 && goodsList.map((item) => (
+            {goodsList && goodsList.length > 0 && goodsList.map((item) => (
               <GoodsItem
                 key={item.id}
                 onItemClick={() => {
@@ -283,7 +282,7 @@ const HomeScreen = () => {
               />
             ))}
           </View>
-          {goodsList.length > 0 ? (
+          {goodsList && goodsList.length > 0 ? (
             isLoaded ? (
               ActivityIndicator()
             ) : (

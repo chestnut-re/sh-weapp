@@ -20,7 +20,6 @@ const BrowsePage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasMores, setHasMores] = useState(false);
   const [goodsList, setGoodsList] = useState<any[]>([])
-  const [timeTidyGoodsList, setTimeTidyGoodsList] = useState<any[]>([])
 
 
 
@@ -59,7 +58,6 @@ const BrowsePage = () => {
     const res = await getPageData(1);
     setHasMores(res.hasMore)
     setGoodsList(res.list)
-    tidyGoodsList(res.list)
     setIsLoaded(res.isLoaded)
   };
 
@@ -67,19 +65,6 @@ const BrowsePage = () => {
     const l = `${H5.goodsDetail}?id=${e.goodsId}&goodsPriceId=${e.goodsPriceId}&isRebate=${e.isRebate}&isPurchase=${e.isPurchase}&isPurchaseAdd=${e.isPurchaseAdd}&tagCity=${e.departureCity}&tapInfo=${e.goodsTypeTag}`
     Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(l)}` })
   }
-
-  const tidyGoodsList = (list) => {
-    for (var i = 0; i < list.length; i++) {
-      for (var j = i + 1; j < list.length; j++) {
-        if (filterCurDate(getMyDate(list[i].createTime)) == filterCurDate(getMyDate(list[j].createTime))) {
-          console.log(list[j])
-          // arr.splice(j, 1);
-          // j--;
-        }
-      }
-    }
-  }
-
   return (
     <View className='MyBrowsePage__root'>
       <ScrollView
@@ -93,9 +78,17 @@ const BrowsePage = () => {
       >
         <View className='browseView'>
           {goodsList.length > 0 ? (
-            goodsList.map((item) => (
+            goodsList.map((item, index) => (
               <View onClick={() => { anOrder(item) }} className='item' key={item['goodsId']}>
-                <View className='date'>{getMyDate(item['createTime']) || '2022/00/00'}</View>
+                {index == 0 ? (
+                  <View className='date'>{filterCurDate(getMyDate(item['createTime'])) || '2022/00/00'}</View>
+                ) : (
+                  filterCurDate(getMyDate(goodsList[index].createTime)) != filterCurDate(getMyDate(goodsList[index - 1].createTime)) ? (
+                    <View className='date'>{filterCurDate(getMyDate(item['createTime'])) || '2022/00/00'}</View>
+                  ) : (
+                    null
+                  )
+                )}
                 <View className='card'>
                   {item['state'] == 3 ? <View className='no-jump'>已下架</View> : null}
                   <Img

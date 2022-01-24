@@ -16,14 +16,18 @@ import './index.less'
  * 定位
  */
 const LocationPage = () => {
-  const { userStore } = useStore()
+  const { userStore, homeStore } = useStore()
   const [viewInto, setViewInto] = useState<any>('A')
   const [cityData, setCityData] = useState<any>({})
 
   /**选择城市 */
   const _selectedCity = (city2: any) => {
     userStore.setCityCode(city2)
-    Taro.navigateBack()
+    Taro.navigateBack({
+      complete: () => {
+        homeStore.onRefreshHomePage()
+      }
+    })
   }
 
   const renderCityList = (cityList: any) => {
