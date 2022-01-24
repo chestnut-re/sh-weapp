@@ -91,18 +91,22 @@ const BrowsePage = () => {
                 )}
                 <View className='card'>
                   {item['state'] == 3 ? <View className='no-jump'>已下架</View> : null}
-                  <Img
-                    url={item['promotionalImageUrl']}
-                    className='jump'
-                  />
+                  <View className='jumpView'>
+                    <Img
+                      url={item['promotionalImageUrl']}
+                      className='jump'
+                    />
+                  </View>
                   <View className={item['state'] == 3 ? 'no-right-all' : 'right-all'}>
                     <View className='text'>{item['goodsName']}</View>
                     <View className='money'>{`¥ ${item['personCurrentPrice'] / 100}`}</View>
                     <View className='shopInfo'>
-                      <Img
-                        url={item['shopHeadUrl']}
-                        className='shopHeadImg'
-                      />
+                      <View className='shopHead'>
+                        <Img
+                          url={item['shopHeadUrl']}
+                          className='shopHeadImg'
+                        />
+                      </View>
                       <Text className='shopName'>{item['shopName'] || '暂无'}</Text>
                     </View>
                   </View>
