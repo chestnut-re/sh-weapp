@@ -46,20 +46,20 @@ const MyOrderPage = () => {
   return (
     <View className='MyOrderPage__root'>
       <Tabs className='orderTabs' value={value} onChange={onTabs} sticky>
-        {tabsList.map((item, index) => (
+        {/* {tabsList.map((item, index) => (
           <Tabs.TabPane key={`index${item.state}`} title={item.title}>
             <OrderList por={orders} state={item.state} />
           </Tabs.TabPane>
-        ))}
-        {/* <Tabs.TabPane title='全部'>
+        ))} */}
+        <Tabs.TabPane title='全部'>
           <OrderList por={orders} state={0} />
         </Tabs.TabPane>
         <Tabs.TabPane title='待付款'>
           <OrderList por={orders} state={1} />
         </Tabs.TabPane>
-        <Tabs.TabPane title='已失效'>
+        {/* <Tabs.TabPane title='已失效'>
           <OrderList por={orders} state={2} />
-        </Tabs.TabPane>
+        </Tabs.TabPane> */}
         <Tabs.TabPane title='待核销'>
           <OrderList por={orders} state={3} />
         </Tabs.TabPane>
@@ -68,7 +68,7 @@ const MyOrderPage = () => {
         </Tabs.TabPane>
         <Tabs.TabPane title='退款/售后'>
           <OrderList por={orders} state={5} />
-        </Tabs.TabPane> */}
+        </Tabs.TabPane>
       </Tabs>
     </View>
   )
