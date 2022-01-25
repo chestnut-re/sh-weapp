@@ -45,9 +45,8 @@ const HomeScreen = () => {
           }
         }
       } else {
-        const bizId = getUrlParams(q)['bizId']
+
         const jumpTo = getUrlParams(q)['jumpTo']
-        commonStore.bizId = bizId
         commonStore.jumpTo = jumpTo
 
         // 判断是否登录，没有登录先去登录
@@ -55,6 +54,9 @@ const HomeScreen = () => {
           // 已经登录
           Taro.navigateTo({ url: decodeURIComponent(jumpTo) })
         } else {
+          const bizId = getUrlParams(q)['bizId']
+          commonStore.bizId = bizId
+
           // 未登录
           commonStore.setAfterLoginCallback(() => {
             Taro.redirectTo({ url: decodeURIComponent(jumpTo) }) // 替换登录页面
