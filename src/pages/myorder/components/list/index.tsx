@@ -28,8 +28,10 @@ const OrderListPage = (props) => {
       url: `/pages/webview/index?url=${encodeURIComponent(`${H5.orderDetail}?type=${state}&orderId=${id}`)}`,
     })
   }
-  const toPersonalBind = () => {
-
+  const toPersonalBind = (item) => {
+    Taro.navigateTo({
+      url: `/pages/webview/index?url=${encodeURIComponent(`${H5.personalBind}?id=${item.id}&orderId=${item.goodsId}`)}`,
+    })
   }
   const onLoad = async () => {
     console.log(pageRef.current.loading)
@@ -123,18 +125,19 @@ const OrderListPage = (props) => {
                     <View className='message'>
                       {/* <View className='message-one'>咨询</View> */}
                       <View onClick={() => { onBuyAgain(item) }} className='message-one'>再次购买</View>
-                      {/* <View className='message-two'>填写出行人信息</View> */}
+                      {item.updateType == 0 && <View onClick={() => { toPersonalBind(item) }} className='message-two'>填写出行人信息</View>}
+
                     </View>
                   ) : item.state == 4 ? (
                     <View className='message'>
                       <View onClick={() => { onBuyAgain(item) }} className='message-one'>再次购买</View>
-                      <View className='message-one'>分享给TA</View>
+                      {/* <View className='message-one'>分享给TA</View> */}
                     </View>
                   ) : (
                     <View className='message'>
                       {/* <View className='message-one'>咨询</View>
                       <View className='message-one'>分享给TA</View> */}
-                      <View className='message-two'>填写出行人信息</View>
+                      {/* <View onClick={() => { toPersonalBind(item) }} className='message-two'>填写出行人信息</View> */}
                     </View>
                   )}
                 </View>
