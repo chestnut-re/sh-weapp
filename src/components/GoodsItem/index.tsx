@@ -62,7 +62,7 @@ const GoodsItem: React.FC<Props> = ({ item, onItemClick }) => {
           />
           <View className='label'>
             <View className='label-pic'>{item.departureCity}</View>
-            <View className='text'>{item.goodsNickName}</View>
+            <View className='text'>{item.goodsTypeTag}</View>
           </View>
         </View>
         <View className='content'>
