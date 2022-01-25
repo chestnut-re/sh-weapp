@@ -105,6 +105,12 @@ const LoginPage = () => {
     })
   }
 
+  const onOpenProtocol = () => {
+    if (!selectProtocol) {
+      setOpenProtocol(true)
+    }
+  }
+
   return (
     <View className='LoginPage__root'>
       <NavBar className='loginNav'>
@@ -123,9 +129,16 @@ const LoginPage = () => {
         <View className='text-two'>世界那样美好 待你游历细品</View>
       </View>
       <View className='btn-box'>
-        <Button className='btn' lang='zh_CN' openType='getPhoneNumber' onGetPhoneNumber={wxAuthorizeLogin}>
-          授权登录
-        </Button>
+        {selectProtocol ? (
+          <Button className='btn' lang='zh_CN' openType='getPhoneNumber' onGetPhoneNumber={wxAuthorizeLogin}>
+            授权登录
+          </Button>
+        ) : (
+          <Button onClick={onOpenProtocol} className='btn' lang='zh_CN' >
+            授权登录
+          </Button>
+        )}
+
       </View>
       <View
         onClick={() => {

@@ -44,4 +44,7 @@ export class H5 {
   static beansExplain = `${h5Domain}/beans-explain`
   /** 再次购买 */
   static submitOrder = `${h5Domain}/submit-order`
+
+  /** 添加出行人 */
+  static personalBind = `${h5Domain}/personal-bind`
 }

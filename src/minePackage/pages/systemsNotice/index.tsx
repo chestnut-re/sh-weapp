@@ -48,8 +48,11 @@ const SystemsNoticePage = (props) => {
     console.log('componentDidShow')
   })
 
-  const pullDownRefresh = async () => {
-    setLoading(true)
+  const pullDownRefresh = async (isLoading = true) => {
+    if (isLoading) {
+      setLoading(true)
+    }
+
     pageIndex = 1;
     const res = await getFollowedList(1);
     setHasMores(res.hasMore)
@@ -63,6 +66,9 @@ const SystemsNoticePage = (props) => {
       const {
         data: { data }
       } = res
+      if (data) {
+        pullDownRefresh(false)
+      }
 
       console.log('data', data)
     })
@@ -83,6 +89,7 @@ const SystemsNoticePage = (props) => {
 
   return (
     <View className='MsgPushPage__root'>
+
       <ScrollView
         scrollY
         scrollWithAnimation

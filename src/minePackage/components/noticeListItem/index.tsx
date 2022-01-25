@@ -13,7 +13,7 @@ const NoticeListItem = (props) => {
   return (
     <View className='notice-item'>
       <View className='time'>
-        {getMyDate(itemData.updateTime)}
+        {getMyDate(itemData.createTime)}
       </View>
       <View onClick={props.onRead} className='content'>
         <View className='title'>{itemData.title}</View>

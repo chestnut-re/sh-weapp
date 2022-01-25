@@ -34,7 +34,9 @@ const MsgScreen = (props) => {
   // usePageScroll(({ scrollTop: aScrollTop }) => setScrollTop(aScrollTop))
 
   useEffect(() => {
-    getUnreadMsg()
+    if (userStore.isBindMobile) {
+      getUnreadMsg()
+    }
     // WebIM.conn.getSessionList().then((res) => {
     //   console.log('WebIMWebIMWebIM', res)
     // }).catch((err) => {
@@ -109,7 +111,7 @@ const MsgScreen = (props) => {
             <Text className='txt'>行程消息</Text>
           </View>
         </View>
-        <ScrollView scrollY className='msg-scroll' scrollWithAnimation onScrollToLower={() => getCommentInfo()}>
+        <ScrollView scrollY className='msg-scroll' scrollWithAnimation>
           {/* <Loading /> */}
           {/* <View className='refundInfoView'>
             <View className='refundInfoItem'>

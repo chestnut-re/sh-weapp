@@ -28,6 +28,9 @@ const OrderListPage = (props) => {
       url: `/pages/webview/index?url=${encodeURIComponent(`${H5.orderDetail}?type=${state}&orderId=${id}`)}`,
     })
   }
+  const toPersonalBind = () => {
+
+  }
   const onLoad = async () => {
     console.log(pageRef.current.loading)
     console.log(pageRef.current.current)
@@ -104,21 +107,21 @@ const OrderListPage = (props) => {
                   </View>
                   {item.state == 1 ? (
                     <View className='message'>
-                      <View className='message-one'>咨询</View>
+                      {/* <View className='message-one'>咨询</View> */}
                       <View className='message-two' onClick={() => toOrderDetail(item.state, item.id)}>
                         去付款
                       </View>
                     </View>
                   ) : item.state == 2 ? (
                     <View className='message'>
-                      <View className='message-one'>咨询</View>
+                      {/* <View className='message-one'>咨询</View> */}
                       <View className='message-two' onClick={() => toOrderDetail(item.state, item.id)}>
                         去付款
                       </View>
                     </View>
                   ) : item.state == 3 ? (
                     <View className='message'>
-                      <View className='message-one'>咨询</View>
+                      {/* <View className='message-one'>咨询</View> */}
                       <View onClick={() => { onBuyAgain(item) }} className='message-one'>再次购买</View>
                       {/* <View className='message-two'>填写出行人信息</View> */}
                     </View>
@@ -129,8 +132,8 @@ const OrderListPage = (props) => {
                     </View>
                   ) : (
                     <View className='message'>
-                      <View className='message-one'>咨询</View>
-                      <View className='message-one'>分享给TA</View>
+                      {/* <View className='message-one'>咨询</View>
+                      <View className='message-one'>分享给TA</View> */}
                       <View className='message-two'>填写出行人信息</View>
                     </View>
                   )}
