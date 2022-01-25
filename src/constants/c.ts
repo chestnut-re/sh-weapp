@@ -1,23 +1,33 @@
 /**
  * BASE_URL
  */
-// export const BASE_URL = 'http://192.168.10.59:19001'
 
 /**测试服务器 */
 // export const BASE_URL = 'http://47.94.45.53:39010'
 // export const BASE_URL = 'http://192.168.10.60:39210/api' //杨东
 // export const BASE_URL = 'http://192.168.10.188:19001/api' //刘金凯
 // export const BASE_URL = 'http://192.168.10.52:19001' //邢浩
-export const BASE_URL = 'https://prodapi.mountainseas.cn/api' //线上环境
-// export const BASE_URL = 'https://testapi.mountainseas.cn/api' //测试环境
-// export const BASE_URL = 'https://devapi.mountainseas.cn/api' //开发环境
 
 /**
- * H5 url 地址
+ * 正式环境
  */
-// export const h5Domain = 'http://192.168.10.126:4000'
-export const h5Domain = 'https://travel.mountainseas.cn'
+export const BASE_URL = 'https://prodapi.mountainseas.cn/api' //线上环境
+export const h5Domain = 'https://travel.mountainseas.cn' // 正式
+
+/**
+ * 测试环境
+ */
+// export const BASE_URL = 'https://testapi.mountainseas.cn/api' //测试环境
+// export const h5Domain = 'https://testtravel.mountainseas.cn' // 测试
+
+/**
+ * 开发环境
+ */
+
+// export const BASE_URL = 'https://devapi.mountainseas.cn/api' //开发环境
 // export const h5Domain = 'https://devtravel.mountainseas.cn'
+
+// export const h5Domain = 'http://192.168.10.126:4000'
 
 /**SESSION_KEY */
 export const SESSION_KEY = 'SESSION_KEY'

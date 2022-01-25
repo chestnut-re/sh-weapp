@@ -41,7 +41,6 @@ const MyOrderPage = () => {
   }
   const onTabs = (item) => {
     setValue(item)
-    // console.log('itemitem', item)
   }
   return (
     <View className='MyOrderPage__root'>
