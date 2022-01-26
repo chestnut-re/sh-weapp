@@ -93,8 +93,8 @@ const MineScreen = () => {
   const toFist = () => {
     // Taro.navigateBack()
   }
-  const toMyOrder = () => {
-    Taro.navigateTo({ url: '/pages/myOrder/index' })
+  const toMyOrder = (type) => {
+    Taro.navigateTo({ url: `/pages/myorder/index?type=${type}` })
   }
   const toMyToken = () => {
     if (userStore?.totalAmount > 0) {
@@ -445,20 +445,35 @@ const MineScreen = () => {
         <View className='my-order'>
           <View className='order-tab'>
             <View className='tab'>我的订单</View>
-            <View className='all-order' onClick={toMyOrder}>
+            <View
+              className='all-order'
+              onClick={() => {
+                toMyOrder(0)
+              }}
+            >
               全部订单
               <Image className='img' src={jump} />
             </View>
           </View>
           <View className='order-type'>
-            <View className='red-body' onClick={toMyOrder}>
+            <View
+              className='red-body'
+              onClick={() => {
+                toMyOrder(1)
+              }}
+            >
               <Image src={wpey} />
               <View>待付款</View>
               {orderCount['unpaidCountNum'] && orderCount['unpaidCountNum'] > 0 ? (
                 <View className='red-num'>{orderCount['unpaidCountNum']}</View>
               ) : (null)}
             </View>
-            <View className='sec red-body' onClick={toMyOrder}>
+            <View
+              className='sec red-body'
+              onClick={() => {
+                toMyOrder(3)
+              }}
+            >
               <Image src={peying} />
               <View>待核销</View>
               {orderCount['unconfirmedCountNum'] && orderCount['unconfirmedCountNum'] > 0 ? (
@@ -466,7 +481,12 @@ const MineScreen = () => {
               ) : (null)}
 
             </View>
-            <View className='red-body' onClick={toMyOrder}>
+            <View
+              className='red-body'
+              onClick={() => {
+                toMyOrder(4)
+              }}
+            >
               <Image src={overpey} />
               <View>已完成</View>
               {orderCount['completedCountNum'] && orderCount['completedCountNum'] > 0 ? (

@@ -5,7 +5,7 @@ export default {
     'pages/mine/index',
     'pages/login/index',
     'pages/pay/index',
-    'pages/myOrder/index',
+    'pages/myorder/index',
     'pages/usualMessage/index',
     'pages/resetPassword/index',
     'pages/verification/index',

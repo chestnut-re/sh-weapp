@@ -1,4 +1,4 @@
-import { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
+import Taro, { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
 import { View } from '@tarojs/components'
 import { Tabs } from '@taroify/core'
 import { useEffect, useState } from 'react'
@@ -24,6 +24,9 @@ const MyOrderPage = () => {
   const [reachTop, setReachTop] = useState(true)
   const [orders, setOrders] = useState<any[]>([])
   useEffect(() => {
+    const type = Taro.getCurrentInstance()?.router?.params?.type as any
+    setValue(Number(type))
+    console.log('urlParams', Number(type))
     orderList()
   }, [])
   usePageScroll(({ scrollTop: aScrollTop }) => {
@@ -39,7 +42,6 @@ const MyOrderPage = () => {
       setOrders(result.data.data.records)
     }
   }
-
 
   const onTabs = (item) => {
     setValue(item)
