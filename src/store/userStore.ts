@@ -9,6 +9,7 @@ import Taro from '@tarojs/taro'
 import { makeObservable, observable, action } from 'mobx'
 import { hideLoading, showLoading, showMToast } from '@/utils/ui'
 import { getSuggestCity } from '@/utils/location'
+import { commonStore } from '@/store/context'
 
 /**
  * 用户相关数据
@@ -82,17 +83,28 @@ class UserData {
     return data
   }
 
+  registerChannel() {
+    if (commonStore.bizId != '') {
+      return 1
+    } else if (commonStore.taskId != '') {
+      return 2
+    } else if (commonStore.goodsId != '') {
+      return 3
+    }
+    return 5
+  }
+
   /**登录 */
   async login(encryptedData, iv, wxCode) {
     const loginParams = {} as any
     const openInfo = await this.getOpenId(wxCode)
-    console.log('openInfo', openInfo)
+    console.log('openInfo', this.registerChannel())
 
     loginParams.encryptedData = encryptedData
     loginParams.sessionKey = openInfo.sessionKey
     loginParams.iv = iv
     loginParams.openId = openInfo.openId
-    loginParams.registerChannel = ''
+    loginParams.registerChannel = this.registerChannel()
     loginParams.salesmanUserId = ''
 
     const { data } = await WXService.login(loginParams)

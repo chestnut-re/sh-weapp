@@ -25,8 +25,17 @@ const WebViewPage = () => {
 
     // 判断是否登录，没有登录先去登录
     if (!userStore.isBindMobile && (getUrlPath(url) == 'goods-detail' || getUrlPath(url) == 'group-shop')) {
+
       const bizId = getUrlParams(url)['bizId']
+      const taskId = getUrlParams(url)['taskId']
+      const userId = getUrlParams(url)['userId']
+      if (taskId && userId) {
+        commonStore.taskId = taskId
+      }
       if (bizId) {
+        commonStore.bizId = bizId
+      }
+      if (!bizId && getUrlPath(url) == 'goods-detail') {
         commonStore.bizId = bizId
       }
       Taro.navigateTo({ url: `/pages/login/index?url=${Taro.getCurrentInstance()?.router?.params?.url ?? ''}&from=web` })

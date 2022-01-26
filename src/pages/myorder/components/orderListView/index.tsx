@@ -106,11 +106,9 @@ const OrderListPage = ({ por }) => {
                                 </View>
                               )
                             }
-
                           </View>
                         ))
                       }
-
                     </View>
                   )}
 

@@ -46,7 +46,6 @@ const HomeScreen = () => {
 
     if (Taro.getCurrentInstance()?.router?.params?.q) {
       const q = decodeURIComponent(Taro.getCurrentInstance()?.router?.params?.q ?? '')
-
       if (q.startsWith('https://travel.mountainseas.cn/miniapp?action=go') && getUrlParams(q)['data']) {
         const data = getUrlParams(q)['data']
         if (data) {
@@ -58,7 +57,6 @@ const HomeScreen = () => {
           }
         }
       } else {
-
         const jumpTo = getUrlParams(q)['jumpTo']
         commonStore.jumpTo = jumpTo
 

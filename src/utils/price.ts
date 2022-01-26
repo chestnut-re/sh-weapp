@@ -10,5 +10,9 @@ export const getPrice = (price: number | string, toFixed = 0) => {
     return '0.00'
   }
   let priceInt = (Number(price) / 1000).toFixed(toFixed)
-  return parseInt(priceInt)
+  return priceInt
+}
+
+export const getIntPrice = (price: number | string, toFixed = 0) => {
+  return parseInt(getPrice(price, toFixed))
 }

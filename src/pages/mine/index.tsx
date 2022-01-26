@@ -1,50 +1,35 @@
 import Taro, { useDidShow, usePageScroll, useShareAppMessage, useTabItemTap } from '@tarojs/taro'
 import { useStore } from '@/store/context'
 import { ScrollView, View, Text, Image, Canvas } from '@tarojs/components'
-import { Steps, List, Popup } from '@taroify/core'
 import { observer } from 'mobx-react'
 import { useEffect, useState } from 'react'
 import { getUrlParams, getUrlPath } from '@/utils/webviewUtils'
 import { showMToast } from '@/utils/ui'
 import pic from '@/assets/img/common/shg.png'
-import lingdang from '@/assets/img/mine/lingdang.png'
-import saoyisao from '@/assets/img/mine/saoyisao.png'
-import saoyisao1 from '@/assets/img/mine/saoyisao1.png'
+
 import shezhi from '@/assets/img/mine/shezhi.png'
-import shezhi1 from '@/assets/img/mine/shezhi1.png'
-import myPhoto from '@/assets/img/mine/myphoto.png'
+
 import jump from '@/assets/img/yjfk/jump.png'
 import tishi from '@/assets/img/mine/tishi.png'
 import liulan from '@/assets/img/mine/liulan.png'
 import good from '@/assets/img/mine/good.png'
-import map from '@/assets/img/mine/map.png'
-import join from '@/assets/img/mine/join.png'
-import renzheng from '@/assets/img/mine/renzheng.png'
-import yhquan from '@/assets/img/mine/yhquan.png'
+
 import cyxx from '@/assets/img/mine/cyxx.png'
 import kefu from '@/assets/img/mine/kefu.png'
 import wpey from '@/assets/img/mine/wpey.png'
 import peying from '@/assets/img/mine/peying.png'
 import overpey from '@/assets/img/mine/overpey.png'
-import tuanzhang from '@/assets/img/mine/tuanzhang.png'
-import qiandao from '@/assets/img/mine/qiandao.png'
-import close from '@/assets/img/mine/close.png'
+
 import db from '@/assets/img/mine/coin.png'
 import store from '@/assets/img/mine/store.png'
-import circle from '@/assets/img/mine/circle.png'
-import weCat from '@/assets/img/mine/weCat.png'
-import long from '@/assets/img/mine/long.png'
-import link from '@/assets/img/mine/link.png'
-import del from '@/assets/img/mine/del.png'
+
 import { H5 } from '@/constants/h5'
-import { LikeService } from '@/service/Like'
 
 import ShareView from '@/components/shareView'
-import { UserService } from '@/service/UserService'
 import LongImgView from '@/components/longImgView'
 import './index.less'
 import { MyOrderService } from '@/service/MyOrderService'
-
+import { getIntPrice } from '@/utils/price'
 /**
  * 我的页面
  */
@@ -389,7 +374,7 @@ const MineScreen = () => {
             <Image onClick={toMyTokenExplain} className='img' src={tishi} />
           </View>
           <View className='myTokenNum'>
-            <View className='Token__Num'>{userStore?.totalAmount}</View>
+            <View className='Token__Num'>{getIntPrice(userStore?.totalAmount, 2)}</View>
             <Image className='img' src={db} />
           </View>
         </View>
