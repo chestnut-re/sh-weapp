@@ -119,7 +119,6 @@ const SystemsNoticePage = (props) => {
           ))}
           {msgList.length > 0 && !hasMore && <View className='noMore'>加载完成</View>}
         </View>
-
       </ScrollView>
     </View>
   )
