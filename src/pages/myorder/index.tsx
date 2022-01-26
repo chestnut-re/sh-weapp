@@ -16,7 +16,7 @@ let pageIndex = 1;
 const tabsList = [
   { title: '全部', state: '0' },
   { title: '待付款', state: '1' },
-  { title: '已失效', state: '2' },
+  // { title: '已失效', state: '2' },
   { title: '待核销', state: '3' },
   { title: '已完成', state: '4' },
   { title: '退款/售后', state: '5' },
