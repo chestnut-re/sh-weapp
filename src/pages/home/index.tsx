@@ -43,7 +43,6 @@ const HomeScreen = () => {
     // })
     // Taro.navigateTo({ url: '/pages/login/index' })
 
-
     if (Taro.getCurrentInstance()?.router?.params?.q) {
       const q = decodeURIComponent(Taro.getCurrentInstance()?.router?.params?.q ?? '')
       if (q.startsWith('https://travel.mountainseas.cn/miniapp?action=go') && getUrlParams(q)['data']) {

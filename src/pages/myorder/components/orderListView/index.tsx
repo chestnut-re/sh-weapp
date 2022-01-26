@@ -4,7 +4,7 @@ import { useRef, useState } from 'react'
 import { observer } from 'mobx-react'
 import { H5 } from '@/constants/h5'
 import './index.less'
-import { getPrice } from '@/utils/price'
+import { RMB_CON } from '@/utils/price'
 /**
  * 我的订单
  */
@@ -115,9 +115,9 @@ const OrderListPage = ({ por }) => {
                 </View>
               </View>
               <View className='price'>
-                <View className='discount'>已优惠 <Text className='money'>¥{getPrice(item.discountAmount, 2)}</Text></View>
+                <View className='discount'>已优惠 <Text className='money'>¥{RMB_CON(item.discountAmount)}</Text></View>
                 <View>
-                  共计 ¥{getPrice(item.payAmount, 2)}
+                  共计 ¥{RMB_CON(item.payAmount)}
                 </View>
               </View>
 

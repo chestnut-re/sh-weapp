@@ -9,7 +9,7 @@ import Img from '@/components/Img'
 import { H5 } from '@/constants/h5'
 import NoDataView from '@/components/noDataView'
 import { getMyDate, filterCurDate } from '@/utils/date'
-import { getPrice, getIntPrice } from '@/utils/price'
+import { RMB_CON } from '@/utils/price'
 
 import './index.less'
 
@@ -100,7 +100,7 @@ const BrowsePage = () => {
                   </View>
                   <View className={item['state'] == 3 ? 'no-right-all' : 'right-all'}>
                     <View className='text'>{item['goodsName']}</View>
-                    <View className='money'>{`¥ ${getIntPrice(item['personCurrentPrice'])}`}</View>
+                    <View className='money'>{`¥ ${RMB_CON(item['personCurrentPrice'])}`}</View>
                     <View className='shopInfo'>
                       <View className='shopHead'>
                         <Img

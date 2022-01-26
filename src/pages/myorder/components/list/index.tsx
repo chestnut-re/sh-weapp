@@ -7,7 +7,7 @@ import pic from '@/assets/img/common/shg.png'
 import { H5 } from '@/constants/h5'
 import './index.less'
 import { MyOrderService } from '@/service/MyOrderService'
-import { getPrice } from '@/utils/price'
+import { RMB_CON } from '@/utils/price'
 /**
  * 我的订单
  */
@@ -19,7 +19,6 @@ const OrderListPage = (props) => {
   const refreshingRef = useRef(false)
   const [scrollTop, setScrollTop] = useState(0)
   const [reachTop, setReachTop] = useState(true)
-  const RMB_CON = 100
   usePageScroll(({ scrollTop: aScrollTop }) => {
     setScrollTop(aScrollTop)
     setReachTop(aScrollTop === 0)
@@ -102,9 +101,9 @@ const OrderListPage = (props) => {
                       </View>
                     </View>
                     <View className='price'>
-                      <View className='discount'>已优惠¥{getPrice(item.discountAmount, 2)}</View>
+                      <View className='discount'>已优惠¥{RMB_CON(item.discountAmount)}</View>
                       <View>
-                        共计<Text className='money'>¥{getPrice(item.payAmount, 2)}</Text>
+                        共计<Text className='money'>¥{RMB_CON(item.payAmount)}</Text>
                       </View>
                     </View>
                   </View>

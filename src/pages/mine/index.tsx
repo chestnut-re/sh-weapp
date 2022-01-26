@@ -29,7 +29,7 @@ import ShareView from '@/components/shareView'
 import LongImgView from '@/components/longImgView'
 import './index.less'
 import { MyOrderService } from '@/service/MyOrderService'
-import { getIntPrice } from '@/utils/price'
+import { RMB_CON } from '@/utils/price'
 /**
  * 我的页面
  */
@@ -374,7 +374,7 @@ const MineScreen = () => {
             <Image onClick={toMyTokenExplain} className='img' src={tishi} />
           </View>
           <View className='myTokenNum'>
-            <View className='Token__Num'>{getIntPrice(userStore?.totalAmount, 2)}</View>
+            <View className='Token__Num'>{RMB_CON(userStore?.totalAmount)}</View>
             <Image className='img' src={db} />
           </View>
         </View>

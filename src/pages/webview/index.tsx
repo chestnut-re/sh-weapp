@@ -36,7 +36,7 @@ const WebViewPage = () => {
         commonStore.bizId = bizId
       }
       if (!bizId && getUrlPath(url) == 'goods-detail') {
-        commonStore.bizId = bizId
+        commonStore.goodsId = 'goods'
       }
       Taro.navigateTo({ url: `/pages/login/index?url=${Taro.getCurrentInstance()?.router?.params?.url ?? ''}&from=web` })
     } else {
