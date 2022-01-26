@@ -62,6 +62,7 @@ class UserData {
   getToken() {
     try {
       const value = Taro.getStorageSync(ACCESS_TOKEN)
+      console.log('ACCESS_TOKEN', value)
       if (value) {
         this.accessToken = value
       }

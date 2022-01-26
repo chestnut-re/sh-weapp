@@ -43,6 +43,7 @@ import ShareView from '@/components/shareView'
 import { UserService } from '@/service/UserService'
 import LongImgView from '@/components/longImgView'
 import './index.less'
+import { MyOrderService } from '@/service/MyOrderService'
 
 /**
  * 我的页面
@@ -59,11 +60,14 @@ const MineScreen = () => {
   const [isShowLongImg, setIsShowLongImg] = useState(false)
   const [image, setImage] = useState('')
 
+  const [orderCount, setOrderCount] = useState({})
+
   const picture =
     'https://shanhai-shoping.oss-cn-beijing.aliyuncs.com/img/user/pic/cd2d77f5983f44c5b6e20c313e12d26e.jpg'
   useEffect(() => {
     if (userStore.isBindMobile) {
       userStore.getMineInfo()
+      getQuerySortOrderCount()
     }
   }, [])
 
@@ -74,6 +78,16 @@ const MineScreen = () => {
       return
     }
   })
+
+  const getQuerySortOrderCount = () => {
+    MyOrderService.querySortOrderCount().then((res) => {
+      const { data: { data } } = res
+      if (data) {
+        setOrderCount(data)
+      }
+      console.log('res data data data data', data)
+    })
+  }
 
 
   const toFist = () => {
@@ -308,10 +322,6 @@ const MineScreen = () => {
         const params = getUrlParams(res.result)
         const d = JSON.parse(decodeURIComponent(params['data']))
         if (d.type === 'web') {
-          // const webUrlParams = getUrlParams(d['path'])
-          // if (webUrlParams.userId && getUrlPath(d['path']) == 'goods-detail') {
-          //   UserService.bindRecommend(webUrlParams.userId)
-          // }
           Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(d['path'])}` })
         } else {
           showMToast('请扫描店铺二维码')
@@ -325,20 +335,6 @@ const MineScreen = () => {
   return (
     <View className='MineScreen__root'>
       <View className='index'>
-        {/* 使用Canvas绘制分享图片 */}
-        {/* {isShowCanvas && (
-          <View className='canvas-wrap'>
-            <Canvas
-              id='card-canvas'
-              className='card-canvas'
-              style='width: 320px; height: 450px'
-              canvasId='cardCanvas'
-            ></Canvas>
-            <Button onClick={saveCard} className='btn-save' type='primary' size='mini'>
-              保存到相册
-            </Button>
-          </View>
-        )} */}
         <Canvas
           id='card-canvas'
           className='card-canvas'
@@ -430,32 +426,6 @@ const MineScreen = () => {
             <Image className='img' src={shezhi} />
             <View className='item-text'>设置中心</View>
           </View>
-
-
-          {/* <View className='item' onClick={() => setOpen(true)}>
-            <Image className='img' src={map} />
-            <View className='item-text'>分享</View>
-          </View> */}
-          {/* <View className='item'>
-          <Image className='img' src={join} />
-          <View className='item-text'>邀请好友</View>
-        </View> */}
-          {/* <View className='item'>
-          <Image className='img' src={renzheng} />
-          <View className='item-text'>学生认证</View>
-        </View>
-        <View className='item'>
-          <Image className='img' src={yhquan} />
-          <View className='item-text'>优惠券</View>
-        </View>
-        <View className='item'>
-          <Image className='img' src={map} />
-          <View className='item-text'>游记地图</View>
-        </View>
-        <View className='item' onClick={() => setOpen(true)}>
-          <Image className='img' src={map} />
-          <View className='item-text'>分享</View>
-        </View> */}
         </View>
         {/* <View className='travel' onClick={toMyTravel}>
         <View className='travel-title'>
@@ -484,139 +454,28 @@ const MineScreen = () => {
             <View className='red-body' onClick={toMyOrder}>
               <Image src={wpey} />
               <View>待付款</View>
-              {/* <View className='red-num'>2</View> */}
+              {orderCount['unpaidCountNum'] && orderCount['unpaidCountNum'] > 0 ? (
+                <View className='red-num'>{orderCount['unpaidCountNum']}</View>
+              ) : (null)}
             </View>
-            <View className='sec' onClick={toMyOrder}>
+            <View className='sec red-body' onClick={toMyOrder}>
               <Image src={peying} />
               <View>待核销</View>
+              {orderCount['unconfirmedCountNum'] && orderCount['unconfirmedCountNum'] > 0 ? (
+                <View className='red-num'>{orderCount['unconfirmedCountNum']}</View>
+              ) : (null)}
+
             </View>
-            <View onClick={toMyOrder}>
+            <View className='red-body' onClick={toMyOrder}>
               <Image src={overpey} />
               <View>已完成</View>
+              {orderCount['completedCountNum'] && orderCount['completedCountNum'] > 0 ? (
+                <View className='red-num'>{orderCount['completedCountNum']}</View>
+              ) : (null)}
             </View>
           </View>
         </View>
-        {/* <View className='play-game' onClick={toReferenceRouter}>
-        <View className='trip'>
-          <View className='header'>
-            <View className='happy'>乐享游玩中</View>
-            <View className='share'>我在三亚游玩分享此刻</View>
-          </View>
-          <View className='play-name'>三亚5日自由行(5钻)·直减300『高星4晚连住』</View>
-          <View className='step'>
-            <Steps className='custom-color' value={2} alternativeLabel>
-              <Steps.Step>第一天</Steps.Step>
-              <Steps.Step>第二天</Steps.Step>
-              <Steps.Step>第三天</Steps.Step>
-              <Steps.Step>第四天</Steps.Step>
-              <Steps.Step>第五天</Steps.Step>
-            </Steps>
-          </View>
-          <View className='commander'>
-            <View>
-              <Image className='img' src={tuanzhang} />
-              <Text className='call'>团长</Text>
-              <View className='name'>赵大白</View>
-            </View>
-            <View className='help'>需要帮助？</View>
-          </View>
-        </View>
-        <View className='date'>
-          <View>
-            <View className='time'>8:30集合</View>
-            <View className='place'>亚特兰蒂斯酒店大堂</View>
-          </View>
-          <Image className='img' src={qiandao} />
-        </View>
-      </View>
-      <View className='join-team'>
-        <View className='close'>
-          <View>
-            <Text>我知道了</Text>
-            <Image className='img' src={close} />
-          </View>
-        </View>
-        <View className='join'>
-          <Image className='img' src={pic} />
-          <View>
-            <View className='ontext'>三亚5日自由行(5钻)·直减300『高星4晚连住...</View>
-            <View className='untext'>已成团，将于2021/10/22出发</View>
-          </View>
-        </View>
-      </View>
-      <View className='order-list'>
-        <List
-          loading={loading}
-          hasMore={hasMore}
-          scrollTop={scrollTop}
-          onLoad={() => {
-            setLoading(true)
-            setTimeout(() => {
-              for (let i = 0; i < 10; i++) {
-                const text = list.length + 1
-                list.push(text < 10 ? '0' + text : String(text))
-              }
-              setList([...list])
-              setHasMore(list.length < 40)
-              setLoading(false)
-            }, 1000)
-          }}
-        >
-          {list.map((item) => (
-            <View className='item' key={item}>
-              <View className='order-card'>
-                <View className='content'>
-                  <Image className='img' src={pic} />
-                  <View className='name'>
-                    三亚5日自由行(5钻)·直减300「高 星4晚连住...
-                    <View className='small-name'>
-                      <View>2021/10/22出发</View>
-                      <View>
-                        <Text>成人X2</Text> <Text>儿童X2</Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-                <View className='price'>
-                  <View className='discount'>已优惠¥200</View>
-                  <View>
-                    共计<Text className='money'>¥5798</Text>
-                  </View>
-                </View>
-                <View className='message'>
-                  <View className='message-one'>咨询</View>
-                  <View className='message-two'>去支付</View>
-                </View>
-              </View>
-            </View>
-          ))}
-        </List>
-      </View>
-      <Popup className='popup' open={open} rounded placement='bottom'>
-        <View className='popup-title'>
-          <View>分享给TA 一起嗨玩</View>
-          <Image className='del' src={del} onClick={() => setOpen(false)} />
-        </View>
-        <View className='popup-select'>
-          <Button openType='share' plain id='1'>
-            <Image src={weCat} />
-            <View>微信</View>
-          </Button>
-          <Button openType='share' plain id='2'>
-            <Image src={circle} />
-            <View>朋友圈</View>
-          </Button>
-          <Button openType='share' plain id='3'>
-            <Image src={link} />
-            <View>链接</View>
-          </Button>
-          <Button onGetUserInfo={getUserInfo} openType='getUserInfo' plain id='4'>
-            <Image src={long} />
-            <View>长图</View>
-          </Button>
-        </View>
-        <View className='btn'>取消</View>
-      </Popup> */}
+
       </ScrollView>
     </View>
   )

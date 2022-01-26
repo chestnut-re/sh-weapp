@@ -1,3 +1,4 @@
+import { doPostAction } from './../utils/request'
 import { doGetAction } from '@/utils/request'
 import { BASE_URL } from '../constants/c'
 
@@ -21,6 +22,13 @@ export class MyOrderService {
         current,
         size: 10,
       },
+    })
+  }
+  /// 获取订单数量
+  static querySortOrderCount() {
+    return doPostAction({
+      url: `${BASE_URL}/orders/querySortOrderCount`,
+      data: {},
     })
   }
 }

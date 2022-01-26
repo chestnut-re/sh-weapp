@@ -7,6 +7,7 @@ import pic from '@/assets/img/common/shg.png'
 import { H5 } from '@/constants/h5'
 import './index.less'
 import { MyOrderService } from '@/service/MyOrderService'
+import { getPrice } from '@/utils/price'
 /**
  * 我的订单
  */
@@ -101,9 +102,9 @@ const OrderListPage = (props) => {
                       </View>
                     </View>
                     <View className='price'>
-                      <View className='discount'>已优惠¥{item.discountAmount / RMB_CON}</View>
+                      <View className='discount'>已优惠¥{getPrice(item.discountAmount, 2)}</View>
                       <View>
-                        共计<Text className='money'>¥{item.payAmount / RMB_CON}</Text>
+                        共计<Text className='money'>¥{getPrice(item.payAmount, 2)}</Text>
                       </View>
                     </View>
                   </View>

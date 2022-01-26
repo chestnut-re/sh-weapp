@@ -5,9 +5,10 @@
  * @returns number
  * 格式化价格方法
  */
-export const getPrice = (price: number | string, toFixed = 0): string => {
+export const getPrice = (price: number | string, toFixed = 0) => {
   if (price == '' || price == null) {
     return '0.00'
   }
-  return (Number(price) / 1000).toFixed(toFixed)
+  let priceInt = (Number(price) / 1000).toFixed(toFixed)
+  return parseInt(priceInt)
 }
