@@ -155,7 +155,6 @@ const HomeScreen = () => {
           id: '',
         })
       }
-
       setActivityList(poshDataNum == 3 ? [] : newActivityList)
     }
   }

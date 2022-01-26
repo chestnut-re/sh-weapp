@@ -87,7 +87,7 @@ const OrderListPage = ({ por }) => {
                       成人X{item.adultNum} 儿童X{item.childNum}
                     </View>
                   </View>
-                  {item.refundNumDtoList && item.refundNumDtoList.length > 0 && (
+                  {/* {item.refundNumDtoList && item.refundNumDtoList.length > 0 && (
                     <View className='refundInfoView'>
                       {
                         item.refundNumDtoList.map((refundItem, refundIndex) => (
@@ -110,7 +110,7 @@ const OrderListPage = ({ por }) => {
                         ))
                       }
                     </View>
-                  )}
+                  )} */}
 
                 </View>
               </View>
