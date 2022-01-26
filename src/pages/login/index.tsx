@@ -64,11 +64,13 @@ const LoginPage = () => {
         if (commonStore.afterLoginCallback) {
           commonStore.afterLoginCallback()
           commonStore.removeAfterLoginCallback()
+          return;
         }
         /**
          * 判断是否h5页面
          */
         if (params.from == 'web') {
+          console.log('webMiniPathswebMiniPaths', params)
           if (urlParams.rebateType == '2' && result.data.userDetails.isRegister == 0) {
             const beanParams = {
               recommendId: urlParams.userId,

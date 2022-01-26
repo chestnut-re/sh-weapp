@@ -30,6 +30,19 @@ const HomeScreen = () => {
 
   useEffect(() => {
     pullDownRefresh()
+    // const qs = 'https://testtravel.mountainseas.cn/miniapp?action=go&bizId=1478274355669729280&jumpTo=%2Fpages%2Fwebview%2Findex%3Furl%3Dhttps%253A%252F%252Ftesttravel.mountainseas.cn%252Fgroup-shop%253Fid%253D1478274356177240064%2526userId%253D1478274355669729280&timeStamp=1643182175350'
+    // const jumpTos = getUrlParams(qs)['jumpTo']
+    // const webMiniPaths = `/pages/webview/index?url=${qs}`
+    // const bizId = getUrlParams(qs)['bizId']
+    // commonStore.bizId = bizId
+
+    // // 未登录
+    // commonStore.setAfterLoginCallback(() => {
+    //   Taro.redirectTo({ url: decodeURIComponent(jumpTos) }) // 替换登录页面
+    //   commonStore.removeAfterLoginCallback()
+    // })
+    // Taro.navigateTo({ url: '/pages/login/index' })
+
 
     if (Taro.getCurrentInstance()?.router?.params?.q) {
       const q = decodeURIComponent(Taro.getCurrentInstance()?.router?.params?.q ?? '')
