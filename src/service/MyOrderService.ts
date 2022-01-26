@@ -7,18 +7,12 @@ import { BASE_URL } from '../constants/c'
  */
 
 export class MyOrderService {
-  /// 获取订单列表
-  static orderQuery() {
-    return doGetAction({
-      url: `${BASE_URL}/orders/query`,
-      data: {},
-    })
-  }
   /// 下拉刷新
-  static orderQueryUp(current) {
+  static orderQueryUp(current, params) {
     return doGetAction({
-      url: `${BASE_URL}/orders/query`,
+      url: `${BASE_URL}/orders/findOrdersAndRefund`,
       data: {
+        ...params,
         current,
         size: 10,
       },

@@ -41,7 +41,7 @@ const OrderListPage = (props) => {
     pageRef.current.loading = true
     setLoading(true)
     let newList = pageRef.current.current === 1 ? [] : list
-    MyOrderService.orderQueryUp(pageRef.current.current).then((result) => {
+    MyOrderService.orderQueryUp(pageRef.current.current, 1).then((result) => {
       refreshingRef.current = false
       if (result.data.code == '200') {
         setList(newList.concat(result.data.data.records))
