@@ -33,7 +33,7 @@ const MyOrderPage = () => {
   useEffect(() => {
     const type = Taro.getCurrentInstance()?.router?.params?.type
     setValue(Number(type))
-    pullDownRefresh(1, Number(type))
+    pullDownRefresh(1, tabsList[Number(type)].state)
   }, [])
 
   const pullDownRefresh = async (page, type, isLoading = true) => {
@@ -76,8 +76,7 @@ const MyOrderPage = () => {
   const onTabs = async (item) => {
     if (item == value) return
     setValue(item)
-    pullDownRefresh(1, item, false)
-    console.log('list list list', item)
+    pullDownRefresh(1, tabsList[item].state, false)
   }
 
   /**
@@ -107,13 +106,13 @@ const MyOrderPage = () => {
         scrollWithAnimation
         refresherEnabled
         refresherTriggered={loading}
-        onRefresherRefresh={() => pullDownRefresh(1, value)}
+        onRefresherRefresh={() => pullDownRefresh(1, tabsList[value].state)}
         onScrollToLower={onScrollToLower}
         refresherBackground='#f1f2f2'
       >
 
         {orders && orders.length > 0 ? (
-          <OrderList por={orders} />
+          <OrderList por={orders} orderStateNum={tabsList[value].state} />
         ) : (
           !loading && (<NoDataView text='亲，还没有订单哦~' />)
         )}

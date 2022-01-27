@@ -38,7 +38,7 @@ const WebViewPage = () => {
       if (!bizId && getUrlPath(url) == 'goods-detail') {
         commonStore.goodsId = 'goods'
       }
-      Taro.navigateTo({ url: `/pages/login/index?url=${Taro.getCurrentInstance()?.router?.params?.url ?? ''}&from=web` })
+      Taro.redirectTo({ url: `/pages/login/index?url=${Taro.getCurrentInstance()?.router?.params?.url ?? ''}&from=web` })
     } else {
       onJumpUrl(url)
     }

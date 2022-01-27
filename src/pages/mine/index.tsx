@@ -456,7 +456,7 @@ const MineScreen = () => {
             <View
               className='sec red-body'
               onClick={() => {
-                toMyOrder(3)
+                toMyOrder(2)
               }}
             >
               <Image src={peying} />
@@ -469,7 +469,7 @@ const MineScreen = () => {
             <View
               className='red-body'
               onClick={() => {
-                toMyOrder(4)
+                toMyOrder(3)
               }}
             >
               <Image src={overpey} />

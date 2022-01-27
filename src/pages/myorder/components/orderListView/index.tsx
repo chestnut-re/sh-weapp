@@ -8,7 +8,7 @@ import { RMB_CON } from '@/utils/price'
 /**
  * 我的订单
  */
-const OrderListPage = ({ por }) => {
+const OrderListPage = ({ por, orderStateNum }) => {
   const toOrderDetail = (state, id) => {
     Taro.navigateTo({
       url: `/pages/webview/index?url=${encodeURIComponent(`${H5.orderDetail}?type=${state}&orderId=${id}`)}`,
@@ -26,7 +26,9 @@ const OrderListPage = ({ por }) => {
     Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(l)}` })
   }
 
-  const orderState = (state) => {
+  const orderState = (item) => {
+    const state = item.state
+    const stay = item.stayVerified
     switch (state) {
       case 1:
         return '待付款'
@@ -35,6 +37,9 @@ const OrderListPage = ({ por }) => {
         return '已失效'
         break
       case 3:
+        if (stay == 1 && orderStateNum == 0) {
+          return refundState(item.refundState)
+        }
         return '待核销'
         break
       case 4:
@@ -47,7 +52,7 @@ const OrderListPage = ({ por }) => {
         return '退款成功'
         break
       default:
-        return '退款失败'
+        return ''
     }
   }
 
@@ -73,7 +78,12 @@ const OrderListPage = ({ por }) => {
           <View className='card'>
             <View onClick={() => toOrderDetail(item.state, item.id)}>
               <View className='state'>
-                {orderState(item.state)}
+                {orderStateNum == 5 ? (
+                  refundState(item.refundState)
+                ) : (
+                  orderState(item)
+                )}
+
               </View>
               <View className='content'>
                 <Image className='img' src={item.promotionalImageUrl} />
