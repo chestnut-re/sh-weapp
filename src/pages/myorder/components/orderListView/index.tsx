@@ -67,8 +67,14 @@ const OrderListPage = ({ por, orderStateNum }) => {
       case 3:
         return '退款失败'
         break
+      case 4:
+        return '受理成功'
+        break
+      case 5:
+        return '已取消'
+        break
       default:
-        return '退款失败'
+        return ''
     }
   }
   return (

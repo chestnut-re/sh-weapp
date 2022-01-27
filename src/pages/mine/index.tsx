@@ -1,4 +1,4 @@
-import Taro, { useDidShow, usePageScroll, useShareAppMessage, useTabItemTap } from '@tarojs/taro'
+import Taro, { useDidShow, usePageScroll, useTabItemTap } from '@tarojs/taro'
 import { useStore } from '@/store/context'
 import { ScrollView, View, Text, Image, Canvas } from '@tarojs/components'
 import { observer } from 'mobx-react'
@@ -120,22 +120,7 @@ const MineScreen = () => {
   const toMyTravel = () => {
     Taro.navigateTo({ url: `/pages/webview/index?url=${H5.myTravel}` })
   }
-  useShareAppMessage((res) => {
-    if (res.from === 'button') {
-      // 来自页面内转发按钮
-      console.log(res.target)
-      if (res.target?.['id'] == 1) {
-        return {
-          title: `欢迎浏览${cityName}的名片哦！`,
-          path: '/page/user?id=123',
-        }
-      }
-    }
-    return {
-      title: ``,
-      path: '',
-    }
-  })
+
   /**
    * getUserInfo() 获取用户信息
    */
