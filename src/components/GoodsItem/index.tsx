@@ -6,7 +6,7 @@ import Img from '@/components/Img'
 import { commonStore, useStore } from '@/store/context'
 import Taro from '@tarojs/taro' // Taro 专有 Hooks
 import { LikeService } from '@/service/Like'
-import { RMB_CON } from '@/utils/price'
+import { homeRMB_CON } from '@/utils/price'
 
 import './index.less'
 
@@ -67,7 +67,7 @@ const GoodsItem: React.FC<Props> = ({ item, onItemClick }) => {
         </View>
         <View className='content'>
           <View className='text'>{item.goodsName}</View>
-          <View className='money'><Text className='rmbIcon'>¥</Text>{RMB_CON(item.personCurrentPrice)}</View>
+          <View className='money'><Text className='rmbIcon'>¥</Text>{homeRMB_CON(item.personCurrentPrice)}</View>
           <View className='consume'>
             <Text>{item.shamSales}人已付款</Text>
             <View className='likeView' onClick={likeClick}>
