@@ -3,6 +3,8 @@ import { useStore } from '@/store/context'
 import { ScrollView, View, Text, Image, Canvas } from '@tarojs/components'
 import { observer } from 'mobx-react'
 import { useEffect, useState } from 'react'
+import { Dialog, Popup } from "@taroify/core"
+
 import { getUrlParams, getUrlPath } from '@/utils/webviewUtils'
 import { showMToast } from '@/utils/ui'
 import pic from '@/assets/img/common/shg.png'
@@ -30,12 +32,17 @@ import LongImgView from '@/components/longImgView'
 import './index.less'
 import { MyOrderService } from '@/service/MyOrderService'
 import { RMB_CON } from '@/utils/price'
+
+import customerqr from '@/assets/img/mine/customerqr.jpeg'
+import close from '@/assets/img/mine/close1.png'
 /**
  * 我的页面
  */
 const MineScreen = () => {
   const { userStore, commonStore } = useStore()
   const [open, setOpen] = useState(false)
+
+  const [customerPopup, setCustomerPopup] = useState(false)
   const [cityName, setCityName] = useState('奔赴山海')
   const [isShowCanvas, setIsShowCanvas] = useState(false)
 
@@ -301,6 +308,9 @@ const MineScreen = () => {
       }
     })
   }
+  // const onLongPress = () => {
+
+  // }
 
   return (
     <View className='MineScreen__root'>
@@ -384,7 +394,7 @@ const MineScreen = () => {
             <Image className='img' src={cyxx} />
             <View className='item-text'>常用信息</View>
           </View>
-          <View className='item'>
+          <View className='item' onClick={() => setCustomerPopup(true)}>
             <Image className='img' src={kefu} />
             <View className='item-text'>专属客服</View>
           </View>
@@ -467,6 +477,28 @@ const MineScreen = () => {
         </View>
 
       </ScrollView>
+      {/* <Dialog className='customerPopup' open={customerPopup} onClose={setCustomerPopup}>
+        <Dialog.Content >
+          <View className='customerView'>
+            <Image mode='widthFix' className='img' src={customerqr} />
+          </View>
+          
+
+        </Dialog.Content>
+      </Dialog> */}
+      <Popup className='customerPopup' onClose={() => { setCustomerPopup(false) }} open={customerPopup}>
+        <View className='customerView'>
+          <Image showMenuByLongpress mode='widthFix' className='img' src={customerqr} />
+          <View className='tis'>
+            <Text className='txt'>长按保存图片，扫码下载APP</Text>
+            <Text className='txt'>分享线路，完成任务</Text>
+          </View>
+        </View>
+        <View className='closeView'>
+          <Image onClick={() => { setCustomerPopup(false) }} className='img' src={close} />
+        </View>
+      </Popup>
+
     </View>
   )
 }

@@ -130,14 +130,16 @@ class UserData {
   }
 
   getMineInfo() {
+    if (!this.accessToken) return
     this.getUserInfo()
-    this.getAreaList()
-    this.getWallet()
-    this.likeCount()
+    this.getAreaList() //
+    this.getWallet() //
+    this.likeCount() //
   }
 
   //获取用户信息
   async getUserInfo() {
+    if (!this.accessToken) return
     const useInfo = await UserService.getUserInfo()
     console.log('userRes', useInfo)
     if (useInfo.data.code == 200) {
@@ -148,6 +150,7 @@ class UserData {
   }
   //获取常住地城市列表
   async getAreaList() {
+    if (!this.accessToken) return
     const cityInfo = await LocationService.getAreaList()
     if (cityInfo.data.code == 200) {
       this.cityInfo = cityInfo.data.data
@@ -157,6 +160,7 @@ class UserData {
   }
   //获取我的代币
   async getWallet() {
+    if (!this.accessToken) return
     const wallet = await UserService.getUserWallet()
     if (wallet.data.code == 200) {
       this.totalAmount = wallet.data.data.totalAmount
@@ -214,6 +218,7 @@ class UserData {
 
   /** 点赞浏览数量 */
   async likeCount() {
+    if (!this.accessToken) return
     const {
       data: { data },
     } = await LikeService.likeCount()

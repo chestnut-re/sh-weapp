@@ -606,4 +606,46 @@
       border-radius: 50%;
     }
   }
+  .customerPopup {
+    background-color: transparent;
+    border-radius: 20px;
+    overflow: hidden;
+    .customerView {
+      position: relative;
+      .img {
+        width: 528px;
+      }
+      .tis {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0 0 20px 20px;
+        overflow: hidden;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 99;
+        height: 150px;
+        background: #fff;
+        .txt {
+          font-size: 24px;
+          font-weight: bold;
+          text-align: center;
+          color: #333333;
+        }
+      }
+    }
+    .closeView {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .img {
+        margin-top: 50px;
+        width: 60px;
+        height: 60px;
+      }
+    }
+  }
 }
