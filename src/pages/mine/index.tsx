@@ -33,7 +33,6 @@ import './index.less'
 import { MyOrderService } from '@/service/MyOrderService'
 import { RMB_CON } from '@/utils/price'
 
-import customerqr from '@/assets/img/mine/customerqr.jpeg'
 import close from '@/assets/img/mine/close1.png'
 /**
  * 我的页面
@@ -488,7 +487,7 @@ const MineScreen = () => {
       </Dialog> */}
       <Popup className='customerPopup' onClose={() => { setCustomerPopup(false) }} open={customerPopup}>
         <View className='customerView'>
-          <Image showMenuByLongpress mode='widthFix' className='img' src={customerqr} />
+          <Image showMenuByLongpress mode='widthFix' className='img' src='https://travel-h5.oss-cn-beijing.aliyuncs.com/img/customerqr-6486.png' />
           <View className='tis'>
             <Text className='txt'>长按保存图片，扫码下载APP</Text>
             <Text className='txt'>分享线路，完成任务</Text>
