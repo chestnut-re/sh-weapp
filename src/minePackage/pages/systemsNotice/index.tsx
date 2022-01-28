@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-shadow
 
 import Taro, { usePageScroll, useDidShow } from '@tarojs/taro'
 import { View, ScrollView } from '@tarojs/components'
@@ -8,6 +9,7 @@ import { observer } from 'mobx-react'
 import MsgListItem from './../../components/noticeListItem';
 import { MsgService } from '@/service/MsgService'
 import NoDataView from '@/components/noDataView'
+import { H5 } from '@/constants/h5'
 
 import './index.less'
 
@@ -17,10 +19,23 @@ const SystemsNoticePage = (props) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasMores, setHasMores] = useState(false);
   const [msgList, setMsgList] = useState<any>([])
-
   const [hasMore, setHasMore] = useState<boolean>(true)
 
+  const [msgTypes, setMsgTypes] = useState<any>('');
+
   useEffect(() => {
+    const msgType = Taro.getCurrentInstance().router?.params.type
+
+    let pageTitle = '系统通知'
+    if (msgType == '1') {
+      pageTitle = '系统通知'
+    } else if (msgType == '2') {
+      pageTitle = '订单消息'
+    } else if (msgType == '3') {
+      pageTitle = '行程消息'
+    }
+    Taro.setNavigationBarTitle({ title: pageTitle })
+    setMsgTypes(msgType)
     pullDownRefresh()
   }, [])
 
@@ -61,8 +76,7 @@ const SystemsNoticePage = (props) => {
   };
 
   const onReadAll = () => {
-    const msgType = Taro.getCurrentInstance().router?.params.type
-    MsgService.readAll(msgType).then((res) => {
+    MsgService.readAll(msgTypes).then((res) => {
       const {
         data: { data }
       } = res
@@ -76,15 +90,39 @@ const SystemsNoticePage = (props) => {
   }
 
   const onRead = (item) => {
-    MsgService.read(item.id).then((res) => {
-      const {
-        data: { data }
-      } = res
-      if (item.link) {
-        Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(item.link)}` })
+    if (item.isRead == 0) {
+      MsgService.read(item.id).then((res) => {
+        const {
+          data: { data }
+        } = res
+      })
+    }
+
+    console.log('data', item)
+
+    if (msgTypes == 2) {
+      let stateStr = ''
+      switch (item.extendMap.orderState) {
+        case 1:
+          stateStr = '订单待支付';
+          break
+        case 3:
+          stateStr = '付款';
+          break
+        case 4:
+          stateStr = '订单已完成';
+          break
+        case 5:
+          stateStr = '退款';
+          break
+        default:
+
       }
-      console.log('data', data)
-    })
+      Taro.navigateTo({
+        url: `/pages/webview/index?url=${encodeURIComponent(`${H5.orderDetail}?type=${item.extendMap.orderState}&orderId=${item.extendMap.orderId}`)}`,
+      })
+    }
+
   }
 
   return (
@@ -95,7 +133,7 @@ const SystemsNoticePage = (props) => {
         scrollWithAnimation
         refresherEnabled
         refresherTriggered={loading}
-        onRefresherRefresh={pullDownRefresh}
+        onRefresherRefresh={() => pullDownRefresh()}
         onScrollToLower={onScrollToLower}
         className='msg_scroll'
       >
@@ -115,7 +153,7 @@ const SystemsNoticePage = (props) => {
           )}
 
           {msgList.map((item, index) => (
-            <MsgListItem onRead={() => { onRead(item) }} key={index} items={item} />
+            <MsgListItem onRead={onRead} key={index} items={item} />
           ))}
           {msgList.length > 0 && !hasMore && <View className='noMore'>加载完成</View>}
         </View>

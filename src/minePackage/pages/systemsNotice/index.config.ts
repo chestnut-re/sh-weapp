@@ -1,4 +1,4 @@
 export default {
-  navigationBarTitleText: '系统通知',
+  navigationBarTitleText: '',
   disableScroll: true,
 }

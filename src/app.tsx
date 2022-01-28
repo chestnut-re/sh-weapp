@@ -57,6 +57,10 @@ const App = ({ children }) => {
   useEffect(() => {
     getSystemInfo()
     onUpdateWeapp()
+    Taro.onAppShow((res) => {
+      userStore.getWallet()
+      console.log('Taro.onAppShow Taro.onAppShow', res)
+    })
   }, [])
   /**
    * 获取设备信息
