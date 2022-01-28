@@ -1,10 +1,11 @@
 import Taro from '@tarojs/taro'
-import { Provider, userStore } from './store/context'
+import { Provider, userStore, commonStore } from './store/context'
 import config from './utils/systemInfo'
 import './app.less'
 
 import { clearStorage } from './utils/storage'
 import { useEffect } from 'react'
+
 // eslint-disable-next-line import/no-commonjs
 const JSONbigString = require('json-bigint')({ storeAsString: true })
 
@@ -42,7 +43,7 @@ const jsonParse = function (chain) {
     // console.log('resJSON', res)
     try {
       res.data = JSONbigString.parse(res.data)
-    } catch (error) { }
+    } catch (error) {}
     return res
   })
 }
@@ -52,7 +53,6 @@ Taro.addInterceptor(jsonParse)
 Taro.getLaunchOptionsSync()
 // console.log(Taro.getLaunchOptionsSync())
 
-
 const App = ({ children }) => {
   useEffect(() => {
     getSystemInfo()
@@ -61,32 +61,38 @@ const App = ({ children }) => {
       userStore.getWallet()
       console.log('Taro.onAppShow Taro.onAppShow', res)
     })
+    Taro.onAppHide((res) => {
+      // 隐藏
+      commonStore.taskId = null
+      commonStore.bizId = null
+      commonStore.goodsId = null
+    })
   }, [])
   /**
    * 获取设备信息
    */
   const getSystemInfo = () => {
     try {
-      let res = Taro.getSystemInfoSync();
-      config.pixelRate = res.windowWidth / 750;
-      config.platform = res.platform;
-      config.statusBarHeight = res.statusBarHeight;
+      let res = Taro.getSystemInfoSync()
+      config.pixelRate = res.windowWidth / 750
+      config.platform = res.platform
+      config.statusBarHeight = res.statusBarHeight
       if (res.platform.toLowerCase() == 'devtools') {
-        config.capsuleHeight = 44;
+        config.capsuleHeight = 44
       }
       if (res.platform.toLowerCase() == 'android') {
-        config.capsuleHeight = 48;
+        config.capsuleHeight = 48
       }
-      config.titleHeight = (config.capsuleHeight + config.statusBarHeight) / config.pixelRate;
+      config.titleHeight = (config.capsuleHeight + config.statusBarHeight) / config.pixelRate
       if (res.statusBarHeight >= 44) {
-        config.isHighHead = true;
+        config.isHighHead = true
       }
-      if (res.windowHeight > 750) config.isAllScreen = true;
-      config.systemHeight = res.windowHeight;
+      if (res.windowHeight > 750) config.isAllScreen = true
+      config.systemHeight = res.windowHeight
 
       console.log('resresresres', res)
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
   }
   /**
@@ -109,13 +115,12 @@ const App = ({ children }) => {
             // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
             updateManager.applyUpdate()
           }
-        }
+        },
       })
     })
     updateManager.onUpdateFailed(function () {
       // 新的版本下载失败
     })
-
   }
   return <Provider>{children}</Provider>
 }
