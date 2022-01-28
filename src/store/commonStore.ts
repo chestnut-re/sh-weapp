@@ -5,6 +5,7 @@ class CommonData {
   bizId = '' // 业务员绑定
   taskId = '' // 分享任务注册
   goodsId = '' // 分享商品注册
+  source = '' // 来源
   afterLoginCallback = null // 登录回调
 
   constructor() {

@@ -63,9 +63,11 @@ const App = ({ children }) => {
     })
     Taro.onAppHide((res) => {
       // 隐藏
-      commonStore.taskId = null
-      commonStore.bizId = null
-      commonStore.goodsId = null
+      // 去除分享临时数据
+      commonStore.taskId = ''
+      commonStore.bizId = ''
+      commonStore.goodsId = ''
+      commonStore.source = ''
     })
   }, [])
   /**
