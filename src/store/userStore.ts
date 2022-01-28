@@ -1,5 +1,4 @@
-import { token } from '@/assets/img/token/22token.png'
-import { ACCESS_TOKEN, CITY_INFO, REFRESH_TOKEN, SESSION_KEY } from '@/constants/c'
+import { ACCESS_TOKEN, CITY_INFO, OPEN_ID, REFRESH_TOKEN, SESSION_KEY } from '@/constants/c'
 import { WXService } from '@/service/WXService'
 import { UserService } from '@/service/UserService'
 import { LocationService } from '@/service/LocationService'
@@ -67,6 +66,12 @@ class UserData {
       if (value) {
         this.accessToken = value
       }
+
+      const valueOpenId = Taro.getStorageSync(OPEN_ID)
+      console.log('local OpenId', valueOpenId)
+      if (valueOpenId) {
+        this.openId = valueOpenId
+      }
     } catch (e) {
       // Do something when catch error
     }
@@ -115,13 +120,14 @@ class UserData {
       this.accessToken = data.data.accessToken
       this.refreshToken = data.data.refreshToken
 
-      // this.openId =data.userDetails.openId
+      this.openId = openInfo.openId
       this._isBindMobile = data.data.userDetails.isResgister
       this.sessionKey = data.data.userDetails.sessionKey
       // this.phoneNumber = data.userDetails.phoneNumber
       save(SESSION_KEY, this.sessionKey!)
       save(ACCESS_TOKEN, this.accessToken!)
       save(REFRESH_TOKEN, this.refreshToken!)
+      save(OPEN_ID, openInfo.openId)
       this.getMineInfo()
       return data
     } else {
@@ -180,6 +186,7 @@ class UserData {
     remove(SESSION_KEY)
     remove(ACCESS_TOKEN)
     remove(REFRESH_TOKEN)
+    remove(OPEN_ID)
     clearStorage()
     // 回到首页
     Taro.switchTab({

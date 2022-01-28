@@ -87,7 +87,7 @@ const HomeScreen = () => {
       data: { data },
     } = await HomeService.getGoodsPage(pIndex)
     setLoading(false)
-    return { list: data.records, hasMore: data.total > pIndex * 10 ? true : false, isLoaded: pIndex === 1 }
+    return { list: data?.records ?? [], hasMore: data.total > pIndex * 10 ? true : false, isLoaded: pIndex === 1 }
   }
 
   const onPageScroll = (scrollTop) => {

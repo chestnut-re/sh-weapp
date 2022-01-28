@@ -11,14 +11,14 @@
 /**
  * 正式环境
  */
-// export const BASE_URL = 'https://prodapi.mountainseas.cn/api' //线上环境
-// export const h5Domain = 'https://travel.mountainseas.cn' // 正式
+export const BASE_URL = 'https://prodapi.mountainseas.cn/api' //线上环境
+export const h5Domain = 'https://travel.mountainseas.cn' // 正式
 
 /**
  * 测试环境
  */
-export const BASE_URL = 'https://testapi.mountainseas.cn/api' //测试环境
-export const h5Domain = 'https://testtravel.mountainseas.cn' // 测试
+// export const BASE_URL = 'https://testapi.mountainseas.cn/api' //测试环境
+// export const h5Domain = 'https://testtravel.mountainseas.cn' // 测试
 
 /**
  * 开发环境
@@ -35,7 +35,6 @@ export const SESSION_KEY = 'SESSION_KEY'
 export const ACCESS_TOKEN = 'ACCESS_TOKEN'
 /**刷新用户 token */
 export const REFRESH_TOKEN = 'REFRESH_TOKEN'
-
 /**
  * OPEN_ID
  */
