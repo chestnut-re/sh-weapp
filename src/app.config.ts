@@ -1,5 +1,6 @@
 export default {
   pages: [
+    // 'pages/webview/index',
     'pages/home/index',
     'pages/msg/index',
     'pages/mine/index',

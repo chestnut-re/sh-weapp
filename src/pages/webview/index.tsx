@@ -38,7 +38,13 @@ const WebViewPage = () => {
       if (!bizId && getUrlPath(url) == 'goods-detail') {
         commonStore.goodsId = 'goods'
       }
-      Taro.redirectTo({ url: `/pages/login/index?url=${Taro.getCurrentInstance()?.router?.params?.url ?? ''}&from=web` })
+      // 未登录
+      commonStore.setAfterLoginCallback(() => {
+        Taro.navigateBack();
+        onJumpUrl(url);
+        commonStore.removeAfterLoginCallback()
+      })
+      Taro.navigateTo({ url: `/pages/login/index` })
     } else {
       onJumpUrl(url)
     }
