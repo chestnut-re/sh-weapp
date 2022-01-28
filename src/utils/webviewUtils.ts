@@ -36,6 +36,19 @@ export const dealWebViewURL = (url: string) => {
     taskId: commonStore.taskId,
     source: commonStore.source,
   }
+
+  if (userStore.openId) {
+    addParams.openId = userStore.openId
+  }
+
+  if (userStore.taskId) {
+    addParams.taskId = userStore.taskId
+  }
+
+  if (userStore.source) {
+    addParams.source = userStore.source
+  }
+
   return `${url.split('?')[0]}?${qs.stringify({ ...allParams, ...addParams })}`
 }
 
