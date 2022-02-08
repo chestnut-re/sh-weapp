@@ -51,6 +51,8 @@ const WebViewPage = () => {
     } else {
       onJumpUrl(url)
     }
+    console.log('getUrlParams(url)', getUrlParams(url))
+
     return () => {
       console.log('123123123123 personal-details', getUrlPath(url))
 
@@ -72,7 +74,7 @@ const WebViewPage = () => {
   }
 
   const handleMessage = (event: any) => {
-    console.log('2132312312postMessagepostMessage', event)
+    console.log('postMessage', event)
   }
 
   return <WebView src={initUrl} onMessage={handleMessage} />

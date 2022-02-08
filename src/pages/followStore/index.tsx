@@ -27,8 +27,9 @@ const MyBrowsePage = () => {
     Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(`${H5.groupShop}?id=${item['id']}`)}` })
   }
 
-  const anOrder = (e) => {
-    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(`${H5.goodsDetail}?id=${e['id']}&isRebate=${e.isRebate}&isPurchase=${e.isPurchase}&isPurchaseAdd=${e.isPurchaseAdd}`)}` })
+  const anOrder = (e, item) => {
+    console.log('e shopId', `${H5.goodsDetail}?id=${e['id']}&isRebate=${e.isRebate}&isPurchase=${e.isPurchase}&isPurchaseAdd=${e.isPurchaseAdd}&shopId=${item.id}`)
+    Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(`${H5.goodsDetail}?id=${e['id']}&isRebate=${e.isRebate}&isPurchase=${e.isPurchase}&isPurchaseAdd=${e.isPurchaseAdd}&shopId=${item.id}`)}` })
   }
   usePageScroll(({ scrollTop: aScrollTop }) => {
     setScrollTop(aScrollTop)
@@ -110,7 +111,7 @@ const MyBrowsePage = () => {
                     <View className='img-list'>
                       {item['shopGoods'] && item['shopGoods'].length > 0 && item['shopGoods'].map((items, index) => (
                         index < 4 && (
-                          <View onClick={() => { anOrder(items) }}>
+                          <View onClick={() => { anOrder(items, item) }}>
                             <Img
                               key={`index${index}`}
                               url={items['promotionalImageUrl']}
