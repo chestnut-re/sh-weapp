@@ -51,8 +51,10 @@ const WebViewPage = () => {
     } else {
       onJumpUrl(url)
     }
-    console.log('123123123123', url, getUrlPath(url))
     return () => {
+      console.log('123123123123 personal-details', getUrlPath(url))
+
+
       if (getUrlPath(url) == 'goods-detail') {
         userStore.likeCount()
       }
@@ -70,7 +72,7 @@ const WebViewPage = () => {
   }
 
   const handleMessage = (event: any) => {
-    console.log(event)
+    console.log('2132312312postMessagepostMessage', event)
   }
 
   return <WebView src={initUrl} onMessage={handleMessage} />

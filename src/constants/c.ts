@@ -27,7 +27,7 @@ export const h5Domain = 'https://testtravel.mountainseas.cn' // 测试
 // export const BASE_URL = 'https://devapi.mountainseas.cn/api' //开发环境
 // export const h5Domain = 'https://devtravel.mountainseas.cn'
 
-// export const h5Domain = 'http://192.168.10.126:4000'
+// export const h5Domain = 'http://192.168.10.36:4000'
 
 /**SESSION_KEY */
 export const SESSION_KEY = 'SESSION_KEY'

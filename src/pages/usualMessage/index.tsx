@@ -1,5 +1,5 @@
 /* eslint-disable import/first */
-import Taro, { usePageScroll } from '@tarojs/taro' // Taro 专有 Hooks
+import Taro, { usePageScroll, useDidShow } from '@tarojs/taro' // Taro 专有 Hooks
 import { View, Text, Image } from '@tarojs/components'
 import { Tabs, List, Loading, PullRefresh, SwipeCell, Button } from '@taroify/core'
 import { H5 } from '@/constants/h5'
@@ -23,11 +23,14 @@ const UsualMessagePage = () => {
   const [scrollTop, setScrollTop] = useState(0)
   const [reachTop, setReachTop] = useState(true)
   useEffect(() => {
-    travelerList()
+
   }, [])
   usePageScroll(({ scrollTop: aScrollTop }) => {
     setScrollTop(aScrollTop)
     setReachTop(aScrollTop === 0)
+  })
+  useDidShow(() => {
+    travelerList()
   })
   const onLoad = () => {
     setLoading(true)
