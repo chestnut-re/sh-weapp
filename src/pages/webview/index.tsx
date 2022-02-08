@@ -15,6 +15,26 @@ const WebViewPage = () => {
 
   const [initUrl, setInitUrl] = useState('')
 
+  // 保存url中的参数
+  const saveUrlParams = (url) => {
+    const bizId = getUrlParams(url)['bizId']
+    const taskId = getUrlParams(url)['taskId'] // 任务id
+    const userId = getUrlParams(url)['userId']
+    const source = getUrlParams(url)['source'] // 订单来源
+    if (taskId && userId) {
+      commonStore.taskId = taskId
+    }
+    if (bizId) {
+      commonStore.bizId = bizId
+    }
+    if (source) {
+      commonStore.source = source
+    }
+    if (!bizId && getUrlPath(url) == 'goods-detail') {
+      commonStore.goodsId = 'goods'
+    }
+  }
+
   useEffect(() => {
     // Taro.showShareMenu({
     //   withShareTicket: true,
@@ -22,25 +42,11 @@ const WebViewPage = () => {
     // })
 
     const url = decodeURIComponent(Taro.getCurrentInstance()?.router?.params?.url ?? '')
+    console.log('url', url)
 
+    saveUrlParams(url)
     // 判断是否登录，没有登录先去登录
     if (!userStore.isBindMobile && (getUrlPath(url) == 'goods-detail' || getUrlPath(url) == 'group-shop')) {
-      const bizId = getUrlParams(url)['bizId']
-      const taskId = getUrlParams(url)['taskId'] // 任务id
-      const userId = getUrlParams(url)['userId']
-      const source = getUrlParams(url)['source'] // 订单来源
-      if (taskId && userId) {
-        commonStore.taskId = taskId
-      }
-      if (bizId) {
-        commonStore.bizId = bizId
-      }
-      if (source) {
-        commonStore.source = source
-      }
-      if (!bizId && getUrlPath(url) == 'goods-detail') {
-        commonStore.goodsId = 'goods'
-      }
       // 未登录
       commonStore.setAfterLoginCallback(() => {
         Taro.navigateBack()
@@ -55,8 +61,6 @@ const WebViewPage = () => {
 
     return () => {
       console.log('123123123123 personal-details', getUrlPath(url))
-
-
       if (getUrlPath(url) == 'goods-detail') {
         userStore.likeCount()
       }
@@ -69,7 +73,7 @@ const WebViewPage = () => {
       UserService.bindRecommend(webUrlParams.userId)
     }
 
-    console.log(dealWebViewURL(url))
+    console.log('dealWebViewURL', dealWebViewURL(url))
     setInitUrl(dealWebViewURL(url))
   }
 

@@ -62,8 +62,9 @@ const App = ({ children }) => {
       console.log('Taro.onAppShow Taro.onAppShow', res)
     })
     Taro.onAppHide((res) => {
+      console.log('Taro.onAppHide Taro.onAppHide', res)
       // 隐藏
-      // 去除分享临时数据
+      // 去除临时数据
       commonStore.taskId = ''
       commonStore.bizId = ''
       commonStore.goodsId = ''
