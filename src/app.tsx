@@ -24,7 +24,10 @@ const loginStateCheck = function (chain) {
       res.data.code === '010010' ||
       res.data.code === '010012' ||
       res.data.code === '010014' ||
-      res.data.code === '000003'
+      res.data.code === '000003' ||
+      res.data.code === '010000' ||
+      res.data.code === '000004' ||
+      res.data.code === '000002'
     ) {
       console.log('accessToken 失效，退出登录并回到首页')
       userStore.loginOut()
