@@ -16,8 +16,7 @@ const SetUpPage = () => {
   const { userStore, homeStore } = useStore()
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState('20.32Mb')
-  const picture =
-    'https://shanhai-shoping.oss-cn-beijing.aliyuncs.com/img/user/pic/cd2d77f5983f44c5b6e20c313e12d26e.jpg'
+  const picture = 'https://h5-cdn.mountainseas.cn/img/cavator-3d77.png'
 
   /**退出登录并回到首页 */
   const _logout = () => {

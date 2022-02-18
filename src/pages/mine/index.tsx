@@ -3,7 +3,7 @@ import { useStore } from '@/store/context'
 import { ScrollView, View, Text, Image, Canvas } from '@tarojs/components'
 import { observer } from 'mobx-react'
 import { useEffect, useState } from 'react'
-import { Dialog, Popup } from "@taroify/core"
+import { Dialog, Popup } from '@taroify/core'
 
 import { getUrlParams, getUrlPath } from '@/utils/webviewUtils'
 import { showMToast } from '@/utils/ui'
@@ -47,14 +47,12 @@ const MineScreen = () => {
 
   const [userInfo, setUserInfo] = useState({})
 
-
   const [isShowLongImg, setIsShowLongImg] = useState(false)
   const [image, setImage] = useState('')
 
   const [orderCount, setOrderCount] = useState({})
 
-  const picture =
-    'https://shanhai-shoping.oss-cn-beijing.aliyuncs.com/img/user/pic/cd2d77f5983f44c5b6e20c313e12d26e.jpg'
+  const picture = 'https://h5-cdn.mountainseas.cn/img/cavator-3d77.png'
   useEffect(() => {
     if (userStore.isBindMobile) {
       userStore.getMineInfo()
@@ -62,7 +60,7 @@ const MineScreen = () => {
     }
   }, [])
 
-  useTabItemTap(item => {
+  useTabItemTap((item) => {
     if (!userStore.isBindMobile) {
       // 未登录
       Taro.redirectTo({ url: '/pages/login/index' })
@@ -72,14 +70,15 @@ const MineScreen = () => {
 
   const getQuerySortOrderCount = () => {
     MyOrderService.querySortOrderCount().then((res) => {
-      const { data: { data } } = res
+      const {
+        data: { data },
+      } = res
       if (data) {
         setOrderCount(data)
       }
       console.log('res data data data data', data)
     })
   }
-
 
   const toFist = () => {
     // Taro.navigateBack()
@@ -94,7 +93,7 @@ const MineScreen = () => {
   }
 
   const toMyTokenExplain = (e) => {
-    e.stopPropagation();
+    e.stopPropagation()
     Taro.navigateTo({ url: `/pages/webview/index?url=${encodeURIComponent(H5.beansExplain)}` })
   }
 
@@ -112,7 +111,6 @@ const MineScreen = () => {
 
   const onLikeOrBrowse = (from) => {
     Taro.navigateTo({ url: `/minePackage/pages/browse/index?from=${from}` })
-
   }
   const toUsual = () => {
     Taro.navigateTo({ url: '/pages/usualMessage/index' })
@@ -215,7 +213,6 @@ const MineScreen = () => {
     if (res.errMsg == 'canvasToTempFilePath:ok') {
       setImage(res.tempFilePath)
     }
-
   }
   /**
    * saveCard() 保存图片到本地
@@ -321,7 +318,7 @@ const MineScreen = () => {
           canvasId='cardCanvas'
         ></Canvas>
       </View>
-      <ScrollView className='mineScroll' scrollY scrollWithAnimation >
+      <ScrollView className='mineScroll' scrollY scrollWithAnimation>
         <ShareView
           onLongImg={startDrawImg}
           copyLink='23123123123'
@@ -445,7 +442,7 @@ const MineScreen = () => {
               <View>待付款</View>
               {orderCount['unpaidCountNum'] && orderCount['unpaidCountNum'] > 0 ? (
                 <View className='red-num'>{orderCount['unpaidCountNum']}</View>
-              ) : (null)}
+              ) : null}
             </View>
             <View
               className='sec red-body'
@@ -457,8 +454,7 @@ const MineScreen = () => {
               <View>待核销</View>
               {orderCount['unconfirmedCountNum'] && orderCount['unconfirmedCountNum'] > 0 ? (
                 <View className='red-num'>{orderCount['unconfirmedCountNum']}</View>
-              ) : (null)}
-
+              ) : null}
             </View>
             <View
               className='red-body'
@@ -470,11 +466,10 @@ const MineScreen = () => {
               <View>已完成</View>
               {orderCount['completedCountNum'] && orderCount['completedCountNum'] > 0 ? (
                 <View className='red-num'>{orderCount['completedCountNum']}</View>
-              ) : (null)}
+              ) : null}
             </View>
           </View>
         </View>
-
       </ScrollView>
       {/* <Dialog className='customerPopup' open={customerPopup} onClose={setCustomerPopup}>
         <Dialog.Content >
@@ -485,19 +480,35 @@ const MineScreen = () => {
 
         </Dialog.Content>
       </Dialog> */}
-      <Popup className='customerPopup' onClose={() => { setCustomerPopup(false) }} open={customerPopup}>
+      <Popup
+        className='customerPopup'
+        onClose={() => {
+          setCustomerPopup(false)
+        }}
+        open={customerPopup}
+      >
         <View className='customerView'>
-          <Image showMenuByLongpress mode='widthFix' className='img' src='https://travel-h5.oss-cn-beijing.aliyuncs.com/img/customerqr-6486.png' />
+          <Image
+            showMenuByLongpress
+            mode='widthFix'
+            className='img'
+            src='https://travel-h5.oss-cn-beijing.aliyuncs.com/img/customerqr-6486.png'
+          />
           <View className='tis'>
             <Text className='txt'>长按保存图片，扫码下载APP</Text>
             <Text className='txt'>分享线路，完成任务</Text>
           </View>
         </View>
         <View className='closeView'>
-          <Image onClick={() => { setCustomerPopup(false) }} className='img' src={close} />
+          <Image
+            onClick={() => {
+              setCustomerPopup(false)
+            }}
+            className='img'
+            src={close}
+          />
         </View>
       </Popup>
-
     </View>
   )
 }

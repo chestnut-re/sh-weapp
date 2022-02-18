@@ -23,8 +23,7 @@ const MyDataPage = () => {
   const [minDate] = useState(new Date(1970, 0, 1))
   const [maxDate] = useState(new Date(2025, 10, 1))
   const [defaultValue] = useState(new Date(2021, 0, 17))
-  const picture =
-    'https://shanhai-shoping.oss-cn-beijing.aliyuncs.com/img/user/pic/cd2d77f5983f44c5b6e20c313e12d26e.jpg'
+  const picture = 'https://h5-cdn.mountainseas.cn/img/cavator-3d77.png'
 
   const toSetName = () => {
     Taro.navigateTo({ url: '/pages/setName/index' })
